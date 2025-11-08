@@ -1,31 +1,32 @@
-version: '3.8'
-
 services:
   postgres:
-    build: .
-    container_name: myjira-postgres-db
+    build:
+      context: ./data-scheme # Контекст сборки
+      dockerfile: Dockerfile # Путь к Dockerfile относительно контекста
+    container_name: myjira-postgres-${ENV:-dev}
     environment:
-      POSTGRES_DB: ${DB_NAME:-myjira_test}
+      POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
       - "${DB_PORT:-5432}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./myJIRA.sql:/docker-entrypoint-initdb.d/myJIRA.sql
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - postgres_data_${ENV:-dev}:/var/lib/postgresql/data
     networks:
-      - myjira-network
+      - myjira-network-${ENV:-dev}
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME:-myjira_test}"]
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
       interval: 30s
       timeout: 10s
       retries: 3
 
 volumes:
-  postgres_data:
+  postgres_data_dev:
+  postgres_data_prod:
 
 networks:
-  myjira-network:
+  myjira-network-dev:
+    driver: bridge
+  myjira-network-prod:
     driver: bridge
