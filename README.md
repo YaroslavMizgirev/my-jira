@@ -1,14 +1,23 @@
 # my-jira
 
 Создаю приложение похожее на Jira с функциональностью:
+
 - Ведение проектной деятельности;
+- "Архитектура как код";
 - Подключение ИИ помощника.
 
-## Этап 1: Выбор СУБД, создание схемы данных.
-За основную СУБД берем PostgreSQL.
-см. [схема данных](./data-scheme/my-jira.sql).
+## Этап 1: Выбор СУБД, создание схемы данных
 
-## Этап 2: Разработка backend.
+За основную СУБД берем PostgreSQL 18:
+
+1. см. [Схема данных](./data-scheme/myjira.sql)
+2. см. [Базовые настройки](./data-scheme/init.sql)
+3. см. [Переменные окружения](./data-scheme/myjira.env)
+4. см. [Dockerfile](./data-scheme/Dockerfile)
+5. см. раздел 'postgres' в [docker-compose.yml](docker-compose.yml)
+
+## Этап 2: Разработка backend
+
 Проект будем реализовывать с применением Spring Boot, на платформе Java 17 используя [Zulu JDK FX](https://www.azul.com/core-post-download/?endpoint=zulu&uuid=ba2dc6eb-1dae-44af-a4f5-760bb2c23553).
 
 ### Используемые зависимости
