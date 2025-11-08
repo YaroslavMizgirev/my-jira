@@ -1,0 +1,90 @@
+spring:
+  application:
+    name: my-jira
+  security:
+    oauth2:
+      client:
+        registration:
+          # Google
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
+            scope:
+              - email
+              - profile
+          
+          # GitHub
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_SECRET}
+            scope:
+              - user:email
+              - read:user
+          
+          # GitLab
+          gitlab:
+            client-id: ${GITLAB_CLIENT_ID}
+            client-secret: ${GITLAB_CLIENT_SECRET}
+            scope:
+              - read_user
+              - email
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: GitLab
+          
+          # Yandex
+          yandex:
+            client-id: ${YANDEX_CLIENT_ID}
+            client-secret: ${YANDEX_CLIENT_SECRET}
+            scope:
+              - login:email
+              - login:info
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: Yandex
+          
+          # Mail.ru
+          mailru:
+            client-id: ${MAILRU_CLIENT_ID}
+            client-secret: ${MAILRU_CLIENT_SECRET}
+            scope:
+              - userinfo
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: Mail.ru
+
+        provider:
+          # GitLab configuration
+          gitlab:
+            authorization-uri: https://gitlab.com/oauth/authorize
+            token-uri: https://gitlab.com/oauth/token
+            user-info-uri: https://gitlab.com/api/v4/user
+            user-name-attribute: name
+            
+          # Yandex configuration  
+          yandex:
+            authorization-uri: https://oauth.yandex.ru/authorize
+            token-uri: https://oauth.yandex.ru/token
+            user-info-uri: https://login.yandex.ru/info
+            user-name-attribute: login
+            
+          # Mail.ru configuration
+          mailru:
+            authorization-uri: https://oauth.mail.ru/login
+            token-uri: https://oauth.mail.ru/token
+            user-info-uri: https://oauth.mail.ru/userinfo
+            user-name-attribute: email
+  devtools:
+    restart:
+      enabled: true
+      poll-interval: 1000
+      quiet-period: 400
+      exclude: static/**,public/**,templates/**
+  thymeleaf:
+    cache: false
+server:
+  port: 8080
+
+logging:
+  level:
+    '[org.springframework.security]': INFO
