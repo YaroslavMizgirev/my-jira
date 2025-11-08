@@ -16,6 +16,31 @@
 4. см. [Dockerfile](./data-scheme/Dockerfile)
 5. см. раздел 'postgres' в [docker-compose.yml](docker-compose.yml)
 
+```shell
+# запуск контейнера postgres:18
+docker-compose --env-file data-scheme/myjira.env up -d
+
+docker-compose down # Остановить контейнер
+
+docker system prune # Удалит все неиспользуемые данные
+
+docker images # Проверить оставшиеся образы
+docker image prune # Удалит: Образы без тегов, которые создаются во время сборки
+docker rmi my-jira-postgres # Удалит: конкретный образ
+
+docker volume ls # Проверить оставшиеся диски
+docker volume prune # Удалит: ВСЕ неиспользуемые volumes
+docker volume rm my-jira_postgres_data_dev # Удалит: конкретный диск
+
+docker builder prune # Удалит: Весь кеш сборки, который занимает много места
+
+docker ps # Проверит оставшиеся контейнеры
+docker images # Проверить оставшиеся образы
+docker volume ls # Проверить оставшиеся диски
+docker system df # Проверить общее состояние системы
+docker builder du # Проверить build cache
+```
+
 ## Этап 2: Разработка backend
 
 Проект будем реализовывать с применением Spring Boot, на платформе Java 17 используя [Zulu JDK FX](https://www.azul.com/core-post-download/?endpoint=zulu&uuid=ba2dc6eb-1dae-44af-a4f5-760bb2c23553).
