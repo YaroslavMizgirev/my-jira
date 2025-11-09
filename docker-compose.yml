@@ -1,19 +1,19 @@
 services:
   postgres:
     build:
-      context: ./data-scheme # Контекст сборки
+      context: ./data-scheme/postgres-18-debian # Контекст сборки
       dockerfile: Dockerfile # Путь к Dockerfile относительно контекста
-    container_name: myjira-postgres-${ENV:-dev}
+    container_name: postgres_${ENV:-dev}
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "${DB_PORT:-5432}:5432"
+      - "${DB_PORT:-5433}:5432"
     volumes:
       - postgres_data_${ENV:-dev}:/var/lib/postgresql/data
     networks:
-      - myjira-network-${ENV:-dev}
+      - postgres_network_${ENV:-dev}
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
