@@ -1,30 +1,59 @@
 spring:
   application:
     name: my-jira
+
+  datasource:
+      url: jdbc:postgresql://localhost:5433/myjira
+      username: ${DB_USER:myjira_user}
+      password: ${DB_PASSWORD:myjira_pass}
+      driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: false
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+    validate-on-migrate: true
+    baseline-version: 1
+    # Важно: не создавать заново существующие таблицы
+    placeholders:
+      existing-schema: true
+
   security:
     oauth2:
       client:
         registration:
-          # Google
+          # Google - будет отключен если нет переменных окружения
           google:
-            client-id: ${GOOGLE_CLIENT_ID}
-            client-secret: ${GOOGLE_CLIENT_SECRET}
+            client-id: ${GOOGLE_CLIENT_ID:disabled}
+            client-secret: ${GOOGLE_CLIENT_SECRET:disabled}
             scope:
               - email
               - profile
           
-          # GitHub
+          # GitHub - будет отключен если нет переменных окружения
           github:
-            client-id: ${GITHUB_CLIENT_ID}
-            client-secret: ${GITHUB_CLIENT_SECRET}
+            client-id: ${GITHUB_CLIENT_ID:disabled}
+            client-secret: ${GITHUB_CLIENT_SECRET:disabled}
             scope:
               - user:email
               - read:user
           
-          # GitLab
+          # GitLab - будет отключен если нет переменных окружения
           gitlab:
-            client-id: ${GITLAB_CLIENT_ID}
-            client-secret: ${GITLAB_CLIENT_SECRET}
+            client-id: ${GITLAB_CLIENT_ID:disabled}
+            client-secret: ${GITLAB_CLIENT_SECRET:disabled}
             scope:
               - read_user
               - email
@@ -32,10 +61,10 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             client-name: GitLab
           
-          # Yandex
+          # Yandex - будет отключен если нет переменных окружения
           yandex:
-            client-id: ${YANDEX_CLIENT_ID}
-            client-secret: ${YANDEX_CLIENT_SECRET}
+            client-id: ${YANDEX_CLIENT_ID:disabled}
+            client-secret: ${YANDEX_CLIENT_SECRET:disabled}
             scope:
               - login:email
               - login:info
@@ -43,10 +72,10 @@ spring:
             redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
             client-name: Yandex
           
-          # Mail.ru
+          # Mail.ru - будет отключен если нет переменных окружения
           mailru:
-            client-id: ${MAILRU_CLIENT_ID}
-            client-secret: ${MAILRU_CLIENT_SECRET}
+            client-id: ${MAILRU_CLIENT_ID:disabled}
+            client-secret: ${MAILRU_CLIENT_SECRET:disabled}
             scope:
               - userinfo
             authorization-grant-type: authorization_code
@@ -74,17 +103,37 @@ spring:
             token-uri: https://oauth.mail.ru/token
             user-info-uri: https://oauth.mail.ru/userinfo
             user-name-attribute: email
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
   devtools:
     restart:
       enabled: true
       poll-interval: 1000
       quiet-period: 400
+      # Пока оставляем исключения, можно будет настроить позже
       exclude: static/**,public/**,templates/**
-  thymeleaf:
-    cache: false
+
 server:
-  port: 8080
+  port: 22080
+  servlet:
+    context-path: /api
 
 logging:
   level:
-    '[org.springframework.security]': INFO
+    ru.mymsoft.myjira: DEBUG
+    org.springframework.security: INFO
+    org.hibernate.SQL: DEBUG
+    org.flywaydb: INFO
+    # Добавляем логирование для OAuth2
+    org.springframework.security.oauth2: INFO
+
+app:
+  jwt:
+    secret: ${JWT_SECRET:myJiraSecretKeyForJWTGenerationWithEnoughLengthForSecurity123!}
+    expiration: 86400000
+  cors:
+    allowed-origins: http://localhost:3000,http://localhost:22080
