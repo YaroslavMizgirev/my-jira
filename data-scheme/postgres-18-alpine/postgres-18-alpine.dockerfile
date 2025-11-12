@@ -206,8 +206,8 @@ STOPSIGNAL SIGINT
 # that even 90 seconds may not be long enough in many instances.
 
 # Копируем схему БД
-COPY myjira.sql /docker-entrypoint-initdb.d/
-COPY init.sql /docker-entrypoint-initdb.d/
+COPY ../myjira.sql /docker-entrypoint-initdb.d/
+COPY ../init.sql /docker-entrypoint-initdb.d/
 
 # Настройка прав
 RUN chmod 644 /docker-entrypoint-initdb.d/*.sql; \

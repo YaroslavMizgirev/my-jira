@@ -9,8 +9,8 @@ ENV LANG=ru_RU.UTF-8
 ENV LC_ALL=ru_RU.UTF-8
 
 # Копируем схему БД
-COPY myjira.sql /docker-entrypoint-initdb.d/
-COPY init.sql /docker-entrypoint-initdb.d/
+COPY ../myjira.sql /docker-entrypoint-initdb.d/
+COPY ../init.sql /docker-entrypoint-initdb.d/
 
 # Настройка прав
 RUN chmod 644 /docker-entrypoint-initdb.d/*.sql

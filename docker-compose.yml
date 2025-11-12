@@ -1,8 +1,8 @@
 services:
   postgres:
     build:
-      context: ./data-scheme/postgres-18-debian # Контекст сборки
-      dockerfile: Dockerfile # Путь к Dockerfile относительно контекста
+      context: ./data-scheme/postgres-18-alpine # Контекст сборки
+      dockerfile: postgres-18-alpine.dockerfile # Путь к Dockerfile относительно контекста
     container_name: postgres_${ENV:-dev}
     environment:
       POSTGRES_DB: ${DB_NAME}
@@ -13,10 +13,35 @@ services:
     volumes:
       - postgres_data_${ENV:-dev}:/var/lib/postgresql/data
     networks:
-      - postgres_network_${ENV:-dev}
+      - myjira-network-${ENV:-dev}
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: myjira_backend_${ENV:-dev}
+    environment:
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_PORT: ${DB_PORT}
+      DB_HOST: postgres
+      JWT_SECRET: ${JWT_SECRET:-myJiraSecretKey}
+    ports:
+      - "22080:22080"
+    depends_on:
+      - postgres
+    networks:
+      - myjira-network-${ENV:-dev}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:22080/api/actuator/health"]
       interval: 30s
       timeout: 10s
       retries: 3
