@@ -23,7 +23,7 @@ public class Workflow {
     private Long id;
 
     @Column(name = "is_default", nullable = false)
-    private Boolean isDefault = false;
+    private Boolean isDefault;
 
     @Column(name = "name", nullable = false)
     @NonNull
