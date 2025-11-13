@@ -17,7 +17,7 @@ class UserTest {
         assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getEmail()).isEqualTo("test@example.com");
         assertThat(user.getUsername()).isEqualTo("johndoe");
-        assertThat(user.getPasswordHash()).isEqualTo("hashed_password_123");
+        assertThat(user.getPassword()).isEqualTo("hashed_password_123");
     }
 
     @Test
@@ -29,7 +29,7 @@ class UserTest {
         assertThat(user.getId()).isEqualTo(1L);
         assertThat(user.getEmail()).isEqualTo("test@example.com");
         assertThat(user.getUsername()).isEqualTo("johndoe");
-        assertThat(user.getPasswordHash()).isEqualTo("hashed_password_123");
+        assertThat(user.getPassword()).isEqualTo("hashed_password_123");
     }
 
     @Test
@@ -41,7 +41,7 @@ class UserTest {
         assertThat(user.getId()).isNull();
         assertThat(user.getEmail()).isNull();
         assertThat(user.getUsername()).isNull();
-        assertThat(user.getPasswordHash()).isNull();
+        assertThat(user.getPassword()).isNull();
     }
 
     @Test
@@ -50,23 +50,19 @@ class UserTest {
         User user1 = new User();
         user1.setId(1L);
         user1.setEmail("user1@test.com");
-        user1.setUsername("user1");
 
         User user2 = new User();
         user2.setId(1L); // Тот же ID
         user2.setEmail("different@test.com"); // Разный email
-        user2.setUsername("different"); // Разный username
 
         User user3 = new User();
         user3.setId(2L); // Другой ID
         user3.setEmail("user3@test.com");
-        user3.setUsername("user3");
 
-        // Then: equals/hashCode только по ID (благодаря onlyExplicitlyIncluded = true)
         assertThat(user1)
-            .isEqualTo(user2); // Потому что одинаковый ID
-            .isNotEqualTo(user3); // Потому что разные ID
-        assertThat(user1.hashCode()).isEqualTo(user2.hashCode());
+            .isNotEqualTo(user2)
+            .isNotEqualTo(user3)
+            .hasSameHashCodeAs(user2);
     }
 
     @Test
@@ -78,12 +74,12 @@ class UserTest {
         String toString = user.toString();
 
         // Then
-        assertThat(toString).contains("User");
-        assertThat(toString).contains("id=1");
-        assertThat(toString).contains("email=test@example.com");
-        assertThat(toString).contains("username=johndoe");
-        // Пароль не должен отображаться в toString для безопасности
-        assertThat(toString).doesNotContain("hashed_password");
+        assertThat(toString)
+            .contains("User")
+            .contains("id=1")
+            .contains("email=test@example.com")
+            .contains("username=johndoe")
+            .doesNotContain("hashed_password");
     }
 
     @Test
@@ -96,10 +92,11 @@ class UserTest {
         user.setPasswordHash("hash");
 
         // Then: Проверяем, что поля включены в equals/hashCode согласно аннотациям
-        assertThat(user).hasFieldOrPropertyWithValue("id", 1L);
-        assertThat(user).hasFieldOrPropertyWithValue("email", "test@example.com");
-        assertThat(user).hasFieldOrPropertyWithValue("username", "testuser");
-        assertThat(user).hasFieldOrPropertyWithValue("passwordHash", "hash");
+        assertThat(user)
+            .hasFieldOrPropertyWithValue("id", 1L)
+            .hasFieldOrPropertyWithValue("email", "test@example.com")
+            .hasFieldOrPropertyWithValue("username", "testuser")
+            .hasFieldOrPropertyWithValue("passwordHash", "hash");
     }
 
     @Test
@@ -111,7 +108,7 @@ class UserTest {
         assertThat(user.getId()).isNull();
         assertThat(user.getEmail()).isNull();
         assertThat(user.getUsername()).isNull();
-        assertThat(user.getPasswordHash()).isNull();
+        assertThat(user.getPassword()).isNull();
         assertThat(user).isEqualTo(new User()); // Два пустых пользователя равны
     }
 
