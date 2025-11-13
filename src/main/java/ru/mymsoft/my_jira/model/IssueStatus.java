@@ -10,18 +10,15 @@ import lombok.*;
     })
 @Getter
 @Setter
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode
+@Builder
 public class IssueStatus {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Include
     private Long id;
 
     @Column(name = "name", nullable = false, length = 50)
-    @EqualsAndHashCode.Include
     private String name;
 }
