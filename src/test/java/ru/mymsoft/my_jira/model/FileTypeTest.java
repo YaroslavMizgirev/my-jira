@@ -17,7 +17,7 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class FileTypeUnitTest {
+class FileTypeTest {
 
     private FileType fileType;
     private Validator validator;
@@ -87,8 +87,8 @@ class FileTypeUnitTest {
           .isEqualTo(fileType2)
           .isNotEqualTo(fileType3)
           .isNotEqualTo(fileType4)
-          .isNotEqualTo(null);
-          .isNotEqualTo("string");
+          .isNotEqualTo(null)
+          .isNotEqualTo("string")
           .hasSameHashCodeAs(fileType2);
         assertThat(fileType1.hashCode()).isNotEqualTo(fileType3.hashCode());
         assertThat(fileType1.hashCode()).isNotEqualTo(fileType4.hashCode());
@@ -98,10 +98,11 @@ class FileTypeUnitTest {
     void testToString() {
         String toString = fileType.toString();
 
-        assertThat(toString).contains("FileType");
-        assertThat(toString).contains("id=1");
-        assertThat(toString).contains("extension=pdf");
-        assertThat(toString).contains("mimeType=application/pdf");
+        assertThat(toString)
+            .contains("FileType")
+            .contains("id=1")
+            .contains("extension=pdf")
+            .contains("mimeType=application/pdf");
     }
 
     @ParameterizedTest
