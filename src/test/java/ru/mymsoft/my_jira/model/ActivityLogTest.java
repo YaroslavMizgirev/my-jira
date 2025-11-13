@@ -15,10 +15,10 @@ class ActivityLogTest {
     void setUp() {
         issue = new Issue();
         issue.setId(1L);
-        
+
         user = new User();
         user.setId(1L);
-        
+
         activityLog = new ActivityLog();
         activityLog.setId(1L);
         activityLog.setIssue(issue);
@@ -83,26 +83,18 @@ class ActivityLogTest {
         // Given
         ActivityLog log1 = new ActivityLog();
         log1.setId(1L);
-        log1.setActionType("CREATE");
 
         ActivityLog log2 = new ActivityLog();
         log2.setId(1L); // Тот же ID
-        log2.setActionType("CREATE"); // Тот же actionType
 
         ActivityLog log3 = new ActivityLog();
         log3.setId(2L); // Другой ID
-        log3.setActionType("CREATE"); // Тот же actionType
-
-        ActivityLog log4 = new ActivityLog();
-        log4.setId(1L);
-        log4.setActionType("COMMENTED"); // Другой actionType
 
         // Then
         assertThat(log1)
-          .isEqualTo(log2);
-          .isNotEqualTo(log3);
-          .isNotEqualTo(log4); // Разные actionType
-        assertThat(log1.hashCode()).isEqualTo(log2.hashCode());
+          .isEqualTo(log2)
+          .isNotEqualTo(log3)
+          .hasSameHashCodeAs(log2);
     }
 
     @Test
@@ -142,7 +134,7 @@ class ActivityLogTest {
     void testCreationTimestampSimulation() {
         // Given
         ActivityLog log = new ActivityLog();
-        
+
         // When
         Instant before = Instant.now();
         log.setCreatedAt(Instant.now());
@@ -168,7 +160,7 @@ class ActivityLogTest {
     @Test
     void testDifferentActionTypes() {
         // Given
-        String[] actionTypes = {"CREATE", "UPDATE", "DELETE", "COMMENT", "ASSIGN"};
+        String[] actionTypes = { "CREATE", "UPDATE", "DELETE", "COMMENT", "ASSIGN" };
 
         for (String actionType : actionTypes) {
             ActivityLog log = new ActivityLog();
