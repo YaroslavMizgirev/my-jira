@@ -3,7 +3,7 @@ package ru.mymsoft.my_jira.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable; // For composite primary key
+import java.io.Serializable;
 
 @Entity
 @Table(name = "project_members")
@@ -11,7 +11,7 @@ import java.io.Serializable; // For composite primary key
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@IdClass(ProjectMember.ProjectMemberId.class) // Define composite primary key class
+@IdClass(ProjectMember.ProjectMemberId.class)
 @Builder
 public class ProjectMember {
     @Id
