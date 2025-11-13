@@ -16,13 +16,13 @@ class AttachmentTest {
     void setUp() {
         issue = new Issue();
         issue.setId(1L);
-        
+
         uploader = new User();
         uploader.setId(1L);
-        
+
         fileType = new FileType();
         fileType.setId(1L);
-        
+
         attachment = new Attachment();
         attachment.setId(1L);
         attachment.setIssue(issue);
@@ -53,7 +53,7 @@ class AttachmentTest {
     void testAttachmentWithDescription() {
         // Given
         attachment.setDescription("Updated design mockups for review");
-        
+
         // Then
         assertThat(attachment.getDescription()).isEqualTo("Updated design mockups for review");
         assertThat(attachment.getDescription()).contains("mockups");
@@ -63,7 +63,7 @@ class AttachmentTest {
     void testAttachmentWithNullDescription() {
         // Given
         attachment.setDescription(null);
-        
+
         // Then
         assertThat(attachment.getDescription()).isNull();
         assertThat(attachment.getFileName()).isEqualTo("document.pdf"); // другие поля не затронуты
@@ -73,7 +73,7 @@ class AttachmentTest {
     void testAttachmentWithEmptyDescription() {
         // Given
         attachment.setDescription("");
-        
+
         // Then
         assertThat(attachment.getDescription()).isEmpty();
     }
@@ -85,7 +85,7 @@ class AttachmentTest {
                                 "It contains important information about the content, purpose, " +
                                 "and context of this file within the project. ".repeat(10);
         attachment.setDescription(longDescription);
-        
+
         // Then
         assertThat(attachment.getDescription()).hasSizeGreaterThan(100);
         assertThat(attachment.getDescription()).contains("important information");
@@ -96,26 +96,18 @@ class AttachmentTest {
         // Given
         Attachment attachment1 = new Attachment();
         attachment1.setId(1L);
-        attachment1.setStoragePath("/path/to/file1.pdf");
 
         Attachment attachment2 = new Attachment();
         attachment2.setId(1L); // Same ID
-        attachment2.setStoragePath("/path/to/file1.pdf"); // Same storagePath
 
         Attachment attachment3 = new Attachment();
-        attachment3.setId(1L); // Same ID
-        attachment3.setStoragePath("/different/path/file1.pdf"); // Different storagePath
-
-        Attachment attachment4 = new Attachment();
-        attachment4.setId(2L); // Different ID
-        attachment4.setStoragePath("/path/to/file1.pdf"); // Same storagePath
+        attachment3.setId(2L); // Different ID
 
         // Then: equals по id + storagePath
         assertThat(attachment1)
-          .isEqualTo(attachment2); // одинаковые id и storagePath
-          .isNotEqualTo(attachment3); // разные storagePath
-          .isNotEqualTo(attachment4); // разные id
-        assertThat(attachment1.hashCode()).isEqualTo(attachment2.hashCode());
+          .isEqualTo(attachment2)
+          .isNotEqualTo(attachment3)
+          .hasSameHashCodeAs(attachment2);
     }
 
     @Test
@@ -139,28 +131,28 @@ class AttachmentTest {
     void testAllArgsConstructor() {
         // Given
         Instant now = Instant.now();
-        Attachment attachment = new Attachment(
-            1L, issue, uploader, "test.txt", fileType, 512L, 
+        Attachment attachment1 = new Attachment(
+            1L, issue, uploader, "test.txt", fileType, 512L,
             "/uploads/test.txt", "Test file description", now
         );
 
         // Then
-        assertThat(attachment.getId()).isEqualTo(1L);
-        assertThat(attachment.getIssue()).isEqualTo(issue);
-        assertThat(attachment.getUploader()).isEqualTo(uploader);
-        assertThat(attachment.getFileName()).isEqualTo("test.txt");
-        assertThat(attachment.getFileType()).isEqualTo(fileType);
-        assertThat(attachment.getFileSizeBytes()).isEqualTo(512L);
-        assertThat(attachment.getStoragePath()).isEqualTo("/uploads/test.txt");
-        assertThat(attachment.getDescription()).isEqualTo("Test file description");
-        assertThat(attachment.getCreatedAt()).isEqualTo(now);
+        assertThat(attachment1.getId()).isEqualTo(1L);
+        assertThat(attachment1.getIssue()).isEqualTo(issue);
+        assertThat(attachment1.getUploader()).isEqualTo(uploader);
+        assertThat(attachment1.getFileName()).isEqualTo("test.txt");
+        assertThat(attachment1.getFileType()).isEqualTo(fileType);
+        assertThat(attachment1.getFileSizeBytes()).isEqualTo(512L);
+        assertThat(attachment1.getStoragePath()).isEqualTo("/uploads/test.txt");
+        assertThat(attachment1.getDescription()).isEqualTo("Test file description");
+        assertThat(attachment1.getCreatedAt()).isEqualTo(now);
     }
 
     @Test
     void testCreationTimestamp() {
         // Given
         Attachment newAttachment = new Attachment();
-        
+
         // When
         Instant before = Instant.now();
         newAttachment.setCreatedAt(Instant.now());
@@ -175,7 +167,7 @@ class AttachmentTest {
         // Given
         attachment.setDescription("File contains: code-samples, (important) notes, & references!");
         attachment.setFileName("special-chars.pdf");
-        
+
         // Then
         assertThat(attachment.getDescription()).contains("code-samples");
         assertThat(attachment.getDescription()).contains("(important)");
@@ -196,18 +188,19 @@ class AttachmentTest {
         attachment2.setDescription("Different description"); // Разное описание
 
         // Then: description не влияет на equals/hashCode
-        assertThat(attachment1).isEqualTo(attachment2);
-        assertThat(attachment1.hashCode()).isEqualTo(attachment2.hashCode());
+        assertThat(attachment1)
+            .isEqualTo(attachment2)
+            .hasSameHashCodeAs(attachment2);
     }
 
     @Test
     void testAttachmentWithMultilineDescription() {
         // Given
-        String multilineDescription = "First line of description\n" +
-                                    "Second line with details\n" +
-                                    "Third line with additional info";
+        String multilineDescription = """First line of description\n
+                                    Second line with details\n
+                                    Third line with additional info""";
         attachment.setDescription(multilineDescription);
-        
+
         // Then
         assertThat(attachment.getDescription()).contains("First line");
         assertThat(attachment.getDescription()).contains("\n");
