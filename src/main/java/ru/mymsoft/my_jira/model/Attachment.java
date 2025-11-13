@@ -2,6 +2,7 @@ package ru.mymsoft.my_jira.model;
 
 import java.time.Instant;
 
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
@@ -13,11 +14,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "attachments")
@@ -25,7 +21,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id", "storagePath"})
+@EqualsAndHashCode(of = {"id"})
+@Builder
 public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
