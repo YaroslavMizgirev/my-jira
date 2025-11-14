@@ -28,8 +28,10 @@ public class FileType {
     private Long id;
 
     @Column(name = "extension", nullable = false, length = 20)
+    @NonNull
     private String extension;
 
     @Column(name = "mime_type", nullable = false, length = 100)
+    @NonNull
     private String mimeType;
 }
