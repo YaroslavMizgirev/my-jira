@@ -15,13 +15,15 @@ import java.io.Serializable;
 @Builder
 public class RolePermission {
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
+    @NonNull
     private Role role;
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "permission_id", nullable = false)
+    @NonNull
     private Permission permission;
 
     @Getter
