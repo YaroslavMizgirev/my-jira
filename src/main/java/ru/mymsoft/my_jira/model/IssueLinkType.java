@@ -4,11 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "issue_link_types",
-    uniqueConstraints = {
-        @UniqueConstraint(name = "uk_issue_link_types_name", columnNames = {"name"}),
-        @UniqueConstraint(name = "uk_issue_link_types_inward_name", columnNames = {"inward_name"})
-    })
+@Table(name = "issue_link_types", uniqueConstraints = {
+        @UniqueConstraint(name = "uk_issue_link_types_name", columnNames = { "name" }),
+        @UniqueConstraint(name = "uk_issue_link_types_inward_name", columnNames = { "inward_name" })
+})
 @Getter
 @Setter
 @NoArgsConstructor
