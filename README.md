@@ -10,8 +10,10 @@
 
 За основную СУБД берем PostgreSQL 18:
 
-1. см. [Схема данных](./data-scheme/postgres-18-debian/myjira.sql)
-2. см. [Базовые настройки](./data-scheme/postgres-18-debian/init.sql)
+1. см. [Базовые настройки в формате SQL](./data-scheme/init.sql)
+2. см. [Схема данных в формате SQL](./data-scheme/myjira.sql)
+3. см. [Схема данных в формате Plantuml](./data-scheme/db-tables-tree.puml)
+4. см. [Схема данных в формате SVG](./data-scheme/out/db-tables-tree/db-tables-tree.svg)
 
 ОС Debian Linux 13:
 
@@ -40,16 +42,50 @@ docker-compose down # Остановить контейнер
 
 Проект будем реализовывать с применением Spring Boot, на платформе Java 17 используя [Zulu JDK FX](https://www.azul.com/core-post-download/?endpoint=zulu&uuid=ba2dc6eb-1dae-44af-a4f5-760bb2c23553).
 
-### Используемые зависимости
+### Используемые зависимости в pom.xml
 
 - Spring Web;
+- Spring Thymeleaf;
 - PostgreSQL Driver;
 - SpringData JPA;
+- H2 Database;
 - Spring Security;
+- OAuth2 Client;
 - Validation;
 - Spring Boot DevTools;
-- Liquibase Migration;
+- Docker Compose Support
+- Flyway Migration;
 - Lombok.
+
+### Java class in src/main/java/ru/mymsoft/my_jira/model
+
+1. [ActivityLog.java](./src/main/java/ru/mymsoft/my_jira/model/ActivityLog.java)
+2. [Attachment.java](./src/main/java/ru/mymsoft/my_jira/model/Attachment.java)
+3. [Comment.java](./src/main/java/ru/mymsoft/my_jira/model/Comment.java)
+4. [FileType.java](./src/main/java/ru/mymsoft/my_jira/model/FileType.java)
+5. [Group.java](./src/main/java/ru/mymsoft/my_jira/model/Group.java)
+6. [Issue.java](./src/main/java/ru/mymsoft/my_jira/model/Issue.java)
+7. [IssueLink.java](./src/main/java/ru/mymsoft/my_jira/model/IssueLink.java)
+8. [IssueLinkType.java](./src/main/java/ru/mymsoft/my_jira/model/IssueLinkType.java)
+9. [IssueStatus.java](./src/main/java/ru/mymsoft/my_jira/model/IssueStatus.java)
+10. [IssueType.java](./src/main/java/ru/mymsoft/my_jira/model/IssueType.java)
+11. [IssueWatcher.java](./src/main/java/ru/mymsoft/my_jira/model/IssueWatcher.java)
+12. [NotificationQueue.java](./src/main/java/ru/mymsoft/my_jira/model/NotificationQueue.java)
+13. [NotificationStatus.java](./src/main/java/ru/mymsoft/my_jira/model/NotificationStatus.java)
+14. [NotificationTemplate.java](./src/main/java/ru/mymsoft/my_jira/model/NotificationTemplate.java)
+15. [Permission.java](./src/main/java/ru/mymsoft/my_jira/model/Permission.java)
+16. [Priority.java](./src/main/java/ru/mymsoft/my_jira/model/Priority.java)
+17. [Project.java](./src/main/java/ru/mymsoft/my_jira/model/Project.java)
+18. [ProjectIssueTypeWorkflowDefault.java](./src/main/java/ru/mymsoft/my_jira/model/ProjectIssueTypeWorkflowDefault.java)
+19. [ProjectMember.java](./src/main/java/ru/mymsoft/my_jira/model/ProjectMember.java)
+20. [Role.java](./src/main/java/ru/mymsoft/my_jira/model/Role.java)
+21. [RolePermission.java](./src/main/java/ru/mymsoft/my_jira/model/RolePermission.java)
+22. [User.java](./src/main/java/ru/mymsoft/my_jira/model/User.java)
+23. [UserGroup.java](./src/main/java/ru/mymsoft/my_jira/model/UserGroup.java)
+24. [UserNotificationSetting.java](./src/main/java/ru/mymsoft/my_jira/model/UserNotificationSetting.java)
+25. [Workflow.java](./src/main/java/ru/mymsoft/my_jira/model/Workflow.java)
+26. [WorkflowStatus.java](./src/main/java/ru/mymsoft/my_jira/model/WorkflowStatus.java)
+27. [WorkflowTransition.java](./src/main/java/ru/mymsoft/my_jira/model/WorkflowTransition.java)
 
 ### Справочная документация
 
