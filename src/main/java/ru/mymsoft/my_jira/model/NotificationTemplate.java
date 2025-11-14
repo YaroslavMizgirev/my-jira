@@ -24,6 +24,7 @@ public class NotificationTemplate {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
+    @NonNull
     private String name;
 
     @Lob
@@ -32,19 +33,24 @@ public class NotificationTemplate {
 
     @Lob
     @Column(name = "body_template", nullable = false)
+    @NonNull
     private String bodyTemplate;
 
     @Column(name = "template_type", nullable = false, length = 50)
+    @NonNull
     private String templateType; // Could be an Enum
 
     @Column(name = "is_active", nullable = false)
+    @NonNull
     private Boolean isActive = true;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
+    @NonNull
     private Instant createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
+    @NonNull
     private Instant updatedAt;
 }
