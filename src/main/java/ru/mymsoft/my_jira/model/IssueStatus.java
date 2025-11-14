@@ -20,5 +20,6 @@ public class IssueStatus {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 50)
+    @NonNull
     private String name;
 }
