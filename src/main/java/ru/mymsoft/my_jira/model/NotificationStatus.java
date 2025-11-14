@@ -17,8 +17,10 @@ public class NotificationStatus {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 20)
+    @NonNull
     private String name;
 
     @Column(name = "is_default", nullable = false)
+    @NonNull
     private Boolean isDefault = false;
 }
