@@ -27,6 +27,7 @@ public class Group {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
+    @NonNull
     private String name;
 
     @Lob
@@ -34,5 +35,6 @@ public class Group {
     private String description;
 
     @Column(name = "is_system_group", nullable = false)
+    @NonNull
     private Boolean isSystemGroup = false;
 }
