@@ -8,6 +8,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.ForeignKey;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,16 +30,31 @@ public class ActivityLog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "issue_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "issue_id", nullable = false, foreignKey = @ForeignKey(
+        name = "fk_activity_log_issue",
+        foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
+        )
+    )
+    @NonNull
     private Issue issue;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id") // user_id can be NULL
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(
+        name = "fk_activity_log_user",
+        foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
+        )
+    )
     private User user;
 
-    @Column(name = "action_type", nullable = false, length = 100)
-    private String actionType;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "action_type_id", nullable = false, foreignKey = @ForeignKey(
+        name = "fk_activity_log_action_type",
+        foreignKeyDefinition = "FOREIGN KEY (action_type_id) REFERENCES public.action_types (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
+        )
+    )
+    @NonNull
+    private ActionType actionType;
 
     @Column(name = "field_name", length = 100)
     private String fieldName;
@@ -53,5 +69,6 @@ public class ActivityLog {
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
+    @NonNull
     private Instant createdAt;
 }
