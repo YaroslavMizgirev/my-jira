@@ -33,7 +33,7 @@ DROP TABLE IF EXISTS public.workflows CASCADE;
 DROP TABLE IF EXISTS public.users CASCADE;
 
 -- ***********************************************************************************
---                              CREATE TABLE
+--                              MAKE TABLE
 -- ***********************************************************************************
 
 CREATE TABLE IF NOT EXISTS public.issue_types(
