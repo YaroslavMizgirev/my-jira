@@ -17,7 +17,6 @@ import java.time.Instant;
 @EqualsAndHashCode(of = {"id"})
 @Builder
 public class NotificationQueue {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -45,17 +44,20 @@ public class NotificationQueue {
     @Column(name = "payload", columnDefinition = "jsonb")
     private String payload;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "status_id", nullable = false)
+    @NonNull
     private NotificationStatus status;
 
     @Column(name = "sent_at")
     private Instant sentAt;
 
     @Column(name = "failed_attempts", nullable = false)
+    @NonNull
     private Integer failedAttempts = 0;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
+    @NonNull
     private Instant createdAt;
 }
