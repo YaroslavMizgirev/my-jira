@@ -19,13 +19,16 @@ public class UserNotificationSetting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false)
+    @NonNull
     private User user;
 
     @Column(name = "notification_type", nullable = false, length = 50)
+    @NonNull
     private String notificationType;
 
     @Column(name = "is_enabled", nullable = false)
-    private Boolean isEnabled = true;
+    @NonNull
+    private Boolean isEnabled;
 }
