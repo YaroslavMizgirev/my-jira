@@ -25,7 +25,7 @@ public class IssueLink {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "source_issue_id", nullable = false, foreignKey = @ForeignKey(
         name = "fk_issue_links_source_issue",
-        foreignKeyDefinition = "FOREIGN KEY (source_issue_id) REFERENCES public.issue (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
+        foreignKeyDefinition = "FOREIGN KEY (source_issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
         )
     )
     @NonNull
