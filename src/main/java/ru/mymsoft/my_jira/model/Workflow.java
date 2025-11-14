@@ -3,9 +3,6 @@ package ru.mymsoft.my_jira.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Table(name = "workflows",
     uniqueConstraints = {
@@ -23,22 +20,10 @@ public class Workflow {
     private Long id;
 
     @Column(name = "is_default", nullable = false)
+    @NonNull
     private Boolean isDefault;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, unique = true)
     @NonNull
     private String name;
-
-    // Связь с WorkflowStatus
-    @ManyToMany
-    @JoinTable(
-            name = "workflow_statuses",
-            joinColumns = @JoinColumn(name = "workflow_id"),
-            inverseJoinColumns = @JoinColumn(name = "status_id")
-    )
-    private Set<IssueStatus> statuses = new HashSet<>();
-
-    // Связь с WorkflowTransition
-    @OneToMany(mappedBy = "workflow", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<WorkflowTransition> transitions = new HashSet<>();
 }
