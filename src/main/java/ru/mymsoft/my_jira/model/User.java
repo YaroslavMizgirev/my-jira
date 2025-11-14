@@ -28,13 +28,16 @@ public class User {
     private Long id;
 
     @Column(name = "email", nullable = false)
+    @NonNull
     private String email;
 
     @Column(name = "username", nullable = false)
+    @NonNull
     private String username;
 
     @Column(name = "password_hash", nullable = false)
     @ToString.Exclude
+    @NonNull
     private String passwordHash;
 
     public void setPassword(String passwordHash) {
