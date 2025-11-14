@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.IdClass;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,12 +25,22 @@ import lombok.Setter;
 @Builder
 public class WorkflowStatus {
   @Id
-  @Column(name = "workflow_id", nullable = false)
-  private Long workflowId;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "workflow_id", nullable = false, foreignKey = @ForeignKey(
+      name = "fk_workflow_statuses_workflow",
+      foreignKeyDefinition = "FOREIGN KEY (workflow_id) REFERENCES public.workflows (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
+      )
+  )
+  private Workflow workflow;
 
   @Id
-  @Column(name = "status_id", nullable = false)
-  private Long statusId;
+  @ManyToOne(fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "status_id", nullable = false, foreignKey = @ForeignKey(
+      name = "fk_workflow_statuses_status",
+      foreignKeyDefinition = "FOREIGN KEY (status_id) REFERENCES public.issue_statuses (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
+      )
+  )
+  private IssueStatus issueStatus;
 
   @Getter
   @Setter
