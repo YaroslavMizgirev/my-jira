@@ -21,9 +21,11 @@ public class Priority {
     private Long id;
 
     @Column(name = "level", nullable = false)
+    @NonNull
     private Integer level;
 
     @Column(name = "name", nullable = false, length = 50)
+    @NonNull
     private String name;
 
     @Column(name = "icon_url")
