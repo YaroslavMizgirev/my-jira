@@ -15,18 +15,21 @@ import java.io.Serializable;
 @Builder
 public class ProjectIssueTypeWorkflowDefault {
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)
+    @NonNull
     private Project project;
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "issue_type_id", nullable = false)
+    @NonNull
     private IssueType issueType;
 
     @Id
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "workflow_id", nullable = false)
+    @NonNull
     private Workflow workflow;
 
     @Getter
