@@ -20,6 +20,7 @@ public class Role {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
+    @NonNull
     private String name;
 
     @Lob
@@ -27,5 +28,6 @@ public class Role {
     private String description;
 
     @Column(name = "is_system_role", nullable = false)
+    @NonNull
     private Boolean isSystemRole = false;
 }
