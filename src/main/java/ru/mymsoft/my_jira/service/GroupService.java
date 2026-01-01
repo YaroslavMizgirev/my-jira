@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.mymsoft.my_jira.dto.CreateGroupDto;
 import ru.mymsoft.my_jira.dto.GroupDto;
 import ru.mymsoft.my_jira.dto.UpdateGroupDto;
-import ru.mymsoft.my_jira.dto.UserDto;
 import ru.mymsoft.my_jira.model.Group;
 import ru.mymsoft.my_jira.repository.GroupRepository;
 
@@ -29,14 +28,12 @@ public class GroupService {
                 .description(request.description())
                 .isSystemGroup(request.isSystemGroup())
                 .build();
-        @SuppressWarnings("null")
         Group savedGroup = groupRepository.save(group);
         return toDto(savedGroup);
     }
 
     @Transactional(readOnly = true)
     public GroupDto getGroupById(Long id) {
-        @SuppressWarnings("null")
         Group group = groupRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Group not found: " + id));
         return toDto(group);
@@ -52,21 +49,18 @@ public class GroupService {
 
     @Transactional
     public GroupDto updateGroup(UpdateGroupDto updatedGroup) {
-        @SuppressWarnings("null")
         Group existingGroup = groupRepository.findById(updatedGroup.id())
                 .orElseThrow(() -> new IllegalArgumentException("Group not found: " + updatedGroup.id()));
         existingGroup.setName(updatedGroup.name());
         existingGroup.setDescription(updatedGroup.description());
         existingGroup.setSystemGroup(updatedGroup.isSystemGroup());
 
-        @SuppressWarnings("null")
         Group savedGroup = groupRepository.save(existingGroup);
         return toDto(savedGroup);
     }
 
     @Transactional
     public void deleteGroup(Long id) {
-        @SuppressWarnings("null")
         if (!groupRepository.existsById(id)) {
             throw new IllegalArgumentException("Group not found: " + id);
         }
