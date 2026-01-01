@@ -37,12 +37,10 @@ public class UserGroupService {
                 .user(user)
                 .group(group)
                 .build();
-        @SuppressWarnings("null")
         UserGroup ugr = userGroupRepository.save(userGroup);
         return toDto(ugr);
     }
 
-    @SuppressWarnings("null")
     @Transactional
     public void removeUserFromGroup(Long userId, Long groupId) {
         UserGroup userGroup = userGroupRepository.findByUserIdAndGroupId(userId, groupId)
