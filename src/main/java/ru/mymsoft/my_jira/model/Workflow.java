@@ -20,8 +20,9 @@ public class Workflow {
     private Long id;
 
     @Column(name = "is_default", nullable = false)
+    @Builder.Default
     @NonNull
-    private Boolean isDefault;
+    private Boolean isDefault = false;
 
     @Column(name = "name", nullable = false, unique = true)
     @NonNull

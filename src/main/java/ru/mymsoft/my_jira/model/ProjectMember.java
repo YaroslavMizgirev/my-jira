@@ -14,6 +14,7 @@ import java.io.Serializable;
 @IdClass(ProjectMember.ProjectMemberId.class)
 @Builder
 public class ProjectMember {
+
     @Id
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "project_id", nullable = false)

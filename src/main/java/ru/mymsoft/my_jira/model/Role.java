@@ -28,6 +28,7 @@ public class Role {
     private String description;
 
     @Column(name = "is_system_role", nullable = false)
+    @Builder.Default
     @NonNull
     private Boolean isSystemRole = false;
 }

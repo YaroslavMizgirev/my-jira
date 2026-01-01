@@ -41,6 +41,7 @@ public class NotificationTemplate {
     private String templateType; // Could be an Enum
 
     @Column(name = "is_active", nullable = false)
+    @Builder.Default
     @NonNull
     private Boolean isActive = true;
 

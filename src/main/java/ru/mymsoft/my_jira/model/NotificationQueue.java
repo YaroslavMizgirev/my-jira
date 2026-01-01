@@ -53,6 +53,7 @@ public class NotificationQueue {
     private Instant sentAt;
 
     @Column(name = "failed_attempts", nullable = false)
+    @Builder.Default
     @NonNull
     private Integer failedAttempts = 0;
 

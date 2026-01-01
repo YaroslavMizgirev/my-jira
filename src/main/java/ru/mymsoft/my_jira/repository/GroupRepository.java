@@ -1,5 +1,10 @@
 package ru.mymsoft.my_jira.repository;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,25 +16,20 @@ import ru.mymsoft.my_jira.model.Group;
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
   Optional<Group> findByName(String name);
-
-  List<Group> findByIsSystemGroup(Boolean isSystemGroup);
-
-  boolean existsByName(String name);
+  boolean existsByNameAndIsSystemGroup(String name, boolean isSystemGroup);
 
   // Поиск по части имени (для автодополнения)
-  List<Group> findByNameContainingIgnoreCase(String namePart);
+  Page<Group> findAllByNameContainsIgnoreCase(String namePart, Pageable pageable);
 
   // Получить все группы с сортировкой
   List<Group> findAllByOrderByNameAsc();
 
-  // Найти системные группы (часто используемый случай)
-  List<Group> findByIsSystemGroupTrueOrderByNameAsc();
-
-  // Найти несистемные (пользовательские) группы
-  List<Group> findByIsSystemGroupFalseOrderByNameAsc();
+  // Найти системные и несистемные (пользовательские) группы
+  List<Group> findAllByIsSystemGroupTrueOrderByNameAsc();
+  List<Group> findAllByIsSystemGroupFalseOrderByNameAsc();
 
   // Поиск групп по описанию
-  List<Group> findByDescriptionContainingIgnoreCase(String descriptionPart);
+  List<Group> findAllByDescriptionContainsIgnoreCase(String descriptionPart);
 
   // Статистика по группам
   @Query("SELECT COUNT(g) FROM Group g WHERE g.isSystemGroup = :isSystem")

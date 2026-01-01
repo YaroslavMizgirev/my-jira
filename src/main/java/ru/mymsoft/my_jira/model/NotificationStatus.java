@@ -21,6 +21,7 @@ public class NotificationStatus {
     private String name;
 
     @Column(name = "is_default", nullable = false)
+    @Builder.Default
     @NonNull
     private Boolean isDefault = false;
 }

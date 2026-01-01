@@ -29,6 +29,7 @@ public class UserNotificationSetting {
     private String notificationType;
 
     @Column(name = "is_enabled", nullable = false)
+    @Builder.Default
     @NonNull
-    private Boolean isEnabled;
+    private Boolean isEnabled = false;
 }
