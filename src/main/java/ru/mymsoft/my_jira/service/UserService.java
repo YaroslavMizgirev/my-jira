@@ -35,14 +35,12 @@ public class UserService {
                 .passwordHash(passwordEncoder.encode(usr.password()))
                 .build();
 
-        @SuppressWarnings("null")
         User savedUser = userRepository.save(user);
         return toDto(savedUser);
     }
 
     @Transactional(readOnly = true)
     public UserDto getUserById(Long id) {
-        @SuppressWarnings("null")
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
         return toDto(user);
@@ -58,21 +56,18 @@ public class UserService {
 
     @Transactional
     public UserDto updateUser(UpdateUserDto updatedUser) {
-        @SuppressWarnings("null")
         User existingUser = userRepository.findById(updatedUser.id())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + updatedUser.id()));
         existingUser.setEmail(updatedUser.email());
         existingUser.setUsername(updatedUser.username());
         existingUser.setPassword(passwordEncoder.encode(updatedUser.newPassword()));
 
-        @SuppressWarnings("null")
         User savedUser = userRepository.save(existingUser);
         return toDto(savedUser);
     }
 
     @Transactional
     public void deleteUser(Long userId) {
-        @SuppressWarnings("null")
         if (!userRepository.existsById(userId)) {
             throw new IllegalArgumentException("User not found: " + userId);
         }
