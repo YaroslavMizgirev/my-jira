@@ -507,7 +507,7 @@ name character varying(100) COLLATE pg_catalog."default" NOT NULL,
 description text COLLATE pg_catalog."default",
 is_system_group boolean NOT NULL DEFAULT FALSE,
 CONSTRAINT groups_pkey PRIMARY KEY (id),
-CONSTRAINT uk_groups_name UNIQUE (name));
+CONSTRAINT uk_groups_name_is_system_group UNIQUE (name, is_system_group));
 
 COMMENT ON TABLE public.groups IS 'Позволяет объединять пользователей в логические группы (например, "Команда разработки", "Команда QA", "Руководители"). Упрощает управление доступом к проектам и массовое назначение прав.';
 
@@ -516,7 +516,7 @@ COMMENT ON COLUMN public.groups.name IS 'Название группы (напр
 COMMENT ON COLUMN public.groups.description IS 'Описание группы.';
 COMMENT ON COLUMN public.groups.is_system_group IS 'Флаг для системных/встроенных групп.';
 
-COMMENT ON CONSTRAINT uk_groups_name ON public.groups IS 'Значение поля `public.groups.name` должно быть уникальным.';
+COMMENT ON CONSTRAINT uk_groups_name_is_system_group ON public.groups IS 'Сочетание значений поля `public.groups.name` и `public.groups.is_system_group` должно быть уникальным.';
 
 CREATE TABLE IF NOT EXISTS public.user_groups(
 user_id bigint NOT NULL,
