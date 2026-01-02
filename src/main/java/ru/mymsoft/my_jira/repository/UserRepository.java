@@ -23,6 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     // Получить всех пользователей с сортировкой по имени
     List<User> findAllByOrderByUsernameAsc();
+    List<User> findAllByOrderByUsernameDesc();
 
     // Проверка существования другого пользователя с тем же email/username
     boolean existsByEmailAndIdNot(String email, Long id);
