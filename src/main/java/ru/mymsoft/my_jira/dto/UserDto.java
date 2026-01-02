@@ -5,6 +5,7 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Schema(description = "Data Transfer Object for user information")
 public record UserDto (
     @NotNull(message = "Id cannot be blank")
     @Schema(description = "Уникальный идентификатор пользователя", example = "1")
