@@ -1,5 +1,6 @@
 package ru.mymsoft.my_jira.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -11,12 +12,19 @@ import ru.mymsoft.my_jira.model.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findByName(String name);
+    Optional<User> findByUsername(String username);
     Optional<User> findByEmail(String email);
-    boolean existsByEmail(String email);
     boolean existsByUsername(String username);
+    boolean existsByEmail(String email);
     
     // Поиск по части имени пользователя или email с пагинацией (для автодополнения)
     Page<User> findAllByUsernameContainsIgnoreCase(String username, Pageable pageable);
     Page<User> findAllByEmailContainsIgnoreCase(String email, Pageable pageable);
+
+    // Получить всех пользователей с сортировкой по имени
+    List<User> findAllByOrderByUsernameAsc();
+
+    // Проверка существования другого пользователя с тем же email/username
+    boolean existsByEmailAndIdNot(String email, Long id);
+    boolean existsByUsernameAndIdNot(String username, Long id);
 }
