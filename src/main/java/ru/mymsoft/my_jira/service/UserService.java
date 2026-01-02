@@ -1,8 +1,10 @@
 package ru.mymsoft.my_jira.service;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +29,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public UserDto createUser(CreateUserDto usr) {
+    public UserDto createUser(@NonNull CreateUserDto usr) {
         if (userRepository.existsByEmail(usr.email())) {
             throw new IllegalArgumentException("User with this email already exists");
         }
@@ -35,32 +37,31 @@ public class UserService {
             throw new IllegalArgumentException("User with this username already exists");
         }
 
-        User user = User.builder()
+        User user = Objects.requireNonNull(User.builder()
                 .email(usr.email())
                 .username(usr.username())
                 .passwordHash(passwordEncoder.encode(usr.password()))
-                .build();
-
+                .build(), "User cannot be null");
         User savedUser = userRepository.save(user);
         return toDto(savedUser);
     }
 
     @Transactional(readOnly = true)
-    public UserDto getUserById(Long id) {
+    public UserDto getUserById(@NonNull Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
         return toDto(user);
     }
 
     @Transactional(readOnly = true)
-    public UserDto getUserByUsername(String username) {
+    public UserDto getUserByUsername(@NonNull String username) {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));
         return toDto(user);
     }
 
     @Transactional(readOnly = true)
-    public UserDto getUserByEmail(String email) {
+    public UserDto getUserByEmail(@NonNull String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
         return toDto(user);
@@ -85,7 +86,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto updateUser(Long userId, UpdateUserDto updatedUser) {
+    public UserDto updateUser(@NonNull Long userId, @NonNull UpdateUserDto updatedUser) {
         // Проверяем соответствие ID
         if (!userId.equals(updatedUser.id())) {
             throw new IllegalArgumentException("ID in path and body must match");
@@ -96,8 +97,8 @@ public class UserService {
         String currentUsername = authentication.getName();
 
         // Находим обновляемого пользователя
-        User existingUser = userRepository.findById(updatedUser.id())
-                .orElseThrow(() -> new IllegalArgumentException("User not found: " + updatedUser.id()));
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId));
 
         // Проверяем права доступа: только сам пользователь может обновлять свои данные
         if (!existingUser.getUsername().equals(currentUsername)) {
@@ -138,7 +139,7 @@ public class UserService {
     }
     
     @Transactional
-    public void deleteUser(Long id) {
+    public void deleteUser(@NonNull Long id) {
         // Получаем текущего аутентифицированного пользователя
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
