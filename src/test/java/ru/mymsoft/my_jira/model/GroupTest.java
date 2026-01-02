@@ -27,7 +27,7 @@ class GroupTest {
         group.setId(1L);
         group.setName("Developers");
         group.setDescription("Software development team");
-        group.setIsSystemGroup(false);
+        group.setSystemGroup(false);
 
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -39,7 +39,7 @@ class GroupTest {
         assertThat(group.getId()).isEqualTo(1L);
         assertThat(group.getName()).isEqualTo("Developers");
         assertThat(group.getDescription()).isEqualTo("Software development team");
-        assertThat(group.getIsSystemGroup()).isFalse();
+        assertThat(group.isSystemGroup()).isFalse();
     }
 
     @Test
@@ -51,13 +51,13 @@ class GroupTest {
         newGroup.setId(2L);
         newGroup.setName("Administrators");
         newGroup.setDescription("System administrators");
-        newGroup.setIsSystemGroup(true);
+        newGroup.setSystemGroup(true);
 
         // Then
         assertThat(newGroup.getId()).isEqualTo(2L);
         assertThat(newGroup.getName()).isEqualTo("Administrators");
         assertThat(newGroup.getDescription()).isEqualTo("System administrators");
-        assertThat(newGroup.getIsSystemGroup()).isTrue();
+        assertThat(newGroup.isSystemGroup()).isTrue();
     }
 
     @Test
@@ -68,7 +68,7 @@ class GroupTest {
         assertNull(emptyGroup.getId());
         assertNull(emptyGroup.getName());
         assertNull(emptyGroup.getDescription());
-        assertThat(emptyGroup.getIsSystemGroup()).isFalse(); // default value
+        assertThat(emptyGroup.isSystemGroup()).isFalse(); // default value
     }
 
     @Test
@@ -78,18 +78,18 @@ class GroupTest {
         assertThat(fullGroup.getId()).isEqualTo(1L);
         assertThat(fullGroup.getName()).isEqualTo("Testers");
         assertThat(fullGroup.getDescription()).isEqualTo("QA team");
-        assertThat(fullGroup.getIsSystemGroup()).isTrue();
+        assertThat(fullGroup.isSystemGroup()).isTrue();
     }
 
     @Test
     void testDefaultIsSystemGroupValue() {
         Group groupWithDefaults = new Group();
 
-        assertThat(groupWithDefaults.getIsSystemGroup()).isFalse();
+        assertThat(groupWithDefaults.isSystemGroup()).isFalse();
 
         // Explicitly set to null should still return default
-        groupWithDefaults.setIsSystemGroup(null);
-        assertThat(groupWithDefaults.getIsSystemGroup()).isNull();
+        groupWithDefaults.setSystemGroup(null);
+        assertThat(groupWithDefaults.isSystemGroup()).isNull();
     }
 
     @Test
@@ -175,7 +175,7 @@ class GroupTest {
     void testNullIsSystemGroup() {
         Group groupWithNullSystemFlag = new Group();
         groupWithNullSystemFlag.setName("Test Group");
-        groupWithNullSystemFlag.setIsSystemGroup(null);
+        groupWithNullSystemFlag.setSystemGroup(null);
 
         Set<ConstraintViolation<Group>> violations = validator.validate(groupWithNullSystemFlag);
 
