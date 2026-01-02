@@ -90,7 +90,6 @@ class ActionTypeTest {
         NullPointerException exception = assertThrows(NullPointerException.class, () -> {
             actionType1.setName(null);
         });
-
         assertTrue(exception.getMessage().contains("name"));
     }
 
@@ -101,7 +100,6 @@ class ActionTypeTest {
         NullPointerException exception = assertThrows(NullPointerException.class, () -> {
             new ActionType(1L, null);
         });
-
         assertTrue(exception.getMessage().contains("name"));
     }
 
@@ -115,7 +113,6 @@ class ActionTypeTest {
                 .name(null)
                 .build();
         });
-
         assertTrue(exception.getMessage().contains("name"));
     }
 
@@ -151,7 +148,8 @@ class ActionTypeTest {
         ActionType differentActionType = new ActionType(2L, "DIFFERENT_NAME");
 
         // Then
-        assertEquals(actionType).hasSameHashCodeAs(sameActionType);
+        assertEquals(actionType.hashCode(), sameActionType.hashCode(),
+                "Objects with same values should have same hashCode");
         assertNotEquals(actionType.hashCode(), differentActionType.hashCode(),
                 "Different objects should have different hashCode");
 
