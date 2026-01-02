@@ -69,7 +69,7 @@ public class Group {
         return Boolean.TRUE.equals(isSystemGroup);
     }
 
-    public void setSystemGroup(boolean isSystemGroup) {
+    public void setSystemGroup(Boolean isSystemGroup) {
         this.isSystemGroup = isSystemGroup;
     }
 }
