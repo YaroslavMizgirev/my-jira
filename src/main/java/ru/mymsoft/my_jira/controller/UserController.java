@@ -1,5 +1,7 @@
 package ru.mymsoft.my_jira.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -59,6 +61,18 @@ public class UserController {
             Pageable pageable
     ) {
         return userService.listUsers(username, pageable);
+    }
+
+    @GetMapping("/all-sorted")
+    @Operation(summary = "Получение списка всех пользователей, отсортированных по имени")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Список пользователей получен успешно")
+    })
+    public List<UserDto> listAllUsersSorted(
+            @Parameter(description = "Сортировка по имени: true - по возрастанию, false - по убыванию", example = "true")
+            @RequestParam Boolean ascending) {
+        boolean asc = ascending == null ? true : ascending;
+        return userService.listAllUsersSorted(asc);
     }
 
     @GetMapping("/{id}")
