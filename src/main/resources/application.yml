@@ -14,10 +14,10 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
+        "[format_sql]": true
         jdbc:
           lob:
-            non_contextual_creation: true
+            "[non_contextual_creation]": true
     show-sql: false
 
   flyway:
@@ -117,19 +117,19 @@ spring:
       # Пока оставляем исключения, можно будет настроить позже
       exclude: static/**,public/**,templates/**
 
-  datasource:
-    url: jdbc:h2:mem:testdb
-    driver-class-name: org.h2.Driver
-    username: sa
-    password: 
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create-drop
-    show-sql: true
-  h2:
-    console:
-      enabled: true
+  # datasource:
+  #   url: jdbc:h2:mem:testdb
+  #   driver-class-name: org.h2.Driver
+  #   username: sa
+  #   password: 
+  # jpa:
+  #   database-platform: org.hibernate.dialect.H2Dialect
+  #   hibernate:
+  #     ddl-auto: create-drop
+  #   show-sql: true
+  # h2:
+  #   console:
+  #     enabled: true
 
 server:
   port: 22080
@@ -138,12 +138,12 @@ server:
 
 logging:
   level:
-    ru.mymsoft.myjira: DEBUG
-    org.springframework.security: INFO
-    org.hibernate.SQL: DEBUG
-    org.flywaydb: INFO
+    '[ru.mymsoft.my_jira]': DEBUG
+    '[org.springframework.security]': INFO
+    '[org.hibernate]': DEBUG
+    '[org.flywaydb]': INFO
     # Добавляем логирование для OAuth2
-    org.springframework.security.oauth2: INFO
+    '[org.springframework.security.oauth2]': INFO
 
 app:
   jwt:
