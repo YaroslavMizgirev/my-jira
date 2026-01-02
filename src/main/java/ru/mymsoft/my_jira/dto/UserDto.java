@@ -7,15 +7,17 @@ import jakarta.validation.constraints.Size;
 
 @Schema(description = "Data Transfer Object for user information")
 public record UserDto (
-    @NotNull(message = "Id cannot be blank")
-    @Schema(description = "Уникальный идентификатор пользователя", example = "1")
+    @NotNull(message = "Id is required")
+    @Schema(description = "Уникальный идентификатор пользователя", example = "1", nullable = false)
     Long id,
     
+    @NotNull(message = "Email is required")
     @Email(message = "Email must be a valid email address")
-    @Size(min = 3, max = 255, message = "Email must be between 3 and 255 characters")
-    @Schema(description = "Электронная почта пользователя", example = "user@example.com")
+    @Size(min = 6, max = 255, message = "Email must be between 6 and 255 characters")
+    @Schema(description = "Электронная почта пользователя", example = "user@example.com", nullable = false)
     String email,
 
+    @NotNull(message = "Username is required")
     @Size(min = 3, max = 255, message = "Username must be between 3 and 255 characters")
-    @Schema(description = "Уникальное имя пользователя", example = "john_doe")
+    @Schema(description = "Уникальное имя пользователя", example = "john_doe", nullable = false)
     String username) {}
