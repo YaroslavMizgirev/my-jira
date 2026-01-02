@@ -60,16 +60,10 @@ public class GroupService {
     }
 
     @Transactional
-    public void deleteGroup(Long id) {
-        if (!groupRepository.existsById(id)) {
-            throw new IllegalArgumentException("Group not found: " + id);
-        }
-        groupRepository.deleteById(id);
-    }
-
-    @Transactional
     public void deleteGroup(GroupDto groupDto) {
-        deleteGroup(groupDto.id());
+        Group existingGroup = groupRepository.findById(groupDto.id())
+                .orElseThrow(() -> new IllegalArgumentException("Group not found: " + groupDto.id()));
+        groupRepository.delete(existingGroup);
     }
 
     private GroupDto toDto(Group group) {
