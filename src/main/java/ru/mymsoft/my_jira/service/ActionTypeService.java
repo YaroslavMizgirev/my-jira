@@ -3,11 +3,13 @@ package ru.mymsoft.my_jira.service;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import ru.mymsoft.my_jira.dto.ActionTypeDto;
 import ru.mymsoft.my_jira.dto.CreateActionTypeDto;
@@ -25,22 +27,22 @@ public class ActionTypeService {
         if (actionTypeRepository.existsByName(createActionTypeDto.name())) {
             throw new IllegalArgumentException("ActionType with this name already exists");
         }
-        ActionType actionType = ActionType.builder()
+        ActionType actionType = Objects.requireNonNull(ActionType.builder()
             .name(createActionTypeDto.name())
-            .build();
+            .build(), "ActionType cannot be null");
         ActionType savedActionType = actionTypeRepository.save(actionType);
         return toDto(savedActionType);
     }
 
     @Transactional(readOnly = true)
-    public ActionTypeDto getActionTypeById(Long id) {
+    public ActionTypeDto getActionTypeById(@NonNull Long id) {
         ActionType actionType = actionTypeRepository.findById(id)
             .orElseThrow(() -> new IllegalArgumentException("ActionType not found: " + id));
         return toDto(actionType);
     }
 
     @Transactional(readOnly = true)
-    public ActionTypeDto getActionTypeByName(String name) {
+    public ActionTypeDto getActionTypeByName(@NonNull String name) {
         ActionType actionType = actionTypeRepository.findByName(name)
             .orElseThrow(() -> new IllegalArgumentException("ActionType not found with name: " + name));
         return toDto(actionType);
@@ -71,8 +73,9 @@ public class ActionTypeService {
             throw new IllegalArgumentException("ID in path and body must match");
         }
 
-        ActionType existingActionType = actionTypeRepository.findById(actionTypeId)
-            .orElseThrow(() -> new IllegalArgumentException("ActionType not found: " + actionTypeId));
+        ActionType existingActionType = Objects.requireNonNull(actionTypeRepository.findById(actionTypeId)
+            .orElseThrow(() -> new IllegalArgumentException("ActionType not found: " + actionTypeId)),
+            "Existing ActionType cannot be null");
 
         if (updateActionTypeDto.name() != null && !updateActionTypeDto.name().trim().isEmpty()) {
             // Проверяем уникальность имени
@@ -88,7 +91,7 @@ public class ActionTypeService {
     }
 
     @Transactional
-    public void deleteActionType(Long id) {
+    public void deleteActionType(@NonNull Long id) {
         if (!actionTypeRepository.existsById(id)) {
             throw new IllegalArgumentException("ActionType not found: " + id);
         }
