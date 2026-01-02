@@ -1,9 +1,12 @@
 package ru.mymsoft.my_jira.service;
 
+import java.util.Objects;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.NonNull;
 import ru.mymsoft.my_jira.dto.CreateGroupDto;
 import ru.mymsoft.my_jira.dto.GroupDto;
 import ru.mymsoft.my_jira.dto.UpdateGroupDto;
@@ -23,17 +26,17 @@ public class GroupService {
             throw new IllegalArgumentException("Group with this name already exists");
         }
 
-        Group group = Group.builder()
+        Group group = Objects.requireNonNull(Group.builder()
                 .name(request.name())
                 .description(request.description())
                 .isSystemGroup(request.isSystemGroup())
-                .build();
+                .build(), "Group cannot be null");
         Group savedGroup = groupRepository.save(group);
         return toDto(savedGroup);
     }
 
     @Transactional(readOnly = true)
-    public GroupDto getGroupById(Long id) {
+    public GroupDto getGroupById(@NonNull Long id) {
         Group group = groupRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Group not found: " + id));
         return toDto(group);
@@ -48,9 +51,11 @@ public class GroupService {
     }
 
     @Transactional
-    public GroupDto updateGroup(UpdateGroupDto updatedGroup) {
-        Group existingGroup = groupRepository.findById(updatedGroup.id())
-                .orElseThrow(() -> new IllegalArgumentException("Group not found: " + updatedGroup.id()));
+    public GroupDto updateGroup(@NonNull UpdateGroupDto updatedGroup) {
+        Long groupId = Objects.requireNonNull(updatedGroup.id(), "Group ID cannot be null");
+        Group existingGroup = Objects.requireNonNull(groupRepository.findById(groupId)
+                .orElseThrow(() -> new IllegalArgumentException("Group not found: " + updatedGroup.id())),
+                "Existing Group cannot be null");
         existingGroup.setName(updatedGroup.name());
         existingGroup.setDescription(updatedGroup.description());
         existingGroup.setSystemGroup(updatedGroup.isSystemGroup());
@@ -60,9 +65,11 @@ public class GroupService {
     }
 
     @Transactional
-    public void deleteGroup(GroupDto groupDto) {
-        Group existingGroup = groupRepository.findById(groupDto.id())
-                .orElseThrow(() -> new IllegalArgumentException("Group not found: " + groupDto.id()));
+    public void deleteGroup(@NonNull GroupDto groupDto) {
+        Long groupId = Objects.requireNonNull(groupDto.id(), "Group ID cannot be null");
+        Group existingGroup = Objects.requireNonNull(groupRepository.findById(groupId)
+                .orElseThrow(() -> new IllegalArgumentException("Group not found: " + groupDto.id())),
+                "Existing Group cannot be null");
         groupRepository.delete(existingGroup);
     }
 
