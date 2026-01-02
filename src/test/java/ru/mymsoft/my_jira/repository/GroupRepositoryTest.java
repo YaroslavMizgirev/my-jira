@@ -9,6 +9,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import ru.mymsoft.my_jira.model.Group;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,17 +29,17 @@ class GroupRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        developersGroup = Group.builder()
+        developersGroup = Objects.requireNonNull(Group.builder()
                 .name("Developers")
                 .description("Software development team")
                 .isSystemGroup(false)
-                .build();
+                .build(), "Failed to create developersGroup");
 
-        adminsGroup = Group.builder()
+        adminsGroup = Objects.requireNonNull(Group.builder()
                 .name("Administrators")
                 .description("System administrators")
                 .isSystemGroup(true)
-                .build();
+                .build(), "Failed to create adminsGroup");
     }
 
     @Test
