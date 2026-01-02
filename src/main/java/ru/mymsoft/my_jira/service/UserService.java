@@ -1,6 +1,9 @@
 package ru.mymsoft.my_jira.service;
 
 import lombok.RequiredArgsConstructor;
+
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.AccessDeniedException;
@@ -69,6 +72,16 @@ public class UserService {
         return userRepository
                 .findAllByUsernameContainsIgnoreCase(filter, pageable)
                 .map(this::toDto);
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserDto> listAllUsersSorted(boolean ascending) {
+        List<User> users = ascending
+            ? userRepository.findAllByOrderByUsernameAsc()
+            : userRepository.findAllByOrderByUsernameDesc();
+        return users.stream()
+            .map(this::toDto)
+            .toList();
     }
 
     @Transactional
