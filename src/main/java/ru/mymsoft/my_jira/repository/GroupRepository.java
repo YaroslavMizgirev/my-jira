@@ -14,15 +14,15 @@ import ru.mymsoft.my_jira.model.Group;
 
 @Repository
 public interface GroupRepository extends JpaRepository<Group, Long> {
-
   Optional<Group> findByName(String name);
-  boolean existsByNameAndIsSystemGroup(String name, boolean isSystemGroup);
+  boolean existsByNameAndIsSystemGroup(String name, Boolean isSystemGroup);
 
   // Поиск по части имени (для автодополнения)
   Page<Group> findAllByNameContainsIgnoreCase(String namePart, Pageable pageable);
 
-  // Получить все группы с сортировкой
+  // Получить все группы с сортировкой по имени
   List<Group> findAllByOrderByNameAsc();
+  List<Group> findAllByOrderByNameDesc();
 
   // Найти системные и несистемные (пользовательские) группы
   List<Group> findAllByIsSystemGroupTrueOrderByNameAsc();
@@ -38,9 +38,4 @@ public interface GroupRepository extends JpaRepository<Group, Long> {
   // Проверить, используется ли группа в project members
   @Query("SELECT COUNT(pm) > 0 FROM ProjectMember pm WHERE pm.group.id = :groupId")
   boolean isGroupUsedInProjects(@Param("groupId") Long groupId);
-
-  // Найти группы по количеству пользователей (если добавишь связь)
-  // @Query("SELECT g FROM Group g LEFT JOIN g.users u GROUP BY g HAVING COUNT(u)
-  // > :minUsers")
-  // List<Group> findGroupsWithMinimumUsers(@Param("minUsers") long minUsers);
 }
