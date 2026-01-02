@@ -7,15 +7,15 @@ class UserTest {
     @Test
     void testUserCreationWithSetters() {
         // Given
-        User user = new User();
+        User user = User.builder().build();
         user.setId(1L);
-        user.setEmail("test@example.com");
+        user.setEmail("johndoe@example.com");
         user.setUsername("johndoe");
-        user.setPasswordHash("hashed_password_123");
+        user.setPassword("hashed_password_123");
 
         // Then
         assertThat(user.getId()).isEqualTo(1L);
-        assertThat(user.getEmail()).isEqualTo("test@example.com");
+        assertThat(user.getEmail()).isEqualTo("johndoe@example.com");
         assertThat(user.getUsername()).isEqualTo("johndoe");
         assertThat(user.getPassword()).isEqualTo("hashed_password_123");
     }
@@ -23,11 +23,11 @@ class UserTest {
     @Test
     void testUserCreationWithAllArgsConstructor() {
         // Given
-        User user = new User(1L, "test@example.com", "johndoe", "hashed_password_123");
+        User user = new User(1L, "johndoe@example.com", "johndoe", "hashed_password_123");
 
         // Then
         assertThat(user.getId()).isEqualTo(1L);
-        assertThat(user.getEmail()).isEqualTo("test@example.com");
+        assertThat(user.getEmail()).isEqualTo("johndoe@example.com");
         assertThat(user.getUsername()).isEqualTo("johndoe");
         assertThat(user.getPassword()).isEqualTo("hashed_password_123");
     }
@@ -68,7 +68,7 @@ class UserTest {
     @Test
     void testToString() {
         // Given
-        User user = new User(1L, "test@example.com", "johndoe", "hashed_password");
+        User user = new User(1L, "johndoe@example.com", "johndoe", "hashed_password");
 
         // When
         String toString = user.toString();
@@ -77,7 +77,7 @@ class UserTest {
         assertThat(toString)
             .contains("User")
             .contains("id=1")
-            .contains("email=test@example.com")
+            .contains("email=johndoe@example.com")
             .contains("username=johndoe")
             .doesNotContain("hashed_password");
     }
@@ -87,14 +87,14 @@ class UserTest {
         // Given
         User user = new User();
         user.setId(1L);
-        user.setEmail("test@example.com");
+        user.setEmail("testuser@example.com");
         user.setUsername("testuser");
-        user.setPasswordHash("hash");
+        user.setPassword("hash");
 
         // Then: Проверяем, что поля включены в equals/hashCode согласно аннотациям
         assertThat(user)
             .hasFieldOrPropertyWithValue("id", 1L)
-            .hasFieldOrPropertyWithValue("email", "test@example.com")
+            .hasFieldOrPropertyWithValue("email", "testuser@example.com")
             .hasFieldOrPropertyWithValue("username", "testuser")
             .hasFieldOrPropertyWithValue("passwordHash", "hash");
     }
