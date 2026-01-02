@@ -1,9 +1,11 @@
 package ru.mymsoft.my_jira.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+@Schema(description = "Data Transfer Object for creating a new user")
 public record CreateUserDto (
     @NotBlank(message = "Email cannot be blank")
     @Email(message = "Email must be a valid email address")
@@ -14,5 +16,4 @@ public record CreateUserDto (
     String username,
 
    @NotBlank(message = "Password cannot be blank")
-//    @Size(min = 8, message = "Password must be at least 8 characters long")
     String password) {}
