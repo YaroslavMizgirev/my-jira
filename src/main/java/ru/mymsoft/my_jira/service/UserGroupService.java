@@ -1,7 +1,11 @@
 package ru.mymsoft.my_jira.service;
 
+import java.util.Objects;
+
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.NonNull;
+import ru.mymsoft.my_jira.dto.AddUserToGroupDto;
 import ru.mymsoft.my_jira.dto.UserGroupDto;
 import ru.mymsoft.my_jira.model.Group;
 import ru.mymsoft.my_jira.model.User;
@@ -24,7 +28,9 @@ public class UserGroupService {
     }
 
     @Transactional
-    public UserGroupDto addUserToGroup(Long userId, Long groupId) {
+    public UserGroupDto addUserToGroup(@NonNull AddUserToGroupDto request) {
+        Long userId = request.userId();
+        Long groupId = request.groupId();
         if (userId == null || groupId == null) {
             throw new IllegalArgumentException("User ID and Group ID must be provided");
         }
@@ -33,18 +39,19 @@ public class UserGroupService {
         Group group = groupRepository.findById(groupId)
                 .orElseThrow(() -> new IllegalArgumentException("Group not found: " + groupId));
 
-        UserGroup userGroup = UserGroup.builder()
+        UserGroup userGroup = Objects.requireNonNull(UserGroup.builder()
                 .user(user)
                 .group(group)
-                .build();
+                .build(), "UserGroup cannot be null");
         UserGroup ugr = userGroupRepository.save(userGroup);
         return toDto(ugr);
     }
 
     @Transactional
     public void removeUserFromGroup(Long userId, Long groupId) {
-        UserGroup userGroup = userGroupRepository.findByUserIdAndGroupId(userId, groupId)
-                .orElseThrow(() -> new IllegalArgumentException("User is not in the specified group"));
+        UserGroup userGroup = Objects.requireNonNull(userGroupRepository.findByUserIdAndGroupId(userId, groupId)
+                .orElseThrow(() -> new IllegalArgumentException("User is not in the specified group")),
+                "UserGroup cannot be null");
         userGroupRepository.delete(userGroup);
     }
 
