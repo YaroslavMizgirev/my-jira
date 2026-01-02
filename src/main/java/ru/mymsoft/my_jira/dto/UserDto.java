@@ -1,16 +1,20 @@
 package ru.mymsoft.my_jira.dto;
 
-import jakarta.validation.constraints.NotBlank;
+import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record UserDto (
-    @NotBlank(message = "Id cannot be blank")
+    @NotNull(message = "Id cannot be blank")
+    @Schema(description = "Уникальный идентификатор пользователя", example = "1")
     Long id,
     
-    @NotBlank(message = "Email cannot be blank")
+    @Email(message = "Email must be a valid email address")
     @Size(min = 3, max = 255, message = "Email must be between 3 and 255 characters")
+    @Schema(description = "Электронная почта пользователя", example = "user@example.com")
     String email,
 
-    @NotBlank(message = "Username cannot be blank")
     @Size(min = 3, max = 255, message = "Username must be between 3 and 255 characters")
+    @Schema(description = "Уникальное имя пользователя", example = "john_doe")
     String username) {}
