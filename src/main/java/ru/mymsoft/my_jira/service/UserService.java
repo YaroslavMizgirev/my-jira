@@ -3,6 +3,9 @@ package ru.mymsoft.my_jira.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,6 +50,20 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public UserDto getUserByUsername(String username) {
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with username: " + username));
+        return toDto(user);
+    }
+
+    @Transactional(readOnly = true)
+    public UserDto getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new IllegalArgumentException("User not found with email: " + email));
+        return toDto(user);
+    }
+
+    @Transactional(readOnly = true)
     public Page<UserDto> listUsers(String usernameFilter, Pageable pageable) {
         String filter = usernameFilter == null ? "" : usernameFilter;
         return userRepository
@@ -55,28 +72,75 @@ public class UserService {
     }
 
     @Transactional
-    public UserDto updateUser(UpdateUserDto updatedUser) {
+    public UserDto updateUser(Long userId, UpdateUserDto updatedUser) {
+        // Проверяем соответствие ID
+        if (!userId.equals(updatedUser.id())) {
+            throw new IllegalArgumentException("ID in path and body must match");
+        }
+
+        // Получаем текущего аутентифицированного пользователя
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        // Находим обновляемого пользователя
         User existingUser = userRepository.findById(updatedUser.id())
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + updatedUser.id()));
-        existingUser.setEmail(updatedUser.email());
-        existingUser.setUsername(updatedUser.username());
-        existingUser.setPassword(passwordEncoder.encode(updatedUser.newPassword()));
+
+        // Проверяем права доступа: только сам пользователь может обновлять свои данные
+        if (!existingUser.getUsername().equals(currentUsername)) {
+            throw new AccessDeniedException("You can only update your own profile");
+        }
+
+        // Проверяем текущий пароль
+        if (!passwordEncoder.matches(updatedUser.currentPassword(), existingUser.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
+
+        // Обновляем email, если предоставлен
+        if (updatedUser.email() != null && !updatedUser.email().trim().isEmpty()) {
+            // Проверяем уникальность
+            if (!updatedUser.email().equals(existingUser.getEmail()) && 
+                userRepository.existsByEmailAndIdNot(updatedUser.email(), updatedUser.id())) {
+                    throw new IllegalArgumentException("User with this email already exists");
+            }
+            existingUser.setEmail(updatedUser.email());
+        }
+        
+        // Обновляем username, если предоставлен
+        if (updatedUser.username() != null && !updatedUser.username().trim().isEmpty()) {
+            if (!updatedUser.username().equals(existingUser.getUsername()) && 
+                userRepository.existsByUsernameAndIdNot(updatedUser.username(), updatedUser.id())) {
+                    throw new IllegalArgumentException("User with this username already exists");
+            }
+            existingUser.setUsername(updatedUser.username());
+        }
+            
+        // Пароль обязателен при полном обновлении
+        if (updatedUser.newPassword() != null && !updatedUser.newPassword().trim().isEmpty()) {
+            existingUser.setPassword(passwordEncoder.encode(updatedUser.newPassword()));
+        }
 
         User savedUser = userRepository.save(existingUser);
         return toDto(savedUser);
     }
-
-    @Transactional
-    public void deleteUser(Long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw new IllegalArgumentException("User not found: " + userId);
-        }
-        userRepository.deleteById(userId);
-    }
     
     @Transactional
-    public void deleteUser(UserDto userDto) {
-        deleteUser(userDto.id());
+    public void deleteUser(Long id) {
+        // Получаем текущего аутентифицированного пользователя
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+
+        // Находим пользователя для удаления
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
+
+        // Проверяем права доступа: только сам пользователь может удалить свой аккаунт
+        // (или админ, но админская логика должна быть в отдельном сервисе)
+        if (!existingUser.getUsername().equals(currentUsername)) {
+            throw new AccessDeniedException("You can only delete your own account");
+        }
+        
+        userRepository.delete(existingUser);
     }
 
     private UserDto toDto(User user) {
