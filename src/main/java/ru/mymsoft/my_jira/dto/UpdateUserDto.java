@@ -9,12 +9,12 @@ import jakarta.validation.constraints.Size;
 @Schema(description = "DTO для обновления пользователя (используется для PUT и PATCH запросов)")
 public record UpdateUserDto (
     @NotNull(message = "Id is required", groups = {FullUpdate.class, PartialUpdate.class})
-    @Schema(description = "Уникальный идентификатор пользователя", example = "1")
+    @Schema(description = "Уникальный идентификатор пользователя", example = "1", nullable = false)
     Long id,
 
     @NotNull(message = "Email is required for full update", groups = FullUpdate.class)
     @Email(message = "Email must be a valid email address", groups = FullUpdate.class)
-    @Size(min = 3, max = 255, message = "Email must be between 3 and 255 characters")
+    @Size(min = 6, max = 255, message = "Email must be between 6 and 255 characters")
     @Null(message = "Email should not be provided for partial update", groups = PartialUpdate.class)
     @Schema(description = "Новая электронная почта пользователя (опционально)", 
             example = "new.email@example.com", 
@@ -38,7 +38,7 @@ public record UpdateUserDto (
 
     @NotNull(message = "Current password is required", groups = {FullUpdate.class, PartialUpdate.class})
     @Schema(description = "Текущий пароль для подтверждения операции", 
-            example = "currentSecretPassword123", 
+            example = "currentP@ssw0rd!", 
             requiredMode = Schema.RequiredMode.REQUIRED)
     String currentPassword) {
         public interface FullUpdate {}          // Для PUT запросов
