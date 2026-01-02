@@ -14,6 +14,11 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.Setter;
 
+/**
+ * Хранит все типы действий, происходящие с задачами 
+ * (например, изменение статуса, назначение исполнителя, 
+ * обновление описания, добавление комментария/вложения).
+ */
 @Entity
 @Table(name = "action_types")
 @Getter
@@ -23,10 +28,16 @@ import lombok.Setter;
 @EqualsAndHashCode
 @Builder
 public class ActionType {
+  /**
+   * Уникальный идентификатор типа действия.
+   */
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  /**
+   * Тип действия (например, "STATUS_CHANGE", "ASSIGNED", "COMMENTED").
+   */
   @Column(name = "name", nullable = false, unique = true)
   @NonNull
   private String name;
