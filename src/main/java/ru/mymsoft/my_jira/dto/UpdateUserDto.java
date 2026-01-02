@@ -1,25 +1,46 @@
 package ru.mymsoft.my_jira.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import jakarta.validation.constraints.Size;
 
+@Schema(description = "DTO для обновления пользователя (используется для PUT и PATCH запросов)")
 public record UpdateUserDto (
-    @NotBlank(message = "Id cannot be blank")
+    @NotNull(message = "Id is required", groups = {FullUpdate.class, PartialUpdate.class})
+    @Schema(description = "Уникальный идентификатор пользователя", example = "1")
     Long id,
 
-    @NotBlank(message = "Email cannot be blank")
-    @Email(message = "Email must be a valid email address")
+    @NotNull(message = "Email is required for full update", groups = FullUpdate.class)
+    @Email(message = "Email must be a valid email address", groups = FullUpdate.class)
+    @Size(min = 3, max = 255, message = "Email must be between 3 and 255 characters")
+    @Null(message = "Email should not be provided for partial update", groups = PartialUpdate.class)
+    @Schema(description = "Новая электронная почта пользователя (опционально)", 
+            example = "new.email@example.com", 
+            nullable = true)
     String email,
     
-    @NotBlank(message = "Username cannot be blank")
+    @NotNull(message = "Username is required for full update", groups = FullUpdate.class)
     @Size(min = 3, max = 255, message = "Username must be between 3 and 255 characters")
+    @Null(message = "Username should not be provided for partial update", groups = PartialUpdate.class)
+    @Schema(description = "Новое уникальное имя пользователя (опционально)", 
+            example = "new_username", 
+            nullable = true)
     String username,
 
-    // Пароль может быть необязательным для обновления
-    // @Size(min = 8, message = "New password must be at least 8 characters long")
+    @NotNull(message = "New password is required for full update", groups = FullUpdate.class)
+    @Null(message = "New password should not be provided for partial update", groups = PartialUpdate.class)
+    @Schema(description = "Новый пароль пользователя (опционально)", 
+            example = "NewP@ssw0rd!", 
+            nullable = true)
     String newPassword,
 
-    // Требуется старый пароль для подтверждения обновления
-    @NotBlank(message = "Type password for update")
-    String oldPassword) {}
+    @NotNull(message = "Current password is required", groups = {FullUpdate.class, PartialUpdate.class})
+    @Schema(description = "Текущий пароль для подтверждения операции", 
+            example = "currentSecretPassword123", 
+            requiredMode = Schema.RequiredMode.REQUIRED)
+    String currentPassword) {
+        public interface FullUpdate {}          // Для PUT запросов
+        public interface PartialUpdate {}       // Для PATCH запросов
+    }
