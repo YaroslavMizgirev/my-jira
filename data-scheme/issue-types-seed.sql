@@ -2,14 +2,16 @@
 --                    INSERT ISSUE_TYPES DEFAULT VALUES
 -- ***********************************************************************************
 
+BEGIN;
+
 INSERT INTO public.issue_types (name, icon_url, color_hex_code) VALUES
 -- Основные типы задач
-('Bug', 'https://cdn-icons-png.flaticon.com/128/1828/1828270.png', '#E74C3C'),             -- Красный для багов
-('Task', 'https://cdn-icons-png.flaticon.com/128/2920/2920222.png', '#343fdbff'),          -- Синий для задач
-('Story', 'https://cdn-icons-png.flaticon.com/128/3369/3369154.png', '#15a14fff'),         -- Зелёный для историй
-('Epic', 'https://cdn-icons-png.flaticon.com/128/3050/3050159.png', '#842ba7ff'),          -- Фиолетовый для эпиков
-('Sub-task', 'https://cdn-icons-png.flaticon.com/128/1995/1995467.png', '#ff9d00ff'),      -- Оранжевый для подзадач
-('Improvement', 'https://cdn-icons-png.flaticon.com/128/3588/3588592.png', '#18be9dff'),   -- Бирюза для улучшений
-('Documentation', 'https://cdn-icons-png.flaticon.com/128/4034/4034920.png', '#34495E');   -- Тёмно-серый для документации
+('Bug', './icons/bug-48.png', 'rgba(255, 0, 0, 1)'),                       -- Красный для багов
+('Task', './icons/task-48.png', 'rgba(0, 0, 255, 1)'),                     -- Синий для задач
+('Story', './icons/story-50.png', 'rgba(0, 255, 0, 1)'),                   -- Зелёный для историй
+('Epic', './icons/epic-48.png', 'rgba(139, 0, 255, 1)'),                   -- Фиолетовый для эпиков
+('Sub-task', './icons/task-48.png', 'rgba(255, 157, 0, 1)'),               -- Оранжевый для подзадач
+('Improvement', './icons/improvement-50.png', 'rgba(48, 213, 200, 1)'),    -- Бирюза для улучшений
+('Documentation', './icons/documentation-48.png', 'rgba(73, 66, 61, 1)');  -- Тёмно-серый для документации
 
 COMMIT;
