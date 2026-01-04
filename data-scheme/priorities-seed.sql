@@ -2,6 +2,8 @@
 --                    INSERT PRIORITIES DEFAULT VALUES
 -- ***********************************************************************************
 
+BEGIN;
+
 INSERT INTO public.priorities (level, name, icon_url, color_hex_code) VALUES
 -- Приоритеты от самого высокого к самому низкому
 (1, 'Highest', './icons/priority-highest-48.png', 'rgba(255, 0, 0, 1)'),     -- Красный для наивысшего приоритета
