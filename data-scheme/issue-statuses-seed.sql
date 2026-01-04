@@ -2,6 +2,8 @@
 --                    INSERT ISSUE_STATUSES DEFAULT VALUES
 -- ***********************************************************************************
 
+BEGIN;
+
 INSERT INTO public.issue_statuses (name, description) VALUES
 -- Основные статусы жизненного цикла задачи
 ('Backlog', 'Задача находится в бэклоге и ожидает планирования'),
