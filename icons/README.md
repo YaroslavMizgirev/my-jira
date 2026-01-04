@@ -22,6 +22,11 @@
 |task-96.png|![task-96](task-96.png) |
 |task-done-96.png|![task-done-96](task-done-96.png) |
 |task-96.gif|![task-96](task-96.gif) |
+|priority-highest-48.png|![priority-highest-48](priority-highest-48.png) |
+|priority-high-48.png|![priority-high-48](priority-high-48.png) |
+|priority-medium-48.png|![priority-medium-48](priority-medium-48.png) |
+|priority-low-48.png|![priority-low-48](priority-low-48.png) |
+|priority-lowest-48.png|![priority-lowest-48](priority-lowest-48.png) |
 
 ## AddProhibitedSign.java
 
@@ -30,4 +35,14 @@
 ```Shell
 javac AddProhibitedSign.java # Компилирование java to class
 java AddProhibitedSign $input_file $output_file # Использование
+```
+
+## DiamondExclamationGenerator.java
+
+Утилита, которая принимает от пользователя размеры width/heght изображения, цвет заливки и выходное имя файла (по умолчанию в формате png) и затем рисует по центру изображения ромб размером 75% от указанных размеров со скругленными углами, однородно залитый указанным цветом и в самом центре белый восклицательный знак шрифтом 'Arial' размером минимум '18px', максимум 1/2 размера ромба с тенью.\
+Все пользовательские настройки задаются в интерактивном режиме.
+
+```Shell
+javac DiamondExclamationGenerator.java # Компилирование java to class
+java DiamondExclamationGenerator # Использование
 ```
