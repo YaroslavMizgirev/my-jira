@@ -2,12 +2,18 @@
 --                    INSERT ACTION_TYPES DEFAULT VALUES
 -- ***********************************************************************************
 
+BEGIN;
+
 INSERT INTO public.action_types (name) VALUES
 -- Действия, связанные с созданием и закрытием задач
 ('Задача создана'),                     -- ISSUE_CREATED
+('Задача открыта'),                     -- ISSUE_OPENED
+('Задача решена'),                      -- ISSUE_RESOLVED
 ('Задача закрыта'),                     -- ISSUE_CLOSED
 ('Задача переоткрыта'),                 -- ISSUE_REOPENED
-('Задача удалена'),                     -- ISSUE_DELETED
+('Задача отложена'),                    -- ISSUE_HOLDED
+('Задача заблокирована'),               -- ISSUE_BLOCKED
+('Задача отменена'),                    -- ISSUE_CANCELLED
 
 -- Действия, связанные со статусом задачи
 ('Статус задачи изменился'),            -- ISSUE_STATUS_CHANGED
@@ -66,12 +72,4 @@ INSERT INTO public.action_types (name) VALUES
 ('Изменение разрешений'),               -- PERMISSION_CHANGED
 ('Изменение настроек уведомлений');     -- NOTIFICATION_SETTINGS_CHANGED
 
--- ***********************************************************************************
---                        VERIFY INSERT RESULTS
--- ***********************************************************************************
-
--- Проверка вставленных данных
---SELECT id, name FROM public.action_types ORDER BY id;
-
--- Подсчет общего количества типов действий
---SELECT COUNT(*) as total_action_types FROM public.action_types;
+COMMIT;
