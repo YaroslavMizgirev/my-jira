@@ -41,8 +41,7 @@ public class Issue {
     @NonNull
     private Instant createdAt;
 
-    @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "key", nullable = false)
