@@ -7,6 +7,7 @@ BEGIN;
 INSERT INTO public.issue_statuses (name, description) VALUES
 -- Основные статусы жизненного цикла задачи
 ('Conceived', "## Epic
+
 Описание: Epic задуман и находится на этапе идеи, но не формализован.
 Кто создает: Product Owner, Stakeholder.
 Поля обязательные:
@@ -14,11 +15,12 @@ INSERT INTO public.issue_statuses (name, description) VALUES
     - Идея (1-2 предложения);
     - Business Value (предполагаемый).
 Возможные действия:
-    → Refine (Уточнить): Перейти к уточнению требований. Product Owner начинает исследование идеи.
+    → Research (Уточнить): Перейти к уточнению требований. Product Owner начинает исследование идеи.
     → Reject (Отклонить): Отменить идею.
     → Hold (Отложить): Вернуться позже для доработки идеи."),
 
-('Refining', "## Epic
+('Research', "## Epic
+
 Описание: Детализация и исследование Epic. Задача находится на этапе уточнения требований и оценки.
 Кто создает: Product Owner, Business Analyst.
 Поля обязательные:
@@ -33,9 +35,28 @@ INSERT INTO public.issue_statuses (name, description) VALUES
 Возможные действия:
     → Approve (Утвердить): Готово для планирования.
     → Reject (Отклонить): Не соответствует критериям.
-    → Return to Conception (Вернуть): Нужна доп. информация."),
+    → Return to Conception (Вернуть): Нужна доп. информация.
+
+## Story
+
+Описание: Story детализирована и готова для оценки.
+Кто работает: Product Owner, Development Team.
+Поля обязательные:
+    - Детальное описание.
+    - Acceptance Criteria (критерии приемки).
+    - Предварительные Story Points.
+    - Технические заметки.
+Выход Refinement:
+    - Clear Acceptance Criteria.
+    - Story Points оценка.
+    - Technical Spikes если нужно.
+    - Dependencies identified.
+Возможные действия:
+    → Mark Ready (Пометить готовой): Готова для планирования спринта.
+    → Return to Backlog (Вернуть): Требуется больше информации."),
 
 ('Approved', "## Epic
+
 Описание: Epic утвержден и готов к планированию и разбиению на Stories.
 Кто создает: Product Owner, Scrum Master, Steering Committee, Product Council.
 Поля обязательные:
@@ -50,6 +71,23 @@ INSERT INTO public.issue_statuses (name, description) VALUES
 Возможные действия:
     → Plan (Запланировать): Назначить на квартал/релиз.
     → Reject (Отклонить): Отмена утверждения (редко).
+
+## Story
+
+Описание: История утверждена для планирования
+Кто утверждает: ___
+Поля обязательные:
+  - Approved By (кто утвердил);
+  - Approval Date (дата утверждения);
+  - Budget (бюджет если есть);
+  - Success Metrics (метрики успеха).
+Триггеры:
+  - Создание Tasks под Story;
+  - Уведомление командам;
+  - Добавление в Roadmap.
+Возможные действия:
+  → Plan (Запланировать): Назначить на спринт.
+  → Reject (Отклонить): Отмена утверждения (редко).
 
 ## Improvement
 
@@ -85,6 +123,24 @@ INSERT INTO public.issue_statuses (name, description) VALUES
     → Start Progress (Начать): Начало работы команд.
     → Put on Hold (Приостановить): Изменение приоритетов.
     → Reject (Отклонить): Выведение из плана.
+
+## Story
+
+Описание: История включена в план спринта.
+Кто планирует: ___
+Поля обязательные:
+  - Target Release (целевой релиз);
+  - Priority (приоритет);
+  - Dependencies (зависимости);
+  - Team Assignment (назначенные команды).
+Автоматические действия:
+  - Создание связанных Tasks;
+  - Назначение Story Owner;
+  - Обновление Roadmap.
+Возможные действия:
+  → Start Develope (Начать): Начало работы команд.
+  → Put on Hold (Приостановить): Изменение приоритетов.
+  → Reject (Отклонить): Выведение из плана.
 
 ## Improvement
 
@@ -383,23 +439,6 @@ Definition of Done для Task:
     → Refine (Уточнить): Перейти к детализации.
     → Reject (Отклонить): Не подходит для реализации."),
 
-('Refined', "## Story
-Описание: Story детализирована и готова для оценки.
-Кто работает: Product Owner, Development Team.
-Поля обязательные:
-    - Детальное описание.
-    - Acceptance Criteria (критерии приемки).
-    - Предварительные Story Points.
-    - Технические заметки.
-Выход Refinement:
-    - Clear Acceptance Criteria.
-    - Story Points оценка.
-    - Technical Spikes если нужно.
-    - Dependencies identified.
-Возможные действия:
-    → Mark Ready (Пометить готовой): Готова для планирования спринта.
-    → Return to Backlog (Вернуть): Требуется больше информации."),
-
 ('Ready for Development', "## Story
 Описание: Story готова для взятия в спринт.
 Критерии готовности (Definition of Ready):
@@ -492,6 +531,9 @@ Definition of Done для Task:
 Возможные действия:
   → Approve (Одобрить);
   → Request Changes (Запросить изменения)."),
+
+('Code Review Passed', "Ревью кода успешно пройдено"),
+('Code Review Failed', "Ревью кода не пройдено"),
 
 ('Ready for QA', "## Story
 
@@ -624,7 +666,29 @@ Definition of Done для Task:
 Возможные действия:
   → Merge (Смержить): Выполнить слияние кода."),
 
-('Ready for PO Review', "## Story
+('QA Failed', "## Story
+
+Описание: Тесты не пройдены.
+Поля обязательные:
+  - Test Coverage (покрытие тестами);
+  - Defect Count (количество дефектов);
+  - Test Environment (окружение тестирования).
+Автоматические действия:
+  - Возврат на доработку.
+Возможные действия:
+  → Request Changes (Запросить изменения).
+
+## Task
+
+Описание: Все проверки пройдены, готово к слиянию.
+Поля обязательные:
+  - Errors (Ошибки при тестировании).
+Автоматические проверки:
+  - Возврат на доработку.
+Возможные действия:
+  → Request Changes (Запросить изменения)."),
+
+('Ready for Review', "## Story
 Описание: Готово для приемки Product Owner.
 Поля обязательные:
   - Demo Prepared? (демо подготовлено?);
@@ -636,6 +700,9 @@ Definition of Done для Task:
   - User documentation ready.
 Возможные действия:
   → Start PO Review (Начать проверку): PO начинает проверку."),
+
+('Review Passed', "Проверка успешно пройдена"),
+('Review Failed', "Проверка не пройдена"),
 
 ('TODO', "## Task
 
@@ -783,8 +850,6 @@ Definition of Done для Task:
 
 ('Reopened', 'Задача переоткрыта после закрытия'),
 
-('Blocked', 'Задача заблокирована и не может быть выполнена'),
-
-('Cancelled', 'Задача отменена и не будет выполнена');
+('Blocked', 'Задача заблокирована и не может быть выполнена');
 
 COMMIT;
