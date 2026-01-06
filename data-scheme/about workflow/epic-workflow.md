@@ -1,27 +1,39 @@
 # Workflow для Epic
 
 ```mermaid
-graph LR
-    A[Conceived<br/>Задумано] --> B[Refining<br/>Уточняется]
-    B --> C[Approved<br/>Утверждено]
-    C --> D[Planned<br/>Запланировано]
-    D --> E[In Progress<br/>В работе]
-    E --> F[Under Review<br/>На проверке]
-    F --> G[On Hold<br/>Приостановлено]
-    G --> E
-    F --> H[Accepted<br/>Принято]
-    H --> I[Done<br/>Завершено]
-    
-    B --> J[Rejected<br/>Отклонено]
+graph TD
+    A[Conceived<br/>Задумано] e1@--> B[Research<br/>Уточняется]
+    B --> A
+    B e2@--> C[Approved<br/>Утверждено]
+    C e3@--> D[Planned<br/>Запланировано]
+    D e4@--> E[In Progress<br/>В работе]
+    E e5@--> F[In Review<br/>На проверке]
+    F e6@--> H[Accepted<br/>Принято]
+    F --> E
+    H e7@--> I[Resolved<br/>Завершено]
+
+    A --> J[Rejected<br/>Отклонено]
+    B --> J
     C --> J
     D --> J
+    F --> J
+
+    D --> G[On Hold<br/>Отложено]
+    G --> D
+    E --> G
+    F --> G
+    G --> J
     
-    style A fill:#f9f,stroke:#333
-    style I fill:#9f9,stroke:#333
-    style J fill:#f99,stroke:#333
+    classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 25s linear infinite;
+    class e1,e2,e3,e4,e5,e6,e7 animate
+    
+    style A fill:#f9f,stroke:#000
+    style I fill:#9f9,stroke:#000
+    style J fill:#ff0,stroke:#000
+    style G fill:#aaa,stroke:#000
 ```
 
-## Подробное описание каждого статуса:
+## Подробное описание каждого статуса
 
 ### 1. Conceived (Задумано)
 
@@ -34,11 +46,11 @@ graph LR
   - Business Value (предполагаемый)
   
 Возможные действия:
-  → Refine (Уточнить): Product Owner начинает исследование
+  → Research (Уточнить): Product Owner начинает исследование
   → Reject (Отклонить): Идея не актуальна
 ```
 
-### 2. Refining (Уточняется)
+### 2. Research (Уточняется)
 
 ```text
 Описание: Детализация и исследование Epic
@@ -57,7 +69,7 @@ graph LR
 Возможные действия:
   → Approve (Утвердить): Готово для планирования
   → Reject (Отклонить): Не соответствует критериям
-  → Return to Conception (Вернуть): Нужна доп. информация
+  → Return to Conceive (Вернуть): Нужна доп. информация
 ```
 
 ### 3. Approved (Утверждено)
@@ -123,7 +135,7 @@ graph LR
   → Put on Hold (Приостановить): Возникли проблемы
 ```
 
-### 6. Under Review (На проверке)
+### 6. In Review (На проверке)
 
 ```text
 Описание: Gate Review перед завершением
@@ -143,6 +155,7 @@ graph LR
   → Accept (Принять): Epic соответствует критериям
   → Return to Progress (Вернуть): Требуются доработки
   → Put on Hold (Приостановить): Требуются доп. ресурсы
+  → Reject (Отклонить): Не соответствует критериям
 ```
 
 ### 7. On Hold (Приостановлено)
@@ -183,7 +196,7 @@ graph LR
   → Done (Завершить): Финальное закрытие Epic
 ```
 
-### 9. Done (Завершено)
+### 9. Resolved (Завершено)
 
 ```text
 Описание: Epic полностью завершен
