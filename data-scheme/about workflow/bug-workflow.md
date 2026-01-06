@@ -28,12 +28,12 @@ graph TD
     G --> N[Reopened<br/>Переоткрыт]
     N --> D
     
-    style A fill:#ffcccc,stroke:#333
-    style I fill:#9f9,stroke:#333
-    style J fill:#ccc,stroke:#333
-    style K fill:#ccc,stroke:#333
-    style L fill:#ccc,stroke:#333
-    style M fill:#ccc,stroke:#333
+    style A fill:#ffcccc,stroke:#000,color:#000
+    style I fill:#9f9,stroke:#000,color:#000
+    style J fill:#ccc,stroke:#000,color:#000
+    style K fill:#ccc,stroke:#000,color:#000
+    style L fill:#ccc,stroke:#000,color:#000
+    style M fill:#ccc,stroke:#000,color:#000
 ```
 
 ## Подробное описание каждого статуса
