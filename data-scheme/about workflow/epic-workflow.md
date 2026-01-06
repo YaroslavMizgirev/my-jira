@@ -1,6 +1,11 @@
 # Workflow для Epic
 
 ```mermaid
+---
+config:
+  primaryColor: '#000'
+  primaryTextColor: '#000'
+---
 graph TD
     A[Conceived<br/>Задумано] e1@--> B[Research<br/>Уточняется]
     B --> A
