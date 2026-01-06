@@ -51,8 +51,7 @@ public class Group {
     /**
      * Описание группы.
      */
-    @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     /**
