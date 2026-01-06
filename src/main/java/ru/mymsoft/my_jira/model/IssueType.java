@@ -26,6 +26,6 @@ public class IssueType {
     @Column(name = "icon_url")
     private String iconUrl;
 
-    @Column(name = "color_hex_code", length = 7)
-    private String colorHexCode;
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 }
