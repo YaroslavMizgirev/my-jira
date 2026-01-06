@@ -28,8 +28,8 @@ graph TD
     E --> K[Test Failed<br/>Тест провален]
     K --> B
     
-    style A fill:#ffe6cc,stroke:#333
-    style H fill:#9f9,stroke:#333
+    style A fill:#ffe6cc,stroke:#000,color:#000
+    style H fill:#9f9,stroke:#000,color:#000
 ```
 
 ## Подробное описание каждого статуса:
