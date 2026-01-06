@@ -25,7 +25,7 @@ INSERT INTO public.workflow_statuses (workflow_id, status_id) VALUES
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), (SELECT id FROM public.issue_statuses WHERE name = 'Approved')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), (SELECT id FROM public.issue_statuses WHERE name = 'Planned')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Development')),
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), (SELECT id FROM public.issue_statuses WHERE name = 'In Developement')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), (SELECT id FROM public.issue_statuses WHERE name = 'In Development')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Code Review')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), (SELECT id FROM public.issue_statuses WHERE name = 'Code Review Passed')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), (SELECT id FROM public.issue_statuses WHERE name = 'Code Review Failed')),
