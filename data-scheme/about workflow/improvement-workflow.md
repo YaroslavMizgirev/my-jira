@@ -27,11 +27,11 @@ graph TD
     H --> M[No Significant Impact<br/>Нет значимого эффекта]
     M --> N[Abandoned<br/>Заброшено]
     
-    style A fill:#e6ffe6,stroke:#333
-    style J fill:#9f9,stroke:#333
-    style K fill:#ffcccc,stroke:#333
-    style L fill:#ffe6cc,stroke:#333
-    style N fill:#cccccc,stroke:#333
+    style A fill:#e6ffe6,stroke:#000,color:#000
+    style J fill:#9f9,stroke:#000,color:#000
+    style K fill:#ffcccc,stroke:#000,color:#000
+    style L fill:#ffe6cc,stroke:#000,color:#000
+    style N fill:#cccccc,stroke:#000,color:#000
 ```
 
 ## Подробное описание каждого статуса:
