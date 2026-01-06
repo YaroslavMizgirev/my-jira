@@ -1,4 +1,4 @@
-# Workflow для Story
+# Workflow для User Story
 
 ## Особенности Story Workflow
 
@@ -55,10 +55,10 @@ graph TD
   classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 25s linear infinite;
   class e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14 animate
 
-  style A fill:#f9f,stroke:#000
-  style O fill:#9f9,stroke:#000
-  style W fill:#ff0,stroke:#000
-  style X fill:#aaa,stroke:#000
+  style A fill:#f9f,stroke:#000,color:#000
+  style O fill:#9f9,stroke:#000,color:#000
+  style W fill:#ff0,stroke:#000,color:#000
+  style X fill:#aaa,stroke:#000,color:#000
 ```
 
 ## Подробное описание каждого статуса
