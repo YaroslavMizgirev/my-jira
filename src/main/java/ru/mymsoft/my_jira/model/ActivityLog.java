@@ -19,7 +19,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -89,15 +88,13 @@ public class ActivityLog {
     /**
      * Предыдущее значение поля (если применимо).
      */
-    @Lob
-    @Column(name = "old_value")
+    @Column(name = "old_value", columnDefinition = "TEXT")
     private String oldValue;
 
     /**
      * Новое значение поля (если применимо).
      */
-    @Lob
-    @Column(name = "new_value")
+    @Column(name = "new_value", columnDefinition = "TEXT")
     private String newValue;
 
     /**
