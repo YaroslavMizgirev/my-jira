@@ -9,9 +9,9 @@ graph TD
     E --> F[Verified<br/>Верифицирован]
     F --> G[Closed<br/>Закрыт]
     
-    style A fill:#ff0000,stroke:#333,color:#fff
-    style B fill:#ff3333,stroke:#333,color:#fff
-    style C fill:#ff6666,stroke:#333,color:#fff
+    style A fill:#ff0000,stroke:#000,color:#000
+    style B fill:#ff3333,stroke:#000,color:#000
+    style C fill:#ff6666,stroke:#000,color:#000
 ```
 
 ## Особенности
