@@ -22,4 +22,7 @@ public class IssueStatus {
     @Column(name = "name", nullable = false, length = 50)
     @NonNull
     private String name;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 }
