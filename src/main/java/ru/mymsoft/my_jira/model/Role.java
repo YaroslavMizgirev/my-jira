@@ -23,8 +23,7 @@ public class Role {
     @NonNull
     private String name;
 
-    @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column(name = "is_system_role", nullable = false)
