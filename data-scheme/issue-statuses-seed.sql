@@ -6,7 +6,7 @@ BEGIN;
 
 INSERT INTO public.issue_statuses (name, description) VALUES
 -- Основные статусы жизненного цикла задачи
-('Conceived', "## Epic
+('Conceived', '## Epic
 
 Описание: Epic задуман и находится на этапе идеи, но не формализован.
 Кто создает: Product Owner, Stakeholder.
@@ -17,9 +17,9 @@ INSERT INTO public.issue_statuses (name, description) VALUES
 Возможные действия:
     → Research (Уточнить): Перейти к уточнению требований. Product Owner начинает исследование идеи.
     → Reject (Отклонить): Отменить идею.
-    → Hold (Отложить): Вернуться позже для доработки идеи."),
+    → Hold (Отложить): Вернуться позже для доработки идеи.'),
 
-('Research', "## Epic
+('Research', '## Epic
 
 Описание: Детализация и исследование Epic. Задача находится на этапе уточнения требований и оценки.
 Кто создает: Product Owner, Business Analyst.
@@ -53,9 +53,9 @@ INSERT INTO public.issue_statuses (name, description) VALUES
     - Dependencies identified.
 Возможные действия:
     → Mark Ready (Пометить готовой): Готова для планирования спринта.
-    → Return to Backlog (Вернуть): Требуется больше информации."),
+    → Return to Backlog (Вернуть): Требуется больше информации.'),
 
-('Approved', "## Epic
+('Approved', '## Epic
 
 Описание: Epic утвержден и готов к планированию и разбиению на Stories.
 Кто создает: Product Owner, Scrum Master, Steering Committee, Product Council.
@@ -104,9 +104,9 @@ INSERT INTO public.issue_statuses (name, description) VALUES
   - Acceptable risk level.
 Возможные действия:
   → Plan (Запланировать): Включить в план.
-  → Defer (Отложить): Утверждено, но не сейчас."),
+  → Defer (Отложить): Утверждено, но не сейчас.'),
 
-('Planned', "## Epic
+('Planned', '## Epic
 
 Описание: Epic запланирован на конкретный релиз или спринт и готов к выполнению.
 Кто создает: Product Owner, Scrum Master, Development Team, Release Manager.
@@ -155,9 +155,9 @@ Planning considerations:
   - Clear success criteria.
 Возможные действия:
   → Start Implementation (Начать реализацию).
-  → Defer (Отложить): Изменение приоритетов."),
+  → Defer (Отложить): Изменение приоритетов.'),
 
-('In Progress', "## Epic
+('In Progress', '## Epic
 
 Описание: Epic находится в работе.
 Кто работает: Все назначенные команды.
@@ -217,9 +217,9 @@ Best Practices:
   - Experiment Design (дизайн эксперимента);
   - Rollout Plan (план внедрения).
 Возможные действия:
-  → Ready for Review (Готово к ревью)."),
+  → Ready for Review (Готово к ревью).'),
 
-('In Review', "## Epic
+('In Review', '## Epic
 
 Описание: Gate Review перед завершением.
 Кто проверяет: Product Owner, Stakeholders.
@@ -267,9 +267,9 @@ Checklist для PO:
   - Documentation updated;
   - Tests added to prevent recurrence.
 Возможные действия:
-  → Close (Закрыть): Финальное закрытие бага."),
+  → Close (Закрыть): Финальное закрытие бага.'),
 
-('On Hold', "## Epic
+('On Hold', '## Epic
 
 Описание: Epic временно приостановлен.
 Причины:
@@ -283,9 +283,9 @@ Checklist для PO:
     - Impact Assessment (оценка влияния).
 Возможные действия:
     → Resume Progress (Возобновить): Проблемы решены.
-    → Cancel (Отменить): Epic больше не актуален."),
+    → Cancel (Отменить): Epic больше не актуален.'),
 
-('Accepted', "## Epic
+('Accepted', '## Epic
 
 Описание: Epic прошел Gate Review и принят бизнесом.
 Кто подтверждает: Product Owner, Stakeholders.
@@ -328,9 +328,9 @@ Checklist для PO:
   - Positive user feedback;
   - Acceptable implementation cost.
 Возможные действия:
-  → Complete (Завершить): Финальное завершение."),
+  → Complete (Завершить): Финальное завершение.'),
 
-('Resolved', "## Epic
+('Resolved', '## Epic
 
 Описание: Epic полностью завершен и закрыт.
 Кто закрывает: Product Owner, Scrum Master.
@@ -405,9 +405,9 @@ Definition of Done для Task:
 Финальные действия:
   - Update best practices;
   - Share results with team;
-  - Archive documentation."),
+  - Archive documentation.'),
 
-('Rejected', "## Epic
+('Rejected', '## Epic
 Описание: Epic отклонен на любом этапеи не будет реализован.
 Причины:
     - Не соответствует стратегии.
@@ -419,15 +419,15 @@ Definition of Done для Task:
     - Alternative Solutions (альтернативные решения).
     - Learnings (что узнали).
 Возможные действия:
-    → Archive (Архивировать): Сохранить для истории."),
+    → Archive (Архивировать): Сохранить для истории.'),
 
-('Backlog', "## Story
+('Backlog', '## Story
 Описание: Идея для Story, но без деталей.
 Кто создает: Product Owner, Business Analyst.
 Поля обязательные:
     - User Story формулировка.
     - Предполагаемая ценность.
-    - Приоритет (MoSCoW: Must, Should, Could, Won't).
+    - Приоритет (MoSCoW: Must, Should, Could, Won''t).
 Качество Backlog Item:
     - Независимая (Independent).
     - Обсуждаемая (Negotiable).
@@ -437,9 +437,9 @@ Definition of Done для Task:
     - Тестируемая (Testable) - INVEST критерии.
 Возможные действия:
     → Refine (Уточнить): Перейти к детализации.
-    → Reject (Отклонить): Не подходит для реализации."),
+    → Reject (Отклонить): Не подходит для реализации.'),
 
-('Ready for Development', "## Story
+('Ready for Development', '## Story
 Описание: Story готова для взятия в спринт.
 Критерии готовности (Definition of Ready):
     - [ ] Acceptance Criteria четко определены;
@@ -453,9 +453,9 @@ Definition of Done для Task:
     - Dependencies Resolved (зависимости разрешены).
 Возможные действия:
     → Start Development (Начать разработку): Разработчик берет в работу.
-    → Return to Refined (Вернуть): Требуются изменения."),
+    → Return to Refined (Вернуть): Требуются изменения.'),
 
-('In Development', "## Story
+('In Development', '## Story
 Описание: Разработка в процессе.
 Кто работает: Developer(s).
 Поля обязательные:
@@ -470,9 +470,9 @@ Definition of Done для Task:
     - Peer review planned.
 Возможные действия:
     → Submit for Code Review (На ревью кода): Код готов для проверки.
-    → Block (Заблокировать): Возникли проблемы."),
+    → Block (Заблокировать): Возникли проблемы.'),
 
-('Code Review', "## Story
+('Ready for Code Review', '## Story
 
 Описание: Код проверяется другими разработчиками.
 Кто проверяет: 1-2 других разработчика.
@@ -530,12 +530,12 @@ Definition of Done для Task:
   - Clean, maintainable code.
 Возможные действия:
   → Approve (Одобрить);
-  → Request Changes (Запросить изменения)."),
+  → Request Changes (Запросить изменения).'),
 
-('Code Review Passed', "Ревью кода успешно пройдено"),
-('Code Review Failed', "Ревью кода не пройдено"),
+('Code Review Passed', 'Ревью кода успешно пройдено'),
+('Code Review Failed', 'Ревью кода не пройдено'),
 
-('Ready for QA', "## Story
+('Ready for QA', '## Story
 
 Описание: Код прошел ревью и готов к тестированию.
 Поля обязательные:
@@ -575,9 +575,9 @@ Definition of Done для Task:
   - Уведомление QA команды;
   - Запуск регрессионных тестов.
 Возможные действия:
-  → Start Retest (Начать повторное тестирование)."),
+  → Start Retest (Начать повторное тестирование).'),
 
-('In QA', "## Story
+('In QA', '## Story
 
 Описание: Функциональное тестирование.
 Кто тестирует: QA Engineer.
@@ -636,9 +636,9 @@ Definition of Done для Task:
   - Test Results (результаты тестов);
   - User Feedback (обратная связь пользователей).
 Возможные действия:
-  → Ready for Measurement (Готово к измерению эффекта)."),
+  → Ready for Measurement (Готово к измерению эффекта).'),
 
-('QA Passed', "## Story
+('QA Passed', '## Story
 
 Описание: Все тесты успешно пройдены.
 Поля обязательные:
@@ -664,9 +664,9 @@ Definition of Done для Task:
   - Конфликтов нет;
   - CI/CD pipeline green.
 Возможные действия:
-  → Merge (Смержить): Выполнить слияние кода."),
+  → Merge (Смержить): Выполнить слияние кода.'),
 
-('QA Failed', "## Story
+('QA Failed', '## Story
 
 Описание: Тесты не пройдены.
 Поля обязательные:
@@ -686,9 +686,9 @@ Definition of Done для Task:
 Автоматические проверки:
   - Возврат на доработку.
 Возможные действия:
-  → Request Changes (Запросить изменения)."),
+  → Request Changes (Запросить изменения).'),
 
-('Ready for Review', "## Story
+('Ready for Review', '## Story
 Описание: Готово для приемки Product Owner.
 Поля обязательные:
   - Demo Prepared? (демо подготовлено?);
@@ -699,12 +699,12 @@ Definition of Done для Task:
   - Acceptance criteria checklist;
   - User documentation ready.
 Возможные действия:
-  → Start PO Review (Начать проверку): PO начинает проверку."),
+  → Start PO Review (Начать проверку): PO начинает проверку.'),
 
-('Review Passed', "Проверка успешно пройдена"),
-('Review Failed', "Проверка не пройдена"),
+('Review Passed', 'Проверка успешно пройдена'),
+('Review Failed', 'Проверка не пройдена'),
 
-('TODO', "## Task
+('TODO', '## Task
 
 Описание: Задача создана и готова к работе.
 Кто создает: Разработчик, Тестировщик, DevOps.
@@ -720,9 +720,9 @@ Definition of Done для Task:
   - Минимум зависимостей.
 Возможные действия:
   → Start Work (Начать работу): Исполнитель берет задачу.
-  → Cancel (Отменить): Задача больше не актуальна."),
+  → Cancel (Отменить): Задача больше не актуальна.'),
 
-('Merged', "## Task
+('Merged', '## Task
 
 Описание: Код успешно смержен.
 Поля обязательные:
@@ -734,9 +734,9 @@ Post-merge действия:
   - Удаление feature branch;
   - Запуск deployment pipeline.
 Возможные действия:
-  → Mark Done (Пометить завершенной): Переход в финальный статус."),
+  → Mark Done (Пометить завершенной): Переход в финальный статус.'),
 
-('Reported', "##Bug
+('Reported', '##Bug
 
 Описание: Задача полностью завершена.
 Definition of Done для Task:
@@ -750,9 +750,9 @@ Definition of Done для Task:
   - Completion Date (дата завершения).
 Финальные действия:
   - Обновление временных метрик.
-  - Уведомление заинтересованных лиц."),
+  - Уведомление заинтересованных лиц.'),
 
-('Triage', "## Bug
+('Triage', '## Bug
 
 Описание: Анализ и классификация бага.
 Кто делает: QA Lead, Product Owner, Tech Lead.
@@ -769,9 +769,9 @@ Definition of Done для Task:
   → Accept (Принять): Баг валиден и требует исправления.
   → Reject (Отклонить): Не баг или не воспроизводится.
   → Mark Duplicate (Пометить дубликатом): Уже зарегистрирован.
-  → Defer (Отложить): Исправить позже."),
+  → Defer (Отложить): Исправить позже.'),
 
-("Won't Fix", "## Bug
+('Won''t Fix', '## Bug
 
 Описание: Решение не исправлять баг.
 Причины:
@@ -781,17 +781,17 @@ Definition of Done для Task:
   - Obsolete feature (устаревшая функциональность).
 Поля обязательные:
   - Business Justification (бизнес-обоснование).
-  - Alternative Solution (альтернативное решение)."),
+  - Alternative Solution (альтернативное решение).'),
 
-('Cannot Reproduce', "## Bug
+('Cannot Reproduce', '## Bug
 
 Описание: Не удается воспроизвести баг.
 Поля обязательные:
   - Attempts Made (попытки воспроизведения);
   - Environments Tested (проверенные окружения);
-  - Additional Information Requested (запрошенная доп. информация)."),
+  - Additional Information Requested (запрошенная доп. информация).'),
 
-('Proposed', "## Improvement
+('Proposed', '## Improvement
 
 Описание: Предложение по улучшению.
 Кто предлагает: Любой член команды, пользователь.
@@ -807,9 +807,9 @@ Definition of Done для Task:
   - Estimated effort.
 Возможные действия:
   → Evaluate (Оценить): Передать на оценку.
-  → Reject (Отклонить): Не подходящее предложение."),
+  → Reject (Отклонить): Не подходящее предложение.'),
 
-('Evaluating', "## Improvement
+('Evaluating', '## Improvement
 
 Описание: Оценка предложения.
 Кто оценивает: Product Owner, Tech Lead, Business Analyst.
@@ -826,9 +826,9 @@ Definition of Done для Task:
 Возможные действия:
   → Approve (Утвердить): Улучшение одобрено.
   → Reject (Отклонить): Недостаточный ROI.
-  → Request More Info (Запросить доп. информацию)."),
+  → Request More Info (Запросить доп. информацию).'),
 
-('Measuring Impact', "## Improvement
+('Measuring Impact', '## Improvement
 
 Описание: Измерение эффекта от улучшения.
 Поля обязательные:
@@ -842,7 +842,7 @@ Definition of Done для Task:
   - System metrics.
 Возможные действия:
   → Validate (Подтвердить): Эффект подтвержден.
-  → No Impact (Нет эффекта): Улучшение не дало результата."),
+  → No Impact (Нет эффекта): Улучшение не дало результата.'),
 
 ('Open', 'Задача открыта и готова к выполнению'),
 
