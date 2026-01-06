@@ -32,8 +32,7 @@ public class Project {
     @NonNull
     private String key;
 
-    @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
