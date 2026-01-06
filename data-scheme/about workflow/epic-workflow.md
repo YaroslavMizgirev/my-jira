@@ -1,11 +1,6 @@
 # Workflow для Epic
 
 ```mermaid
----
-config:
-  primaryColor: '#fff'
-  primaryTextColor: '#fff'
----
 graph TD
     A[Conceived<br/>Задумано] e1@--> B[Research<br/>Уточняется]
     B --> A
@@ -32,10 +27,10 @@ graph TD
     classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 25s linear infinite;
     class e1,e2,e3,e4,e5,e6,e7 animate
     
-    style A fill:#f9f,stroke:#000
-    style I fill:#9f9,stroke:#000
-    style J fill:#ff0,stroke:#000
-    style G fill:#aaa,stroke:#000
+    style A fill:#f9f,stroke:#000,color:#000
+    style I fill:#9f9,stroke:#000,color:#000
+    style J fill:#ff0,stroke:#000,color:#000
+    style G fill:#aaa,stroke:#000,color:#000
 ```
 
 ## Подробное описание каждого статуса
