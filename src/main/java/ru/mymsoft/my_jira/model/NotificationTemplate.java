@@ -27,12 +27,10 @@ public class NotificationTemplate {
     @NonNull
     private String name;
 
-    @Lob
-    @Column(name = "subject_template")
+    @Column(name = "subject_template", columnDefinition = "TEXT")
     private String subjectTemplate;
 
-    @Lob
-    @Column(name = "body_template", nullable = false)
+    @Column(name = "body_template", nullable = false, columnDefinition = "TEXT")
     @NonNull
     private String bodyTemplate;
 
