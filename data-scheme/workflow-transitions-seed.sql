@@ -19,7 +19,7 @@ INSERT INTO public.workflow_transitions (workflow_id, name, from_status_id, to_s
 
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для эпиков'), 'Начало работы команды', (SELECT id FROM public.issue_statuses WHERE name = 'Planned'), (SELECT id FROM public.issue_statuses WHERE name = 'In Progress')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для эпиков'), 'Выведение из плана', (SELECT id FROM public.issue_statuses WHERE name = 'Planned'), (SELECT id FROM public.issue_statuses WHERE name = 'Rejected')),
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для эпиков'), 'Изменение приоритетов', (SELECT id FROM public.issue_statuses WHERE name = 'Planned'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для эпиков'), 'Приостановлено, всвязи с изменением приоритетов', (SELECT id FROM public.issue_statuses WHERE name = 'Planned'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
 
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для эпиков'), 'Передано на проверку', (SELECT id FROM public.issue_statuses WHERE name = 'In Progress'), (SELECT id FROM public.issue_statuses WHERE name = 'In Review')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для эпиков'), 'Приостановлено, всвязи с возникшими проблемами', (SELECT id FROM public.issue_statuses WHERE name = 'In Progress'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
@@ -48,18 +48,18 @@ INSERT INTO public.workflow_transitions (workflow_id, name, from_status_id, to_s
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Выведение пользовательской истории из плана', (SELECT id FROM public.issue_statuses WHERE name = 'Planned'), (SELECT id FROM public.issue_statuses WHERE name = 'Rejected')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Изменение приоритетов', (SELECT id FROM public.issue_statuses WHERE name = 'Planned'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
 
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Начало разработки', (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Development'), (SELECT id FROM public.issue_statuses WHERE name = 'In Developement')),
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Изменение приоритетов', (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Development'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Начало разработки', (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Development'), (SELECT id FROM public.issue_statuses WHERE name = 'In Development')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Приостановлено, всвязи с изменением приоритетов', (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Development'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
 
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Код готов для проверки', (SELECT id FROM public.issue_statuses WHERE name = 'In Developement'), (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Code Review')),
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Приостановлено, всвязи с возникшими проблемами', (SELECT id FROM public.issue_statuses WHERE name = 'In Developement'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Код готов для проверки', (SELECT id FROM public.issue_statuses WHERE name = 'In Development'), (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Code Review')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Приостановлено, всвязи с возникшими проблемами', (SELECT id FROM public.issue_statuses WHERE name = 'In Development'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
 
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Успешно пройден code review', (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Code Review'), (SELECT id FROM public.issue_statuses WHERE name = 'Code Review Passed')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Не пройден code review', (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Code Review'), (SELECT id FROM public.issue_statuses WHERE name = 'Code Review Failed')),
 
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Передача кода в тестирование', (SELECT id FROM public.issue_statuses WHERE name = 'Code Review Passed'), (SELECT id FROM public.issue_statuses WHERE name = 'Ready for QA')),
 
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Возврат на доработку', (SELECT id FROM public.issue_statuses WHERE name = 'Code Review Failed'), (SELECT id FROM public.issue_statuses WHERE name = 'In Developement')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Возврат на доработку', (SELECT id FROM public.issue_statuses WHERE name = 'Code Review Failed'), (SELECT id FROM public.issue_statuses WHERE name = 'In Development')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Приостановлено, всвязи с изменением приоритетов', (SELECT id FROM public.issue_statuses WHERE name = 'Code Review Failed'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
 
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Начало тестирования', (SELECT id FROM public.issue_statuses WHERE name = 'Ready for QA'), (SELECT id FROM public.issue_statuses WHERE name = 'In QA')),
@@ -70,7 +70,7 @@ INSERT INTO public.workflow_transitions (workflow_id, name, from_status_id, to_s
 
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Передача разработанного и протестированного функционала в проверку', (SELECT id FROM public.issue_statuses WHERE name = 'QA Passed'), (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Review')),
 
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Возврат на доработку', (SELECT id FROM public.issue_statuses WHERE name = 'QA Failed'), (SELECT id FROM public.issue_statuses WHERE name = 'In Developement')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Возврат на доработку', (SELECT id FROM public.issue_statuses WHERE name = 'QA Failed'), (SELECT id FROM public.issue_statuses WHERE name = 'In Development')),
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Приостановлено, всвязи с изменением приоритетов', (SELECT id FROM public.issue_statuses WHERE name = 'QA Failed'), (SELECT id FROM public.issue_statuses WHERE name = 'On Hold')),
 
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Начало проверки', (SELECT id FROM public.issue_statuses WHERE name = 'Ready for Review'), (SELECT id FROM public.issue_statuses WHERE name = 'In Review')),
@@ -85,6 +85,6 @@ INSERT INTO public.workflow_transitions (workflow_id, name, from_status_id, to_s
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Отменено, всвязи с возникновением проблем', (SELECT id FROM public.issue_statuses WHERE name = 'Review Failed'), (SELECT id FROM public.issue_statuses WHERE name = 'Rejected')),
 
 ((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Восстановление в планах на спринт', (SELECT id FROM public.issue_statuses WHERE name = 'On Hold'), (SELECT id FROM public.issue_statuses WHERE name = 'Planned')),
-((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Отменено', (SELECT id FROM public.issue_statuses WHERE name = 'On Hold'), (SELECT id FROM public.issue_statuses WHERE name = 'Rejected')),
+((SELECT id FROM public.workflows WHERE name = 'Рабочий процесс для пользовательских историй'), 'Отменено', (SELECT id FROM public.issue_statuses WHERE name = 'On Hold'), (SELECT id FROM public.issue_statuses WHERE name = 'Rejected'));
 
 COMMIT;
