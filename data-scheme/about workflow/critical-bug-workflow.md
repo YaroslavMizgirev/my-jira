@@ -1,4 +1,4 @@
-# Ускоренный Workflow для Critical Bugs
+# Workflow для Critical Bugs
 
 ```mermaid
 graph TD
