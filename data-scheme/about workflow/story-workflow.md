@@ -11,31 +11,57 @@
 
 ```mermaid
 graph TD
-    A[Backlog<br/>Бэклог] --> B[Refined<br/>Уточнено]
-    B --> C[Ready for Dev<br/>Готово к разработке]
-    C --> D[In Development<br/>В разработке]
-    D --> E[Code Review<br/>Ревью кода]
-    E --> F[Ready for QA<br/>Готово к тестированию]
-    F --> G[In QA<br/>В тестировании]
-    G --> H[QA Passed<br/>Тестирование пройдено]
-    H --> I[Ready for PO Review<br/>Готово к проверке PO]
-    I --> J[PO Review Passed<br/>Проверено PO]
-    J --> K[Done<br/>Завершено]
-    
-    D --> L[Blocked<br/>Заблокировано]
-    L --> D
-    
-    G --> M[QA Failed<br/>Тестирование провалено]
-    M --> D
-    
-    I --> N[PO Review Failed<br/>Проверка провалена]
-    N --> D
-    
-    style A fill:#e6f3ff,stroke:#333
-    style K fill:#9f9,stroke:#333
+  A[Backlog<br/>Бэклог] e1@--> B[Research<br/>Уточняется]
+  B --> A
+  B e2@--> C[Approved<br/>Утверждено]
+  C e3@--> D[Planned<br/>Запланировано]
+  D e4@--> Q[Ready for Developement<br/>Готово к разработке]
+  Q e5@--> E[In Development<br/>В разработке]
+  E e6@--> F[Ready for Code Review<br/>Готово к ревью кода]
+  F e7@--> FA[Code Review Passed<br/>Ревью кода пройдено]
+  F --> FB[Code Review Failed<br/>Ревью кода не пройдено]
+  FB --> E
+  FA e8@--> G[Ready for QA<br/>Готово к тестированию]
+  G e9@--> H[In QA<br/>В тестировании]
+  H e10@--> I[QA Passed<br/>Тестирование пройдено]
+  I e11@--> J[Ready for Review<br/>Готово к проверке]
+  J e12@--> K[In Review<br/>На проверке]
+  K e13@--> L[Review Passed<br/>Проверено]
+  L e14@--> O[Resolved<br/>Завершено]
+
+  H --> M[QA Failed<br/>Тестирование провалено]
+  M --> E
+
+  K --> N[Review Failed<br/>Проверка провалена]
+  N --> E
+
+  A --> W[Rejected<br/>Отклонено]
+  B --> W
+  C --> W
+  D --> W
+  N --> W
+
+  D --> X[On Hold<br/>Отложено]
+  X --> D
+  Q --> X
+  E --> X
+  FB --> X
+  G --> X
+  J --> X
+  M --> X
+  N --> X
+  X --> W
+
+  classDef animate stroke-dasharray: 9,5,stroke-dashoffset: 900,animation: dash 25s linear infinite;
+  class e1,e2,e3,e4,e5,e6,e7,e8,e9,e10,e11,e12,e13,e14 animate
+
+  style A fill:#f9f,stroke:#000
+  style O fill:#9f9,stroke:#000
+  style W fill:#ff0,stroke:#000
+  style X fill:#aaa,stroke:#000
 ```
 
-## Подробное описание каждого статуса:
+## Подробное описание каждого статуса
 
 ### 1. Backlog (Бэклог)
 
@@ -56,15 +82,15 @@ graph TD
   - Тестируемая (Testable) - INVEST критерии
   
 Возможные действия:
-  → Refine (Уточнить): Перейти к детализации
+  → Research (Уточнить): Перейти к детализации
   → Reject (Отклонить): Не подходит для реализации
 ```
 
-### 2. Refined (Уточнено)
+### 2. Research (Уточняется)
 
 ```text
 Описание: Story детализирована и готова для оценки
-Кто работает: Product Owner, Development Team
+Кто работает: Product Owner, Business Analyst, Development Team
 Поля обязательные:
   - Детальное описание
   - Acceptance Criteria (критерии приемки)
@@ -78,11 +104,55 @@ graph TD
   - Dependencies identified
   
 Возможные действия:
-  → Mark Ready (Пометить готовой): Готова для планирования спринта
+  → Approve (Утвердить): Готова для планирования спринта
   → Return to Backlog (Вернуть): Требуется больше информации
+  → Reject (Отклонить): Не соответствует критериям
 ```
 
-### 3. Ready for Dev (Готово к разработке)
+### 3. Approved (Утверждено)
+
+```text
+Описание: История утверждена для планирования
+Кто утверждает: ___
+Поля обязательные:
+  - Approved By (кто утвердил)
+  - Approval Date (дата утверждения)
+  - Budget (бюджет если есть)
+  - Success Metrics (метрики успеха)
+  
+Триггеры:
+  - Создание Tasks под Story
+  - Уведомление командам
+  - Добавление в Roadmap
+  
+Возможные действия:
+  → Plan (Запланировать): Назначить на спринт
+  → Reject (Отклонить): Отмена утверждения (редко)
+```
+
+### 4. Planned (Запланировано)
+
+```text
+Описание: История включена в план спринта
+Кто планирует: ___
+Поля обязательные:
+  - Target Release (целевой релиз)
+  - Priority (приоритет)
+  - Dependencies (зависимости)
+  - Team Assignment (назначенные команды)
+  
+Автоматические действия:
+  - Создание связанных Tasks
+  - Назначение Story Owner
+  - Обновление Roadmap
+  
+Возможные действия:
+  → Start Develope (Начать): Начало работы команд
+  → Put on Hold (Приостановить): Изменение приоритетов
+  → Reject (Отклонить): Выведение из плана
+```
+
+### 5. Ready for Developement (Готово к разработке)
 
 ```text
 Описание: Story готова для взятия в спринт
@@ -100,10 +170,10 @@ graph TD
   
 Возможные действия:
   → Start Development (Начать разработку): Разработчик берет в работу
-  → Return to Refined (Вернуть): Требуются изменения
+  → Put on hold (Отложить): Требуются изменения
 ```
 
-### 4. In Development (В разработке)
+### 6. In Development (В разработке)
 
 ```text
 Описание: Разработка в процессе
@@ -122,10 +192,10 @@ graph TD
   
 Возможные действия:
   → Submit for Code Review (На ревью кода): Код готов для проверки
-  → Block (Заблокировать): Возникли проблемы
+  → Put on hold (Отложить): Возникли проблемы
 ```
 
-### 5. Code Review (Ревью кода)
+### 7. Ready for Code Review (Ревью кода)
 
 ```text
 Описание: Код проверяется другими разработчиками
@@ -142,12 +212,11 @@ graph TD
   - [ ] Performance implications (производительность)
   
 Возможные действия:
-  → Approve (Одобрить): Код прошел ревью
+  → Ready for QA (Одобрить): Код прошел ревью и готов к тестированию
   → Request Changes (Запросить изменения): Требуются правки
-  → Reject (Отклонить): Серьезные проблемы
 ```
 
-### 6. Ready for QA (Готово к тестированию)
+### 8. Ready for QA (Готово к тестированию)
 
 ```text
 Описание: Код прошел ревью и готов к тестированию.
@@ -163,9 +232,10 @@ graph TD
   
 Возможные действия:
   → Start QA (Начать тестирование): QA инженер берет в работу
+  → Put on hold (Отложить): Изменились приоритеты
 ```
 
-### 7. In QA (В тестировании)
+### 9. In QA (В тестировании)
 
 ```text
 Описание: Функциональное тестирование.
@@ -186,7 +256,7 @@ graph TD
   → QA Fail (Тестирование провалено): Найдены проблемы
 ```
 
-### 8. QA Passed (Тестирование пройдено)
+### 10. QA Passed (Тестирование пройдено)
 
 ```text
 Описание: Все тесты успешно пройдены
@@ -201,10 +271,10 @@ graph TD
   - Отметка связанных багов как исправленных
   
 Возможные действия:
-  → Submit for PO Review (На проверку PO): Готово для приемки
+  → Submit for Review (На проверку): Готово для приемки
 ```
 
-### 9. Ready for PO Review (Готово к проверке PO)
+### 11. Ready for Review (Готово к проверке)
 
 ```text
 Описание: Готово для приемки Product Owner
@@ -219,10 +289,11 @@ graph TD
   - User documentation ready
   
 Возможные действия:
-  → Start PO Review (Начать проверку): PO начинает проверку
+  → Start Review (Начать проверку): PO начинает проверку
+  → Put on hold (Отложить): Изменились приоритеты
 ```
 
-### 10. PO Review (Проверка Product Owner)
+### 12. In Review (Проверка)
 
 ```text
 Описание: Product Owner проверяет реализацию
@@ -239,11 +310,29 @@ Checklist для PO:
   - [ ] No regression issues
   
 Возможные действия:
-  → Accept (Принять): Story соответствует ожиданиям
-  → Request Changes (Запросить изменения): Требуются доработки
+  → Review Pass (Принять): Story соответствует ожиданиям
+  → Review Fail (Запросить изменения): Требуются доработки
 ```
 
-### 11. Done (Завершено)
+### 13. Review Passed (Проверка пройдена)
+
+```text
+Описание: Все проверки успешно пройдены
+Поля обязательные:
+  - Review Notes (заметки по проверке)
+  - Acceptance Criteria Met? (критерии выполнены?)
+  
+Проверки (Gate Criteria):
+  - [ ] Все Stories завершены
+  - [ ] Метрики успеха достигнуты
+  - [ ] Пользовательские тесты пройдены
+  - [ ] Документация обновлена
+  
+Возможные действия:
+  → Accept (Принято): Story соответствует критериям
+```
+
+### 14. Resolved (Завершено)
 
 ```text
 Описание: Story полностью завершена
