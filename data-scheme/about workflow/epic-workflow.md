@@ -3,8 +3,8 @@
 ```mermaid
 ---
 config:
-  primaryColor: '#000'
-  primaryTextColor: '#000'
+  primaryColor: '#fff'
+  primaryTextColor: '#fff'
 ---
 graph TD
     A[Conceived<br/>Задумано] e1@--> B[Research<br/>Уточняется]
