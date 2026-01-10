@@ -37,19 +37,19 @@
 
     <!-- Асинхронный аппендер для JSON -->
     <appender name="ASYNC_JSON" class="ch.qos.logback.classic.AsyncAppender">
-        <appender-ref ref="JSON_FILE" />
+        <appender-ref ref="JSON_FILE"/>
         <queueSize>512</queueSize> <!-- Размер буфера -->
         <discardingThreshold>0</discardingThreshold> <!-- Когда начинать отбрасывать логи -->
         <neverBlock>true</neverBlock> <!-- Не блокировать при полном буфере -->
-        <maxFlushTime>5000</maxFlushTime> <!-- Макс. время ожидания записи (мс) -->
+        <maxFlushTime>5000</maxFlushTime> <!-- Максимальное время ожидания записи (мс) -->
     </appender>
 
     <!-- Уровни логирования -->
     <logger name="ru.mymsoft" level="INFO" additivity="false">
-        <appender-ref ref="CONSOLE" />
-        <appender-ref ref="ASYNC_JSON" />
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="ASYNC_JSON"/>
     </logger>
     <root level="WARN">
-        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>
