@@ -6,39 +6,34 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 /**
- * Хранит все типы действий, происходящие с задачами 
- * (например, изменение статуса, назначение исполнителя, 
+ * Хранит все типы действий, происходящие с задачами
+ * (например, изменение статуса, назначение исполнителя,
  * обновление описания, добавление комментария/вложения).
  */
 @Entity
 @Table(name = "action_types")
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode
 @Builder
+@Data
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class ActionType {
-  /**
-   * Уникальный идентификатор типа действия.
-   */
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    /**
+     * Уникальный идентификатор типа действия.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
+    private Long id;
 
-  /**
-   * Тип действия (например, "STATUS_CHANGE", "ASSIGNED", "COMMENTED").
-   */
-  @Column(name = "name", nullable = false, unique = true)
-  @NonNull
-  private String name;
+    /**
+     * Тип действия (например, "STATUS_CHANGE", "ASSIGNED", "COMMENTED").
+     */
+    @Column(name = "name", nullable = false, unique = true)
+    @NonNull
+    @EqualsAndHashCode.Include
+    private String name;
 }
