@@ -2,16 +2,19 @@
 
 ## Таблицы заполненные значениями по умолчанию:
 
-1. [таблица `public.action_types`](./action-types-seed.sql);
-2. [таблица `public.issue_statuses`](./issue-statuses-seed.sql);
-3. [таблица `public.issue_types`](./issue-types-seed.sql);
-4. [таблица `public.priorities`](./priorities-seed.sql);
-5. [таблица `public.users`](./users-seed.sql);
-6. [таблица `public.workflows`](./workflows-seed.sql)^[Далее здесь можно указывать процессы ГОСТ Р 527193-2016 и ГОСТ ИСО МЭК 12207 (см. ГОСТ Р ИСО МЭК ТО 15271).];
-7. [таблица `workflow_statuses`](./workflow-statuses-seed.sql)^[Не завершено.];
-8. [таблица `workflow_transitions`](./workflow-transitions-seed.sql)^[Не завершено.];
-9. [таблица `...`];
-10. [таблица `...`].
+1. [таблица `public.action_types`](./action_types-seed.sql);
+2. [таблица `public.groups`](./groups-seed.sql);
+3. [таблица `public.issue_link_types`](./issue_link_types-seed.sql);
+4. [таблица `public.issue_statuses`](./issue_statuses-seed.sql);
+5. [таблица `public.issue_types`](issue_types-seed.sql);
+6. [таблица `public.notification_statuses`](./notification_statuses-seed.sql);
+7. [таблица `public.permissions`](./permissions-seed.sql);
+8. [таблица `public.priorities`](./priorities-seed.sql);
+9. [таблица `public.roles`](./roles-seed.sql);
+10. [таблица `public.users`](./users-seed.sql);
+11. [таблица `public.workflow_statuses`](./workflow_statuses-seed.sql);
+12. [таблица `public.workflow_transitions`](./workflow_transitions-seed.sql);
+13. [таблица `public.workflows`](./workflows-seed.sql). Далее здесь можно указывать процессы ГОСТ Р 527193-2016 и ГОСТ ИСО МЭК 12207 (см. ГОСТ Р ИСО МЭК ТО 15271).
 
 ## Описание процессов жизненного цикла
 
