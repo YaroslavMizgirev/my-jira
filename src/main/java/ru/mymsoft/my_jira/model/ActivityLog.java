@@ -2,13 +2,7 @@ package ru.mymsoft.my_jira.model;
 
 import java.time.Instant;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Builder;
-import lombok.NonNull;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Column;
@@ -29,18 +23,20 @@ import jakarta.persistence.Table;
  */
 @Entity
 @Table(name = "activity_log")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id"})
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class ActivityLog {
     /**
      * Уникальный идентификатор записи журнала.
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Include
     private Long id;
 
     /**
@@ -53,7 +49,14 @@ public class ActivityLog {
         )
     )
     @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Issue issue;
+
+    @EqualsAndHashCode.Include
+    private Long getIssueId() {
+        return this.issue.getId();
+    }
 
     /**
      * Ссылка на пользователя, который выполнил действие 
@@ -65,7 +68,15 @@ public class ActivityLog {
         foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
         )
     )
+    @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User user;
+
+    @EqualsAndHashCode.Include
+    private Long getUserId() {
+        return this.user.getId();
+    }
 
     /**
      * Ссылка на тип действия, которое происходит с задачей.
@@ -77,24 +88,38 @@ public class ActivityLog {
         )
     )
     @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private ActionType actionType;
+
+    @EqualsAndHashCode.Include
+    private Long getActionTypeId() {
+        return this.actionType.getId();
+    }
 
     /**
      * Имя поля, которое было изменено (если применимо).
      */
     @Column(name = "field_name", length = 100)
+    @NonNull
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private String fieldName;
 
     /**
      * Предыдущее значение поля (если применимо).
      */
     @Column(name = "old_value", columnDefinition = "TEXT")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private String oldValue;
 
     /**
      * Новое значение поля (если применимо).
      */
     @Column(name = "new_value", columnDefinition = "TEXT")
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private String newValue;
 
     /**
@@ -103,5 +128,7 @@ public class ActivityLog {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Include
     private Instant createdAt;
 }
