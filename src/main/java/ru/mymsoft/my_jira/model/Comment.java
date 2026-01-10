@@ -19,41 +19,66 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "comments")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 @Builder
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Include
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "issue_id", nullable = false, foreignKey = @ForeignKey(
         name = "fk_comments_issue",
         foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
-        )
     )
+    )
+    @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Issue issue;
+
+    @EqualsAndHashCode.Include
+    private Long getIssueId() {
+        return this.issue.getId();
+    }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author_id", nullable = false, foreignKey = @ForeignKey(
         name = "fk_comments_author",
         foreignKeyDefinition = "FOREIGN KEY (author_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-        )
     )
+    )
+    @NonNull
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private User author;
 
+    @EqualsAndHashCode.Include
+    private Long getAuthorId() {
+        return this.author.getId();
+    }
+
     @Column(name = "content", nullable = false, columnDefinition = "TEXT")
+    @NonNull
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private String content;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Instant createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Include
     private Instant updatedAt;
 }
