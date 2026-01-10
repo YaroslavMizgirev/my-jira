@@ -4,7 +4,8 @@
 
 BEGIN;
 
-INSERT INTO public.priorities (level, name, color_hex_code, icon_url) VALUES
+INSERT INTO public.priorities (level, name, color_hex_code, icon_url)
+VALUES
 -- Приоритеты от самого высокого к самому низкому
 (1, 'Highest', 'rgba(255, 0, 0, 1)', './icons/priority-highest-48.png'), -- Красный для наивысшего приоритета
 (2, 'High', 'rgba(139, 0, 255, 1)', './icons/priority-high-48.png'),     -- Фиолетовый для высокого приоритета
