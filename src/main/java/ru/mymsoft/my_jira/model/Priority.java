@@ -20,12 +20,10 @@ public class Priority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "level", nullable = false)
-    @NonNull
+    @Column(name = "level")
     private Integer level;
 
     @Column(name = "name", nullable = false, length = 50)
-    @NonNull
     private String name;
 
     @Column(name = "icon_url")

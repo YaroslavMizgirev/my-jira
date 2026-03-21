@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -20,6 +22,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "extension", "mimeType"})
+@ToString
 @Builder
 public class FileType {
 
@@ -28,10 +31,12 @@ public class FileType {
     private Long id;
 
     @Column(name = "extension", nullable = false, length = 20)
-    @NonNull
+    @NotBlank(message = "must not be blank")
+    @Size(max = 20, message = "must not exceed 20 characters")
     private String extension;
 
     @Column(name = "mime_type", nullable = false, length = 100)
-    @NonNull
+    @NotBlank(message = "must not be blank")
+    @Size(max = 100, message = "must not exceed 100 characters")
     private String mimeType;
 }

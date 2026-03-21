@@ -17,20 +17,14 @@ public class IssueWatcher {
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "issue_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_issue_watchers_issue",
-        foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
-        )
+    @JoinColumn(name = "issue_id", nullable = false, foreignKey = @ForeignKey(name = "fk_issue_watchers_issue")
     )
     @NonNull
     private Issue issue;
 
     @Id
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_issue_watchers_user",
-        foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-        )
+    @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "fk_issue_watchers_user")
     )
     @NonNull
     private User user;

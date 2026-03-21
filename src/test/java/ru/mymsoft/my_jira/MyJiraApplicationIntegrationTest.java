@@ -2,12 +2,12 @@ package ru.mymsoft.my_jira;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @SpringBootTest(classes = MyJiraApplication.class)
-@EnableJpaRepositories(basePackages = "ru.mymsoft.my_jira.repository")
+@ActiveProfiles("test")
 class MyJiraApplicationIntegrationTest {
 
     // @MockBean

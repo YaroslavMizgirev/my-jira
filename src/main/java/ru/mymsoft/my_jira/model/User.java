@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import lombok.Builder;
-import lombok.NonNull;
 import lombok.AccessLevel;
 
 /**
@@ -31,7 +30,7 @@ import lombok.AccessLevel;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of ={"id", "email"})
+@EqualsAndHashCode(of = "id")
 @ToString
 @Builder
 public class User {
@@ -46,14 +45,12 @@ public class User {
      * Электронная почта пользователя (используется для входа и уведомлений).
      */
     @Column(name = "email", nullable = false)
-    @NonNull
     private String email;
 
     /**
      * Уникальное имя пользователя.
      */
     @Column(name = "username", nullable = false)
-    @NonNull
     private String username;
 
     /**
@@ -62,7 +59,6 @@ public class User {
      */
     @Column(name = "password_hash", nullable = false)
     @ToString.Exclude
-    @NonNull
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private String passwordHash;

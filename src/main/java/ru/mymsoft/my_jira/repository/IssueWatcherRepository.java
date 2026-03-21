@@ -61,7 +61,7 @@ public interface IssueWatcherRepository extends JpaRepository<IssueWatcher, Issu
   List<IssueWatcher> findWatchersWithUserByIssueId(@Param("issueId") Long issueId);
 
   // Найти наблюдателей с настройками уведомлений (если добавишь связь)
-  @Query("SELECT iw FROM IssueWatcher iw JOIN FETCH iw.user u JOIN UserNotificationSetting uns ON u.id = uns.user WHERE iw.issue.id = :issueId AND uns.notificationType = 'ISSUE_UPDATED' AND uns.isEnabled = true")
+  @Query("SELECT iw FROM IssueWatcher iw JOIN FETCH iw.user u JOIN UserNotificationSetting uns ON u.id = uns.user.id WHERE iw.issue.id = :issueId AND uns.notificationType = 'ISSUE_UPDATED' AND uns.isEnabled = true")
   List<IssueWatcher> findWatchersWithEnabledNotifications(@Param("issueId") Long issueId);
 
   // МЕТОДЫ ДЛЯ UI И ОТЧЕТОВ

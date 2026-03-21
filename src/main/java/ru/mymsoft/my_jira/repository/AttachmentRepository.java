@@ -15,15 +15,15 @@ import ru.mymsoft.my_jira.model.Attachment;
 @Repository
 public interface AttachmentRepository extends JpaRepository<Attachment, Long> {
 
-  List<Attachment> findByIssueIdOrderByCreatedAtDesc(Long issueId);
+  List<Attachment> findByIssueIdOrderByUpdatedAtDesc(Long issueId);
 
-  List<Attachment> findByUploaderIdOrderByCreatedAtDesc(Long uploaderId);
+  List<Attachment> findByUploaderIdOrderByUpdatedAtDesc(Long uploaderId);
 
-  List<Attachment> findByFileTypeIdOrderByCreatedAtDesc(Long fileTypeId);
+  List<Attachment> findByFileTypeIdOrderByUpdatedAtDesc(Long fileTypeId);
 
-  List<Attachment> findTop10ByIssueIdOrderByCreatedAtDesc(Long issueId);
+  List<Attachment> findTop10ByIssueIdOrderByUpdatedAtDesc(Long issueId);
 
-  List<Attachment> findByIssueIdAndCreatedAtBetweenOrderByCreatedAtDesc(Long issueId, Instant startDate, Instant endDate);
+  List<Attachment> findByIssueIdAndUpdatedAtBetweenOrderByUpdatedAtDesc(Long issueId, Instant startDate, Instant endDate);
 
   // Поиск по имени файла (частичное совпадение)
   List<Attachment> findByFileNameContainingIgnoreCase(String fileName);

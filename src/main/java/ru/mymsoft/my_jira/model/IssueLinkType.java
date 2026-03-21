@@ -1,6 +1,8 @@
 package ru.mymsoft.my_jira.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Entity
@@ -13,6 +15,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
+@ToString
 @Builder
 public class IssueLinkType {
     @Id
@@ -20,10 +23,12 @@ public class IssueLinkType {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
-    @NonNull
+    @NotBlank(message = "must not be blank")
+    @Size(max = 100, message = "must not exceed 100 characters")
     private String name;
 
     @Column(name = "inward_name", nullable = false, length = 100)
-    @NonNull
+    @NotBlank(message = "must not be blank")
+    @Size(max = 100, message = "must not exceed 100 characters")
     private String inwardName;
 }

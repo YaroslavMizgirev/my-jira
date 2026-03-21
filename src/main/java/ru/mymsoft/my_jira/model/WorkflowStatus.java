@@ -18,6 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "workflow_statuses")
@@ -26,25 +27,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@EqualsAndHashCode(of = "id")
+@ToString
 public class WorkflowStatus {
   @EmbeddedId
   private WorkflowStatusId id;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @MapsId("workflowId")
-  @JoinColumn(name = "workflow_id", nullable = false, foreignKey = @ForeignKey(
-      name = "fk_workflow_statuses_workflow",
-      foreignKeyDefinition = "FOREIGN KEY (workflow_id) REFERENCES public.workflows (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-      )
+  @JoinColumn(name = "workflow_id", nullable = false, foreignKey = @ForeignKey(name = "fk_workflow_statuses_workflow")
   )
   private Workflow workflow;
 
   @ManyToOne(fetch = FetchType.LAZY, optional = false)
   @MapsId("statusId")
-  @JoinColumn(name = "status_id", nullable = false, foreignKey = @ForeignKey(
-      name = "fk_workflow_statuses_status",
-      foreignKeyDefinition = "FOREIGN KEY (status_id) REFERENCES public.issue_statuses (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-      )
+  @JoinColumn(name = "status_id", nullable = false, foreignKey = @ForeignKey(name = "fk_workflow_statuses_status")
   )
   private IssueStatus issueStatus;
 

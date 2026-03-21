@@ -17,4 +17,8 @@ public interface UserGroupRepository extends JpaRepository<UserGroup, UserGroupI
     Page<UserGroup> findAllByGroup_Id(Long groupId, Pageable pageable);
     
     Optional<UserGroup> findByUserIdAndGroupId(Long userId, Long groupId);
+
+    boolean existsByUser_IdAndGroup_Id(Long userId, Long groupId);
+
+    void deleteByUser_IdAndGroup_Id(Long userId, Long groupId);
 }

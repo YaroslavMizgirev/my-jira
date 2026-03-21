@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(jar -tf ~/.m2/repository/org/springframework/boot/spring-boot-test-autoconfigure/4.0.1/spring-boot-test-autoconfigure-4.0.1.jar)",
+      "Bash(./mvnw test:*)",
+      "Bash(grep -l \"@NonNull\" /c/projects/java/my-jira/.claude/worktrees/sad-albattani/src/main/java/ru/mymsoft/my_jira/model/*.java)",
+      "Bash(grep -v \"^$$Failures:\\\\|Errors:\\\\|Tests run:\\\\|Failed to\\\\|See \\\\|To see\\\\|Re-run\\\\|For more\\\\|Help\\\\|\\\\->\")",
+      "Bash(xargs grep:*)",
+      "Bash(./mvnw compile:*)",
+      "mcp__mcp-registry__search_mcp_registry",
+      "Bash(npx -y mcp-obsidian --help)",
+      "Bash(claude mcp:*)",
+      "Bash(mvn test:*)",
+      "Bash(mvn compile:*)"
+    ]
+  }
+}

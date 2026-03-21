@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.NonNull;
@@ -13,6 +14,7 @@ import ru.mymsoft.my_jira.dto.UpdateGroupDto;
 import ru.mymsoft.my_jira.model.Group;
 import ru.mymsoft.my_jira.repository.GroupRepository;
 
+@Service
 public class GroupService {
     private final GroupRepository groupRepository;
     

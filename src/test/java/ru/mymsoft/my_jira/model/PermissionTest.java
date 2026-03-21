@@ -306,7 +306,7 @@ class PermissionTest {
     @DisplayName("Should verify permission name length constraints")
     void shouldVerifyPermissionNameLengthConstraints() {
         // Given - name with maximum allowed length (100 chars)
-        String maxLengthName = "PERM_".repeat(19) + "END"; // Exactly 100 characters
+        String maxLengthName = "PERM_".repeat(20); // Exactly 100 characters
 
         // When
         Permission permission = Permission.builder()
@@ -326,8 +326,8 @@ class PermissionTest {
         // Given
         String descriptionWithSpecialChars = "Permission allows: \n" +
                 "- Create issues (CRUD) \n" +
-                - Edit issues <with templates> \n" +
-                - Delete issues (use with caution!) \n" +
+                "- Edit issues <with templates> \n" +
+                "- Delete issues (use with caution!) \n" +
                 "Special chars: @#$%^&*()";
 
         // When

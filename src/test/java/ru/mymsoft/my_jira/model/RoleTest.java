@@ -392,8 +392,8 @@ class RoleTest {
         // Given
         String descriptionWithSpecialChars = "Role permissions include: \n" +
                 "- Create & edit issues (CRUD operations) \n" +
-                - Delete issues <with restrictions> \n" +
-                - Manage project settings (use carefully!) \n" +
+                "- Delete issues <with restrictions> \n" +
+                "- Manage project settings (use carefully!) \n" +
                 "Special chars: @#$%^&*()[]{}";
 
         // When

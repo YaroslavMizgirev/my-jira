@@ -60,9 +60,9 @@ class UserTest {
         user3.setEmail("user3@test.com");
 
         assertThat(user1)
-            .isNotEqualTo(user2)
-            .isNotEqualTo(user3)
-            .hasSameHashCodeAs(user2);
+            .isEqualTo(user2)        // same id → equal (id-based equality)
+            .isNotEqualTo(user3)     // different id → not equal
+            .hasSameHashCodeAs(user2); // same id → same hashCode
     }
 
     @Test

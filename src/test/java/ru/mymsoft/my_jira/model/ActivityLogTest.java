@@ -20,9 +20,15 @@ class ActivityLogTest {
 
     @BeforeEach
     void setUp() {
-        // Create test entities
-        testIssue = Issue.builder().id(1L).key("TEST-1").title("Test Issue").build();
-        testUser = User.builder().id(1L).username("testuser").email("test@example.com").build();
+        // Create test entities using no-args constructor to avoid @NonNull checks on JPA-managed fields
+        testIssue = new Issue();
+        testIssue.setId(1L);
+
+        testUser = new User();
+        testUser.setId(1L);
+        testUser.setUsername("testuser");
+        testUser.setEmail("test@example.com");
+
         testActionType = ActionType.builder().id(1L).name("STATUS_CHANGE").build();
 
         activityLog = new ActivityLog(

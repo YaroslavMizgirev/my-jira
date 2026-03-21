@@ -3,6 +3,8 @@ package ru.mymsoft.my_jira.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,6 +18,7 @@ public interface IssueStatusRepository extends JpaRepository<IssueStatus, Long> 
   Optional<IssueStatus> findByName(String name);
   boolean existsByName(String name);
   List<IssueStatus> findByNameContainingIgnoreCase(String namePart);
+  Page<IssueStatus> findAllByNameContainingIgnoreCase(String namePart, Pageable pageable);
   List<IssueStatus> findAllByOrderByNameAsc();
 
   // Найти статусы по ID списком (для workflow)
@@ -35,11 +38,11 @@ public interface IssueStatusRepository extends JpaRepository<IssueStatus, Long> 
   // МЕТОДЫ ДЛЯ WORKFLOW СИСТЕМЫ:
 
   // Найти статусы, используемые в конкретном workflow
-  @Query("SELECT ws.status FROM WorkflowStatus ws WHERE ws.workflow.id = :workflowId ORDER BY ws.status.name")
+  @Query("SELECT ws.issueStatus FROM WorkflowStatus ws WHERE ws.workflow.id = :workflowId ORDER BY ws.issueStatus.name")
   List<IssueStatus> findByWorkflowId(@Param("workflowId") Long workflowId);
 
   // Найти статусы, НЕ используемые в workflow
-  @Query("SELECT s FROM IssueStatus s WHERE s.id NOT IN (SELECT ws.status.id FROM WorkflowStatus ws WHERE ws.workflow.id = :workflowId) ORDER BY s.name")
+  @Query("SELECT s FROM IssueStatus s WHERE s.id NOT IN (SELECT ws.issueStatus.id FROM WorkflowStatus ws WHERE ws.workflow.id = :workflowId) ORDER BY s.name")
   List<IssueStatus> findNotInWorkflow(@Param("workflowId") Long workflowId);
 
   // Статистика использования статусов

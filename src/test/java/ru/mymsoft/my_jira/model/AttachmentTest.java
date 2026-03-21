@@ -32,7 +32,7 @@ class AttachmentTest {
         attachment.setFileSizeBytes(1024L);
         attachment.setStoragePath("/uploads/2024/document.pdf");
         attachment.setDescription("Project requirements document");
-        attachment.setCreatedAt(Instant.now());
+        attachment.setUpdatedAt(Instant.now());
     }
 
     @Test
@@ -46,7 +46,7 @@ class AttachmentTest {
         assertThat(attachment.getFileSizeBytes()).isEqualTo(1024L);
         assertThat(attachment.getStoragePath()).isEqualTo("/uploads/2024/document.pdf");
         assertThat(attachment.getDescription()).isEqualTo("Project requirements document");
-        assertThat(attachment.getCreatedAt()).isNotNull();
+        assertThat(attachment.getUpdatedAt()).isNotNull();
     }
 
     @Test
@@ -124,7 +124,7 @@ class AttachmentTest {
         assertThat(emptyAttachment.getFileSizeBytes()).isNull();
         assertThat(emptyAttachment.getStoragePath()).isNull();
         assertThat(emptyAttachment.getDescription()).isNull();
-        assertThat(emptyAttachment.getCreatedAt()).isNull();
+        assertThat(emptyAttachment.getUpdatedAt()).isNull();
     }
 
     @Test
@@ -145,7 +145,7 @@ class AttachmentTest {
         assertThat(attachment1.getFileSizeBytes()).isEqualTo(512L);
         assertThat(attachment1.getStoragePath()).isEqualTo("/uploads/test.txt");
         assertThat(attachment1.getDescription()).isEqualTo("Test file description");
-        assertThat(attachment1.getCreatedAt()).isEqualTo(now);
+        assertThat(attachment1.getUpdatedAt()).isEqualTo(now);
     }
 
     @Test
@@ -155,11 +155,11 @@ class AttachmentTest {
 
         // When
         Instant before = Instant.now();
-        newAttachment.setCreatedAt(Instant.now());
+        newAttachment.setUpdatedAt(Instant.now());
         Instant after = Instant.now();
 
         // Then
-        assertThat(newAttachment.getCreatedAt()).isBetween(before, after);
+        assertThat(newAttachment.getUpdatedAt()).isBetween(before, after);
     }
 
     @Test
@@ -196,9 +196,10 @@ class AttachmentTest {
     @Test
     void testAttachmentWithMultilineDescription() {
         // Given
-        String multilineDescription = """First line of description\n
-                                    Second line with details\n
-                                    Third line with additional info""";
+        String multilineDescription = """
+                First line of description
+                Second line with details
+                Third line with additional info""";
         attachment.setDescription(multilineDescription);
 
         // Then

@@ -1,0 +1,65 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;DEFAULT_NULL_ORDERING=HIGH;NON_KEYWORDS=KEY,VALUE
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        "[format_sql]": false
+        "[globally_quoted_identifiers]": false
+        "[hbm2ddl.delimiter]": ";"
+    show-sql: false
+
+  flyway:
+    enabled: false
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: disabled
+            client-secret: disabled
+          github:
+            client-id: disabled
+            client-secret: disabled
+          gitlab:
+            client-id: disabled
+            client-secret: disabled
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: GitLab
+          yandex:
+            client-id: disabled
+            client-secret: disabled
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: Yandex
+          mailru:
+            client-id: disabled
+            client-secret: disabled
+            authorization-grant-type: authorization_code
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: Mail.ru
+        provider:
+          gitlab:
+            authorization-uri: https://gitlab.com/oauth/authorize
+            token-uri: https://gitlab.com/oauth/token
+            user-info-uri: https://gitlab.com/api/v4/user
+            user-name-attribute: name
+          yandex:
+            authorization-uri: https://oauth.yandex.ru/authorize
+            token-uri: https://oauth.yandex.ru/token
+            user-info-uri: https://login.yandex.ru/info
+            user-name-attribute: login
+          mailru:
+            authorization-uri: https://oauth.mail.ru/login
+            token-uri: https://oauth.mail.ru/token
+            user-info-uri: https://oauth.mail.ru/userinfo
+            user-name-attribute: email

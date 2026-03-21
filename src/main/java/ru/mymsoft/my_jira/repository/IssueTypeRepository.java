@@ -3,6 +3,8 @@ package ru.mymsoft.my_jira.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -18,6 +20,7 @@ public interface IssueTypeRepository extends JpaRepository<IssueType, Long> {
 
   // Поиск по части имени (для автодополнения)
   List<IssueType> findByNameContainingIgnoreCase(String namePart);
+  Page<IssueType> findAllByNameContainingIgnoreCase(String namePart, Pageable pageable);
   List<IssueType> findByNameStartingWithIgnoreCase(String prefix);
 
   // МЕТОДЫ ДЛЯ ОТОБРАЖЕНИЯ
@@ -25,22 +28,9 @@ public interface IssueTypeRepository extends JpaRepository<IssueType, Long> {
   List<IssueType> findAllByOrderByNameAsc();
   List<IssueType> findAllByOrderByNameDesc();
 
-  // Получить с сортировкой по уровню/приоритету (если добавишь поле order)
-  // List<IssueType> findAllByOrderByOrderAsc();
-
-  // МЕТОДЫ ДЛЯ UI (иконки, цвета)
-
-  // Найти типы с определенным цветом
-  List<IssueType> findByColorHexCode(String colorHexCode);
-
   // Найти типы с иконками
   List<IssueType> findByIconUrlIsNotNull();
   List<IssueType> findByIconUrlIsNull();
-
-  // ПОЛЕЗНЫЕ ДЛЯ СИСТЕМНЫХ ТИПОВ
-  // Найти системные типы (если добавишь флаг isSystemType)
-  // List<IssueType> findByIsSystemTypeTrue();
-  // List<IssueType> findByIsSystemTypeFalse();
 
   // МЕТОДЫ ДЛЯ WORKFLOW И ПРОЕКТОВ
   // Найти типы задач по проекту (через issues)
@@ -65,18 +55,6 @@ public interface IssueTypeRepository extends JpaRepository<IssueType, Long> {
   @Query("SELECT it FROM IssueType it WHERE LOWER(it.name) IN ('bug', 'task', 'story', 'epic')")
   List<IssueType> findStandardTypes();
 
-  // Найти тип "Bug"
-  Optional<IssueType> findBugType();
-
-  // Найти тип "Task"
-  Optional<IssueType> findTaskType();
-
-  // Найти тип "Story"
-  Optional<IssueType> findStoryType();
-
-  // Найти тип "Epic"
-  Optional<IssueType> findEpicType();
-
   // МЕТОДЫ ДЛЯ ВАЛИДАЦИИ И АДМИНИСТРИРОВАНИЯ
   // Проверить, используется ли тип в задачах
   @Query("SELECT COUNT(i) > 0 FROM Issue i WHERE i.issueType.id = :typeId")
@@ -85,17 +63,6 @@ public interface IssueTypeRepository extends JpaRepository<IssueType, Long> {
   // Проверить, используется ли тип в workflow defaults
   @Query("SELECT COUNT(pitwd) > 0 FROM ProjectIssueTypeWorkflowDefault pitwd WHERE pitwd.issueType.id = :typeId")
   boolean isTypeUsedInWorkflowDefaults(@Param("typeId") Long typeId);
-
-  // Безопасное удаление типа
-  // @Modifying
-  // @Transactional
-  // @Query("DELETE FROM IssueType it WHERE it.id = :typeId AND NOT EXISTS (SELECT 1 FROM Issue i WHERE i.issueType.id = :typeId) AND NOT EXISTS (SELECT 1 FROM ProjectIssueTypeWorkflowDefault pitwd WHERE pitwd.issueType.id = :typeId)")
-  // int deleteTypeIfNotUsed(@Param("typeId") Long typeId);
-
-  // ПОИСК ПО ВИЗУАЛЬНЫМ АТРИБУТАМ
-  // Найти типы с определенной цветовой схемой
-  @Query("SELECT it FROM IssueType it WHERE it.colorHexCode LIKE :colorPattern")
-  List<IssueType> findByColorPattern(@Param("colorPattern") String colorPattern);
 
   // ДОПОЛНИТЕЛЬНЫЕ ПОЛЕЗНЫЕ МЕТОДЫ
   // Найти типы по списку ID

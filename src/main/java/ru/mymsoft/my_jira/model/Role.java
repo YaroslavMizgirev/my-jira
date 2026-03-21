@@ -20,7 +20,6 @@ public class Role {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
-    @NonNull
     private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")

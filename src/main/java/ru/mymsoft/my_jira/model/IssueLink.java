@@ -1,6 +1,7 @@
 package ru.mymsoft.my_jira.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -16,6 +17,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = { "id" })
+@ToString
 @Builder
 public class IssueLink {
     @Id
@@ -23,34 +25,24 @@ public class IssueLink {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "source_issue_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_issue_links_source_issue",
-        foreignKeyDefinition = "FOREIGN KEY (source_issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
-        )
+    @JoinColumn(name = "source_issue_id", nullable = false, foreignKey = @ForeignKey(name = "fk_issue_links_source_issue")
     )
-    @NonNull
+    @NotNull(message = "must not be null")
     private Issue sourceIssue;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "target_issue_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_issue_links_target_issue",
-        foreignKeyDefinition = "FOREIGN KEY (target_issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
-        )
+    @JoinColumn(name = "target_issue_id", nullable = false, foreignKey = @ForeignKey(name = "fk_issue_links_target_issue")
     )
-    @NonNull
+    @NotNull(message = "must not be null")
     private Issue targetIssue;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "link_type_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_issue_links_type",
-        foreignKeyDefinition = "FOREIGN KEY (link_type_id) REFERENCES public.issue_link_types (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-        )
+    @JoinColumn(name = "link_type_id", nullable = false, foreignKey = @ForeignKey(name = "fk_issue_links_type")
     )
-    @NonNull
+    @NotNull(message = "must not be null")
     private IssueLinkType linkType;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    @NonNull
     private Instant createdAt;
 }

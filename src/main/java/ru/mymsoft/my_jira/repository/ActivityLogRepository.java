@@ -29,7 +29,8 @@ public interface ActivityLogRepository extends JpaRepository<ActivityLog, Long> 
   List<ActivityLog> findByIssueIdAndFieldNameOrderByCreatedAtDesc(Long issueId, String fieldName);
 
   // Найти активности за период
-  List<ActivityLog> findIssueActivitiesInPeriod(Long issueId, Instant startDate, Instant endDate);
+  @Query("SELECT al FROM ActivityLog al WHERE al.issue.id = :issueId AND al.createdAt BETWEEN :startDate AND :endDate ORDER BY al.createdAt DESC")
+  List<ActivityLog> findIssueActivitiesInPeriod(@Param("issueId") Long issueId, @Param("startDate") Instant startDate, @Param("endDate") Instant endDate);
 
   // Удалить старые активности (для cleanup) - опасно!
   // void deleteByCreatedAtBefore(Instant date);

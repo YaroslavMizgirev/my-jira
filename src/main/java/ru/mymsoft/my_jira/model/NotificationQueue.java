@@ -59,6 +59,5 @@ public class NotificationQueue {
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    @NonNull
     private Instant createdAt;
 }

@@ -136,7 +136,7 @@ class IssueTest {
     @Test
     void testAllArgsConstructor() {
         Issue fullIssue = new Issue(1L, testInstant, "Description", "PROJ-1", "Title",
-                testInstant, null, null, null, null, reporter, null, project);
+                testInstant, null, null, null, reporter, null, null, project);
 
         assertThat(fullIssue.getId()).isEqualTo(1L);
         assertThat(fullIssue.getKey()).isEqualTo("PROJ-1");
@@ -149,13 +149,13 @@ class IssueTest {
     @Test
     void testEqualsAndHashCode() {
         Issue issue1 = new Issue(1L, testInstant, "Desc", "PROJ-1", "Title", testInstant,
-                null, null, null, null, reporter, null, project);
+                null, null, null, reporter, null, null, project);
         Issue issue2 = new Issue(1L, testInstant, "Desc", "PROJ-1", "Title", testInstant,
-                null, null, null, null, reporter, null, project);
+                null, null, null, reporter, null, null, project);
         Issue issue3 = new Issue(2L, testInstant, "Desc", "PROJ-2", "Title", testInstant,
-                null, null, null, null, reporter, null, project);
+                null, null, null, reporter, null, null, project);
         Issue issue4 = new Issue(1L, testInstant, "Desc", "PROJ-3", "Title", testInstant,
-                null, null, null, null, reporter, null, project);
+                null, null, null, reporter, null, null, project);
 
         // Test equals
         assertThat(issue1)

@@ -389,7 +389,7 @@ class ProjectTest {
     @ParameterizedTest
     @CsvSource({
         "Website Redesign, WEB, 'Project to redesign company website', '/icons/web.svg'",
-        'Mobile App, MOB, 'iOS and Android application development', '/icons/mobile.png'',
+        "Mobile App, MOB, 'iOS and Android application development', '/icons/mobile.png'",
         "API Development, API, 'Backend API services', '/icons/api.svg'",
         "Data Analytics, DATA, 'Big data processing and analytics', '/icons/data.png'",
         "Infrastructure, INFRA, 'Cloud infrastructure setup', '/icons/cloud.svg'"
