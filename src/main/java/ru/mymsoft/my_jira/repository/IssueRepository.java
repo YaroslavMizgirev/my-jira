@@ -1,5 +1,7 @@
 package ru.mymsoft.my_jira.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -22,4 +24,6 @@ public interface IssueRepository extends JpaRepository<Issue, Long> {
     List<Issue> findByAssignee(User assignee);
     List<Issue> findByStatus(IssueStatus status);
 
+    Page<Issue> findAllByProject_Id(Long projectId, Pageable pageable);
+    Page<Issue> findAllByTitleContainingIgnoreCase(String title, Pageable pageable);
 }

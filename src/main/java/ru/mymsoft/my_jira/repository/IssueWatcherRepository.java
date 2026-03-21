@@ -34,9 +34,8 @@ public interface IssueWatcherRepository extends JpaRepository<IssueWatcher, Issu
   // Количество задач, за которыми наблюдает пользователь
   Long countByUserId(Long userId);
 
-  // // МЕТОДЫ УДАЛЕНИЯ
-  // // Перестать наблюдать за задачей
-  // void deleteByIssueIdAndUserId(Long issueId, Long userId);
+  // МЕТОДЫ УДАЛЕНИЯ
+  void deleteByIssueIdAndUserId(Long issueId, Long userId);
 
   // // Удалить всех наблюдателей задачи
   // void deleteByIssueId(Long issueId);
