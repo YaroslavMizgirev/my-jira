@@ -23,4 +23,7 @@ public class Workflow {
     @NonNull
     @EqualsAndHashCode.Include
     private String name;
+
+    @Column(name = "is_default", nullable = false)
+    private Boolean isDefault = false;
 }

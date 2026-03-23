@@ -7,67 +7,61 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import lombok.Builder;
-import lombok.AccessLevel;
+import lombok.*;
 
-/**
- * Хранит информацию обо всех зарегистрированных пользователях системы.
- * Это центральная сущность, к которой привязаны многие другие действия и объекты.
- */
 @Entity
 @Table(name = "users",
     uniqueConstraints = {
         @UniqueConstraint(name = "uk_users_email", columnNames = {"email"}),
         @UniqueConstraint(name = "uk_users_username", columnNames = {"username"}),
+        @UniqueConstraint(name = "uk_users_oauth", columnNames = {"oauth_provider", "oauth_id"}),
     })
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
-@ToString
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@ToString(onlyExplicitlyIncluded = true)
 public class User {
-    /**
-     * Уникальный идентификатор пользователя.
-     */
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Include
     private Long id;
 
-    /**
-     * Электронная почта пользователя (используется для входа и уведомлений).
-     */
     @Column(name = "email", nullable = false)
+    @NonNull
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private String email;
 
-    /**
-     * Уникальное имя пользователя.
-     */
     @Column(name = "username", nullable = false)
+    @NonNull
+    @EqualsAndHashCode.Include
+    @ToString.Include
     private String username;
 
-    /**
-     * Хэш пароля пользователя.
-     * SHA-256 или bcrypt (рекомендуется для безопасности).
-     */
-    @Column(name = "password_hash", nullable = false)
+    @Column(name = "password_hash")
+    @EqualsAndHashCode.Exclude
     @ToString.Exclude
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     private String passwordHash;
 
-    public void setPassword(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
+    @Column(name = "oauth_provider", length = 50)
+    @EqualsAndHashCode.Exclude
+    @ToString.Include
+    private String oauthProvider;
 
-    public String getPassword() {
-        return passwordHash;
-    }
+    @Column(name = "oauth_id", length = 255)
+    @EqualsAndHashCode.Exclude
+    private String oauthId;
+
+    @Column(name = "display_name", length = 255)
+    @EqualsAndHashCode.Exclude
+    @ToString.Include
+    private String displayName;
+
+    @Column(name = "avatar_url", length = 2048)
+    @EqualsAndHashCode.Exclude
+    private String avatarUrl;
 }

@@ -37,15 +37,17 @@ public class OAuth2UserService extends DefaultOAuth2UserService {
         String displayName = extractDisplayName(provider, attributes);
         String avatarUrl = extractAvatarUrl(provider, attributes);
 
+        final String resolvedEmail = (email == null || email.isBlank())
+                ? provider + "_" + oauthId + "@noemail.local"
+                : email;
         if (email == null || email.isBlank()) {
             log.warn("OAuth2 provider '{}' did not return an email for user {}", provider, oauthId);
-            email = provider + "_" + oauthId + "@noemail.local";
         }
 
         User user = userRepository.findByOauthProviderAndOauthId(provider, oauthId)
-                .orElseGet(() -> createNewUser(provider, oauthId, email));
+                .orElseGet(() -> createNewUser(provider, oauthId, resolvedEmail));
 
-        updateUserFromOAuth2(user, email, displayName, avatarUrl);
+        updateUserFromOAuth2(user, resolvedEmail, displayName, avatarUrl);
         userRepository.save(user);
 
         log.info("OAuth2 login: provider={}, userId={}, email={}", provider, user.getId(), user.getEmail());
