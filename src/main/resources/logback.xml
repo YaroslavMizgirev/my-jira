@@ -2,16 +2,15 @@
 <configuration>
     <!-- Консольный аппендер -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-        <!-- Фильтрация чувствительных данных -->
+        <!-- Фильтрация чувствительных данных через Java фильтр -->
         <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
-            <evaluator>
-                <expression>return message.contains("password") || message.contains("token");</expression>
+            <evaluator class="ch.qos.logback.classic.boolex.OnMarkerEvaluator">
+                <marker>SENSITIVE</marker>
             </evaluator>
             <onMatch>DENY</onMatch>
         </filter>
 
         <encoder>
-            <charset>UTF-8</charset>
             <pattern>%d{yyyy-MM-dd HH:mm:ss} - %highlight(%-5level) [%thread] %cyan(%logger{36}) - %msg%n</pattern>
         </encoder>
     </appender>
@@ -26,7 +25,6 @@
             <totalSizeCap>3GB</totalSizeCap>
         </rollingPolicy>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
-            <charset>UTF-8</charset>
             <customFields>{"application":"test1"}</customFields>
             <timeZone>Europe/Moscow</timeZone>
             <includeContext>false</includeContext>

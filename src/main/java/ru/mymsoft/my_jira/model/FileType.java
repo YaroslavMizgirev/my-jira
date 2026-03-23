@@ -12,26 +12,26 @@ import lombok.*;
 @Entity
 @Table(name = "file_types",
     uniqueConstraints = {
-        @UniqueConstraint(name = "uk_file_types_extension", columnNames = {"extension"}),
-        @UniqueConstraint(name = "uk_file_types_mime_type", columnNames = {"mime_type"}),
+        @UniqueConstraint(name = "uk_file_types_extension_mime_type", columnNames = {"extension", "mime_type"}),
     })
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id", "extension", "mimeType"})
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class FileType {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
     private Long id;
 
     @Column(name = "extension", nullable = false, length = 20)
     @NonNull
+    @EqualsAndHashCode.Include
     private String extension;
 
     @Column(name = "mime_type", nullable = false, length = 100)
     @NonNull
+    @EqualsAndHashCode.Include
     private String mimeType;
 }

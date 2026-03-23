@@ -8,23 +8,19 @@ import lombok.*;
     uniqueConstraints = {
         @UniqueConstraint(name = "uk_workflows_name", columnNames = {"name"}),
     })
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id", "name"})
 @Builder
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Workflow {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
     private Long id;
 
-    @Column(name = "is_default", nullable = false)
-    @Builder.Default
+    @Column(name = "name", nullable = false)
     @NonNull
-    private Boolean isDefault = false;
-
-    @Column(name = "name", nullable = false, unique = true)
-    @NonNull
+    @EqualsAndHashCode.Include
     private String name;
 }

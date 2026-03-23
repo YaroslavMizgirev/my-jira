@@ -40,8 +40,10 @@
         <java.version>25</java.version>
         <jacoco.version>0.8.14</jacoco.version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
-        <logback-classic.version>1.5.20</logback-classic.version>
-        <assertj-core.version>3.27.3</assertj-core.version>
+        <logback-classic.version>1.5.26</logback-classic.version>
+        <logback-core.version>1.5.26</logback-core.version>
+        <assertj-core.version>3.27.7</assertj-core.version>
+        <surefireArgLine/>
     </properties>
 
     <dependencies>
@@ -82,24 +84,16 @@
             <scope>runtime</scope>
         </dependency>
 
-        <!-- JWT -->
+        <!-- Flyway -->
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-            <version>0.11.5</version>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-impl</artifactId>
-            <version>0.11.5</version>
-            <scope>runtime</scope>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-jackson</artifactId>
-            <version>0.11.5</version>
-            <scope>runtime</scope>
-        </dependency>
+
 
         <!-- Utilities -->
         <dependency>
@@ -113,13 +107,12 @@
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-        <!-- Пока отключим DOCKER -->
-        <!-- <dependency>
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
-        </dependency> -->
+        </dependency>
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -152,6 +145,29 @@
             <artifactId>h2</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-data-jpa-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-testcontainers</artifactId>
+            <version>4.0.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>1.21.4</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testcontainers</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>1.21.4</version>
+            <scope>test</scope>
+        </dependency>
 
         <!-- Logging -->
         <dependency>
@@ -163,6 +179,11 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>${logback-classic.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback-core.version}</version>
         </dependency>
 
         <!-- Annotation -->
@@ -209,6 +230,7 @@
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
+                        <phase>initialize</phase>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
@@ -255,6 +277,73 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <argLine>
+                        --add-opens=java.base/java.lang=ALL-UNNAMED
+                        --add-opens=java.base/java.util=ALL-UNNAMED
+                        --add-opens=java.base/java.lang.reflect=ALL-UNNAMED
+                        --add-opens=java.base/java.text=ALL-UNNAMED
+                        --add-opens=java.desktop/java.awt.font=ALL-UNNAMED
+                        -Djdk.instrument.traceUsage=false
+                        -XX:+EnableDynamicAgentLoading
+                        ${surefireArgLine}
+                    </argLine>
+                    <systemPropertyVariables>
+                        <spring.profiles.active>test</spring.profiles.active>
+                    </systemPropertyVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!-- Integration tests with PostgreSQL -->
+        <profile>
+            <id>test-postgres</id>
+            <properties>
+                <spring.profiles.active>test-postgres</spring.profiles.active>
+                <test.db.url>jdbc:postgresql://localhost:5433/myjira_test</test.db.url>
+                <test.db.username>test_user</test.db.username>
+                <test.db.password>test_password</test.db.password>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>3.5.4</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!-- Production profile -->
+        <profile>
+            <id>prod</id>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>

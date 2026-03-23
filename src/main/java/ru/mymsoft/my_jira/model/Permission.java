@@ -4,25 +4,29 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "permissions",
+@Table(
+    name = "permissions",
     uniqueConstraints = {
         @UniqueConstraint(name = "uk_permissions_name", columnNames = {"name"})
-    })
-@Getter
-@Setter
+    }
+)
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = {"id", "name"})
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Builder
 public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Exclude
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
     @NonNull
+    @EqualsAndHashCode.Include
     private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")
+    @EqualsAndHashCode.Exclude
     private String description;
 }

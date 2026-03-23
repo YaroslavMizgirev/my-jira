@@ -1,11 +1,13 @@
 package ru.mymsoft.my_jira.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -20,7 +22,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import ru.mymsoft.my_jira.dto.ActionTypeDto;
 import ru.mymsoft.my_jira.dto.CreateActionTypeDto;
-import ru.mymsoft.my_jira.dto.UpdateActionTypeDto;
+import ru.mymsoft.my_jira.exception.DuplicateActionTypeNameException;
 import ru.mymsoft.my_jira.service.ActionTypeService;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 @RestController
@@ -36,6 +39,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequiredArgsConstructor
 @Tag(name = "Action Types", description = "API для управления типами действий")
 public class ActionTypeController {
+
     private final ActionTypeService actionTypeService;
 
     @PostMapping
@@ -49,7 +53,7 @@ public class ActionTypeController {
     public ActionTypeDto createActionType(@Valid @RequestBody CreateActionTypeDto request) {
         return actionTypeService.createActionType(request);
     }
-    
+
     @GetMapping
     @Operation(summary = "Получение списка всех типов действий с фильтрацией")
     @ApiResponses(value = {
@@ -72,7 +76,7 @@ public class ActionTypeController {
         @Parameter(description = "Сортировка по имени: true - по возрастанию, false - по убыванию (опционально)")
         @RequestParam(required = false) Boolean ascending
     ) {
-        boolean asc = ascending == null ? true : ascending;
+        boolean asc = ascending == null || ascending;
         return actionTypeService.listAllActionTypesSorted(asc);
     }
 
@@ -113,7 +117,7 @@ public class ActionTypeController {
     public ActionTypeDto updateActionType(
         @Parameter(description = "ID типа действия", example = "1")
         @PathVariable Long id,
-        @Valid @RequestBody UpdateActionTypeDto request
+        @Valid @RequestBody ActionTypeDto request
     ) {
         return actionTypeService.updateActionType(id, request);
     }
@@ -130,5 +134,11 @@ public class ActionTypeController {
         @PathVariable Long id
     ) {
         actionTypeService.deleteActionType(id);
+    }
+
+    @ExceptionHandler(DuplicateActionTypeNameException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<String> handleDuplicateName(DuplicateActionTypeNameException e) {
+        return ResponseEntity.status(409).body(e.getMessage());
     }
 }

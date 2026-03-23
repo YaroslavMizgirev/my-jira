@@ -17,8 +17,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Записывает все значимые изменения и действия, происходящие с задачами 
- * (например, изменение статуса, назначение исполнителя, обновление описания, 
+ * Записывает все значимые изменения и действия, происходящие с задачами
+ * (например, изменение статуса, назначение исполнителя, обновление описания,
  * добавление комментария/вложения). Позволяет просматривать историю изменений задачи.
  */
 @Entity
@@ -43,9 +43,12 @@ public class ActivityLog {
      * Ссылка на задачу, к которой относится запись.
      */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "issue_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_activity_log_issue",
-        foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
+    @JoinColumn(
+        name = "issue_id",
+        nullable = false,
+        foreignKey = @ForeignKey(
+            name = "fk_activity_log_issue",
+            foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
         )
     )
     @NonNull
@@ -59,13 +62,15 @@ public class ActivityLog {
     }
 
     /**
-     * Ссылка на пользователя, который выполнил действие 
+     * Ссылка на пользователя, который выполнил действие
      * (может быть NULL для системных действий).
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(
-        name = "fk_activity_log_user",
-        foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
+    @JoinColumn(
+        name = "user_id",
+        foreignKey = @ForeignKey(
+            name = "fk_activity_log_user",
+            foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
         )
     )
     @NonNull
@@ -82,9 +87,12 @@ public class ActivityLog {
      * Ссылка на тип действия, которое происходит с задачей.
      */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "action_type_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_activity_log_action_type",
-        foreignKeyDefinition = "FOREIGN KEY (action_type_id) REFERENCES public.action_types (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
+    @JoinColumn(
+        name = "action_type_id",
+        nullable = false,
+        foreignKey = @ForeignKey(
+            name = "fk_activity_log_action_type",
+            foreignKeyDefinition = "FOREIGN KEY (action_type_id) REFERENCES public.action_types (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
         )
     )
     @NonNull

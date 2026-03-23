@@ -19,8 +19,7 @@ public class IssueWatcher {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "issue_id", nullable = false, foreignKey = @ForeignKey(
         name = "fk_issue_watchers_issue",
-        foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
-        )
+        foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE")
     )
     @NonNull
     private Issue issue;
@@ -29,8 +28,7 @@ public class IssueWatcher {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(
         name = "fk_issue_watchers_user",
-        foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-        )
+        foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT")
     )
     @NonNull
     private User user;

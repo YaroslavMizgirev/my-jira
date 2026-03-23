@@ -6,70 +6,70 @@ BEGIN;
 
 INSERT INTO public.action_types (name) VALUES
 -- Действия, связанные с созданием и закрытием задач
-('Задача создана'),                     -- ISSUE_CREATED
-('Задача открыта'),                     -- ISSUE_OPENED
-('Задача решена'),                      -- ISSUE_RESOLVED
-('Задача закрыта'),                     -- ISSUE_CLOSED
-('Задача переоткрыта'),                 -- ISSUE_REOPENED
-('Задача отложена'),                    -- ISSUE_HOLDED
-('Задача заблокирована'),               -- ISSUE_BLOCKED
-('Задача отменена'),                    -- ISSUE_CANCELLED
+('Задача создана'),                 -- ISSUE_CREATED
+('Задача открыта'),                 -- ISSUE_OPENED
+('Задача решена'),                  -- ISSUE_RESOLVED
+('Задача закрыта'),                 -- ISSUE_CLOSED
+('Задача переоткрыта'),             -- ISSUE_REOPENED
+('Задача отложена'),                -- ISSUE_HOLDED
+('Задача заблокирована'),           -- ISSUE_BLOCKED
+('Задача отменена'),                -- ISSUE_CANCELLED
 
 -- Действия, связанные со статусом задачи
-('Статус задачи изменился'),            -- ISSUE_STATUS_CHANGED
+('Статус задачи изменился'),        -- ISSUE_STATUS_CHANGED
 
 -- Действия, связанные с назначением
-('Исполнитель назначен'),               -- PERFORMER_ASSIGNED
-('Исполнитель изменился'),              -- PERFORMER_ASSIGNEE_CHANGED
-('Исполнитель удален'),                 -- PERFORMER_UNASSIGNED
+('Исполнитель назначен'),           -- PERFORMER_ASSIGNED
+('Исполнитель изменился'),          -- PERFORMER_ASSIGNEE_CHANGED
+('Исполнитель удален'),             -- PERFORMER_UNASSIGNED
 
 -- Действия, связанные с приоритетом
-('Приоритет изменился'),                -- PRIORITY_CHANGED
+('Приоритет изменился'),            -- PRIORITY_CHANGED
 
 -- Действия, связанные с описанием и названием
-('Название обновлено'),                 -- TITLE_UPDATED
-('Описание обновлено'),                 -- DESCRIPTION_UPDATED
+('Название обновлено'),             -- TITLE_UPDATED
+('Описание обновлено'),             -- DESCRIPTION_UPDATED
 
 -- Действия, связанные с комментариями
-('Комментарий добавлен'),               -- COMMENTED
-('Комментарий обновлен'),               -- COMMENT_UPDATED
-('Комментарий удален'),                 -- COMMENT_DELETED
+('Комментарий добавлен'),           -- COMMENTED
+('Комментарий обновлен'),           -- COMMENT_UPDATED
+('Комментарий удален'),             -- COMMENT_DELETED
 
 -- Действия, связанные с вложениями
-('Вложение добавлено'),                 -- ATTACHMENT_ADDED
-('Вложение удалено'),                   -- ATTACHMENT_DELETED
+('Вложение добавлено'),             -- ATTACHMENT_ADDED
+('Вложение удалено'),               -- ATTACHMENT_DELETED
 
 -- Действия, связанные со сроками
-('Срок установлен'),                    -- DUE_DATE_SET
-('Срок изменился'),                     -- DUE_DATE_CHANGED
-('Срок удален'),                        -- DUE_DATE_REMOVED
+('Срок установлен'),                -- DUE_DATE_SET
+('Срок изменился'),                 -- DUE_DATE_CHANGED
+('Срок удален'),                    -- DUE_DATE_REMOVED
 
 -- Действия, связанные с типом задачи
-('Тип задачи изменился'),               -- ISSUE_TYPE_CHANGED
+('Тип задачи изменился'),           -- ISSUE_TYPE_CHANGED
 
 -- Действия, связанные со связями задач
-('Связь создана'),                      -- LINK_CREATED
-('Связь удалена'),                      -- LINK_DELETED
+('Связь создана'),                  -- LINK_CREATED
+('Связь удалена'),                  -- LINK_DELETED
 
 -- Действия, связанные с наблюдателями
-('Наблюдатель добавлен'),               -- WATCHER_ADDED
-('Наблюдатель удален'),                 -- WATCHER_REMOVED
+('Наблюдатель добавлен'),           -- WATCHER_ADDED
+('Наблюдатель удален'),             -- WATCHER_REMOVED
 
 -- Действия, связанные с метками/тегами (если будут добавлены)
-('Метка добавлена'),                    -- LABEL_ADDED
-('Метка изменена'),                     -- LABEL_CHANGED
-('Метка удалена'),                      -- LABEL_REMOVED
+('Метка добавлена'),                -- LABEL_ADDED
+('Метка изменена'),                 -- LABEL_CHANGED
+('Метка удалена'),                  -- LABEL_REMOVED
 
 -- Действия, связанные с проектом
-('Проект изменился'),                   -- PROJECT_CHANGED
+('Проект изменился'),               -- PROJECT_CHANGED
 
 -- Системные действия
-('Массовое изменение'),                 -- BULK_CHANGE
-('Импорт данных'),                      -- DATA_IMPORT
-('Экспорт данных'),                     -- DATA_EXPORT
-('Системное обновление'),               -- SYSTEM_UPDATE
-('Переход по рабочему процессу'),       -- WORKFLOW_TRANSITION
-('Изменение разрешений'),               -- PERMISSION_CHANGED
-('Изменение настроек уведомлений');     -- NOTIFICATION_SETTINGS_CHANGED
+('Массовое изменение'),             -- BULK_CHANGE
+('Импорт данных'),                  -- DATA_IMPORT
+('Экспорт данных'),                 -- DATA_EXPORT
+('Системное обновление'),           -- SYSTEM_UPDATE
+('Переход по рабочему процессу'),   -- WORKFLOW_TRANSITION
+('Изменение разрешений'),           -- PERMISSION_CHANGED
+('Изменение настроек уведомлений'); -- NOTIFICATION_SETTINGS_CHANGED
 
 COMMIT;

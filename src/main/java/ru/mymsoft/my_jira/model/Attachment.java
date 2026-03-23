@@ -53,7 +53,7 @@ public class Attachment {
     @ToString.Exclude
     private User uploader;
 
-    @Column(name = "file_name", nullable = false, length = 255)
+    @Column(name = "file_name", nullable = false)
     @EqualsAndHashCode.Include
     @ToString.Include
     private String fileName;

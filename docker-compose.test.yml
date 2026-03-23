@@ -1,0 +1,45 @@
+services:
+  postgres-test:
+    image: postgres:18-alpine
+    container_name: myjira-postgres-test
+    environment:
+      POSTGRES_DB: myjira_test
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_test_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U test_user -d myjira_test"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+    networks:
+      - test-network
+
+  redis-test:
+    image: redis:7-alpine
+    container_name: myjira-redis-test
+    ports:
+      - "6380:6379"
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_test_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - test-network
+
+volumes:
+  postgres_test_data:
+  redis_test_data:
+
+networks:
+  test-network:
+    driver: bridge

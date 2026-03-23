@@ -40,22 +40,12 @@ docker-compose down # Остановить контейнер
 
 ## Этап 2: Разработка backend
 
-Проект будем реализовывать с применением Spring Boot, на платформе Java 17 используя [Zulu JDK FX](https://www.azul.com/core-post-download/?endpoint=zulu&uuid=ba2dc6eb-1dae-44af-a4f5-760bb2c23553).
+Проект будем реализовывать с применением:
 
-### Используемые зависимости в pom.xml
-
-- Spring Web;
-- Spring Thymeleaf;
-- PostgreSQL Driver;
-- SpringData JPA;
-- H2 Database;
-- Spring Security;
-- OAuth2 Client;
-- Validation;
-- Spring Boot DevTools;
-- Docker Compose Support
-- Flyway Migration;
-- Lombok.
+- Spring Boot v.4;
+- на платформе Java v.25: OpenJDK Runtime Environment Zulu25.30+17-CA (build 25.0.1+8-LTS);
+- docker (postgres:18-alpine; redis:7-alpine);
+- 
 
 ### Java class in src/main/java/ru/mymsoft/my_jira/model
 
@@ -88,6 +78,21 @@ docker-compose down # Остановить контейнер
 27. [WorkflowTransition.java](./src/main/java/ru/mymsoft/my_jira/model/WorkflowTransition.java)
 
 ### Справочная документация
+
+📋 Как использовать:
+
+Реалистичные интеграционные тесты (PostgreSQL + Testcontainers):
+
+```bash
+./mvnw test -P test-postgres -Dtest=**/*PostgresDataJpaTest
+```
+Ручной Docker для отладки:
+
+```bash
+docker-compose -f docker-compose.test.yml up -d
+./mvnw test -P test-postgres
+docker-compose -f docker-compose.test.yml down
+```
 
 For further reference, please consider the following sections:
 

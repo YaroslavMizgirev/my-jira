@@ -11,10 +11,10 @@ import java.util.List;
 public class OAuth2ClientConfig {
     @Bean
     public ClientRegistrationRepository clientRegistrationRepository(
-            List<org.springframework.security.oauth2.client.registration.ClientRegistration> registrations) {
+        List<org.springframework.security.oauth2.client.registration.ClientRegistration> registrations) {
         
         // Фильтруем только активные провайдеры (не "disabled")
-        List<org.springframework.security.oauth2.client.registration.ClientRegistration> activeRegistrations = 
+        List<org.springframework.security.oauth2.client.registration.ClientRegistration> activeRegistrations =
             registrations.stream()
                 .filter(reg -> !"disabled".equals(reg.getClientId()))
                 .toList();

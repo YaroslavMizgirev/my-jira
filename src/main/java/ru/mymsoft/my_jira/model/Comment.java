@@ -35,8 +35,7 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "issue_id", nullable = false, foreignKey = @ForeignKey(
         name = "fk_comments_issue",
-        foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
-    )
+        foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE")
     )
     @NonNull
     @EqualsAndHashCode.Exclude
@@ -49,10 +48,12 @@ public class Comment {
     }
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "author_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_comments_author",
-        foreignKeyDefinition = "FOREIGN KEY (author_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-    )
+    @JoinColumn(
+        name = "author_id",
+        nullable = false,
+        foreignKey = @ForeignKey(
+            name = "fk_comments_author",
+            foreignKeyDefinition = "FOREIGN KEY (author_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT")
     )
     @NonNull
     @EqualsAndHashCode.Exclude

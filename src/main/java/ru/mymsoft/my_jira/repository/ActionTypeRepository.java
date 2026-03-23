@@ -13,11 +13,13 @@ import ru.mymsoft.my_jira.model.ActionType;
 
 @Repository
 public interface ActionTypeRepository extends JpaRepository<ActionType, Long> {
-  Optional<ActionType> findByName(String name);
-  boolean existsByName(String name);
+    Optional<ActionType> findByName(String name);
 
-  Page<ActionType> findAllByNameContainingIgnoreCase(String namePart, Pageable pageable);
+    boolean existsByName(String name);
 
-  List<ActionType> findAllByOrderByNameAsc();
-  List<ActionType> findAllByOrderByNameDesc();
+    Page<ActionType> findAllByNameContainingIgnoreCase(String namePart, Pageable pageable);
+
+    List<ActionType> findAllByOrderByNameAsc();
+
+    List<ActionType> findAllByOrderByNameDesc();
 }

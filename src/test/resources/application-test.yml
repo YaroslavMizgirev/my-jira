@@ -1,0 +1,45 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+
+  # Disable OAuth2 for tests
+  security:
+    oauth2:
+      client:
+        enabled: false
+      registration: {}
+
+  # Exclude OAuth2 autoconfiguration for tests
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientAutoConfiguration
+      - org.springframework.boot.autoconfigure.security.oauth2.resource.OAuth2ResourceServerAutoConfiguration
+
+  flyway:
+    enabled: false
+
+  # Test-specific properties
+  main:
+    allow-bean-definition-overriding: true
+
+  # Disable web environment for faster tests
+  web:
+    environment: none
+
+logging:
+  level:
+    ru.mymsoft.my_jira: INFO
+    org.springframework.security: WARN
+    org.springframework.test: INFO
