@@ -39,7 +39,7 @@ public class Attachment {
     private Issue issue;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "uploader_id", nullable = false, foreignKey = @ForeignKey(name = "fk_attachments_uploader")
+    @JoinColumn(name = "author_id", nullable = false, foreignKey = @ForeignKey(name = "fk_attachments_author")
     )
     @ToString.Exclude
     private User uploader;

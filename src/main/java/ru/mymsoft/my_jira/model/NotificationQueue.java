@@ -22,7 +22,7 @@ public class NotificationQueue {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipient_user_id")
+    @JoinColumn(name = "recipient_id")
     private User recipientUser;
 
     @Column(name = "recipient_email")

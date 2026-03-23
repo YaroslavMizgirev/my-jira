@@ -177,7 +177,7 @@ RUN ln -svT ${PGDATA} /var/lib/postgresql/data
 VOLUME /var/lib/postgresql
 # ("/var/lib/postgresql" is already pre-created with suitably usable permissions above)
 
-COPY docker-entrypoint.sh docker-ensure-initdb.sh /usr/local/bin/
+COPY postgres-18-alpine/docker-entrypoint.sh postgres-18-alpine/docker-ensure-initdb.sh /usr/local/bin/
 RUN ln -sT docker-ensure-initdb.sh /usr/local/bin/docker-enforce-initdb.sh
 ENTRYPOINT ["docker-entrypoint.sh"]
 
@@ -206,8 +206,8 @@ STOPSIGNAL SIGINT
 # that even 90 seconds may not be long enough in many instances.
 
 # Копируем схему БД
-COPY ../myjira.sql /docker-entrypoint-initdb.d/
-COPY ../init.sql /docker-entrypoint-initdb.d/
+COPY myjira.sql /docker-entrypoint-initdb.d/
+COPY init.sql /docker-entrypoint-initdb.d/
 
 # Настройка прав
 RUN chmod 644 /docker-entrypoint-initdb.d/*.sql; \

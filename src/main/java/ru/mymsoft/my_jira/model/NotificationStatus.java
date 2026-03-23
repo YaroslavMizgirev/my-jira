@@ -25,5 +25,5 @@ public class NotificationStatus {
 
     @Column(name = "description", columnDefinition = "TEXT")
     @EqualsAndHashCode.Exclude
-    private Boolean description = false;
+    private String description;
 }

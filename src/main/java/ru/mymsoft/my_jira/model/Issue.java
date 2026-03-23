@@ -64,7 +64,7 @@ public class Issue {
     private Instant updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "assignee_id", foreignKey = @ForeignKey(name = "fk_issues_assignee")
+    @JoinColumn(name = "performer_id", foreignKey = @ForeignKey(name = "fk_issues_performer")
     )
     private User assignee;
 

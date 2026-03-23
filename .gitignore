@@ -40,4 +40,6 @@ logs/
 *.class
 
 # AI
-.claude/
+.claude/.env
+.env
+.claude/worktrees/
