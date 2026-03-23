@@ -49,13 +49,13 @@ class IssueRepositoryTest {
         reporter = new User();
         reporter.setUsername("reporter");
         reporter.setEmail("reporter@test.com");
-        reporter.setPassword("password");
+        reporter.setPasswordHash("password");
         reporter = persistAndFlush(reporter);
 
         assignee = new User();
         assignee.setUsername("assignee");
         assignee.setEmail("assignee@test.com");
-        assignee.setPassword("password");
+        assignee.setPasswordHash("password");
         assignee = persistAndFlush(assignee);
 
         project = new Project();
@@ -177,7 +177,7 @@ class IssueRepositoryTest {
         User anotherReporter = new User();
         anotherReporter.setUsername("another");
         anotherReporter.setEmail("another@test.com");
-        anotherReporter.setPassword("password");
+        anotherReporter.setPasswordHash("password");
         anotherReporter = persistAndFlush(anotherReporter);
 
         Issue anotherIssue = new Issue();

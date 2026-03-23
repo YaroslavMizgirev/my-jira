@@ -24,7 +24,10 @@ public class SecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return web -> web.ignoring()
-            .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**");
+            .requestMatchers(
+                "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**",
+                "/css/**", "/js/**", "/images/**", "/favicon.ico"
+            );
     }
 
     @Bean
@@ -45,7 +48,7 @@ public class SecurityConfig {
                 .userInfoEndpoint(userInfo -> userInfo
                     .userService(oAuth2UserService)
                 )
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("/dashboard", true)
                 .failureUrl("/login?error=true")
             )
             .logout(logout -> logout

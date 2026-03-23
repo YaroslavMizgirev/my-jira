@@ -116,8 +116,6 @@ spring:
 
 server:
   port: 22080
-  servlet:
-    context-path: /api
 
 logging:
   level:

@@ -53,7 +53,7 @@ class MyJiraApplicationBasicTest {
     void jpaConfigurationCorrect() {
         // Проверяем, что JPA конфигурация загружена
         assertThat(applicationContext.containsBean("jpaVendorAdapter")).isTrue();
-        assertThat(applicationContext.containsBean("jpaDialect")).isTrue();
+        assertThat(applicationContext.containsBean("entityManagerFactory")).isTrue();
     }
 
     @Test
