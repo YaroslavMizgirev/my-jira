@@ -29,7 +29,7 @@ import jakarta.persistence.UniqueConstraint;
 @Entity
 @Table(name = "issues",
     uniqueConstraints = {
-        @UniqueConstraint(name ="uk_issues_key", columnNames = {"key"}),
+        @UniqueConstraint(name ="uk_issues_key", columnNames = {"\"key\""}),
     })
 @Getter
 @Setter
@@ -51,7 +51,7 @@ public class Issue {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "key", nullable = false)
+    @Column(name = "\"key\"", nullable = false)
     @NotBlank(message = "must not be blank")
     private String key;
 

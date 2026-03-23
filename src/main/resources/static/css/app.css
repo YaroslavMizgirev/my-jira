@@ -1,0 +1,79 @@
+/* ── Navbar ── */
+.mj-navbar {
+    background-color: #0052cc;
+    min-height: 56px;
+}
+.mj-brand-accent {
+    color: #4fc3f7;
+}
+.mj-btn-create {
+    background-color: #0747a6;
+    color: #fff;
+    border: 1px solid #2684ff;
+}
+.mj-btn-create:hover {
+    background-color: #2684ff;
+    color: #fff;
+}
+
+/* ── Layout ── */
+body {
+    background-color: #f4f5f7;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.mj-content {
+    padding: 2rem 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ── Cards ── */
+.mj-card {
+    background: #fff;
+    border: 1px solid #dfe1e6;
+    border-radius: 8px;
+    padding: 1.25rem 1.5rem;
+}
+.mj-card-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #172b4d;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #ebecf0;
+    padding-bottom: .5rem;
+}
+
+/* ── Issue/Project rows ── */
+.mj-row {
+    display: flex;
+    align-items: center;
+    padding: .5rem .25rem;
+    border-radius: 4px;
+    text-decoration: none;
+    color: #172b4d;
+    gap: .75rem;
+}
+.mj-row:hover {
+    background: #f4f5f7;
+    color: #0052cc;
+}
+.mj-row + .mj-row {
+    border-top: 1px solid #f0f1f3;
+}
+
+/* ── Priority / Status badges ── */
+.badge-priority-high    { background-color: #ff5630; color: #fff; }
+.badge-priority-medium  { background-color: #ff991f; color: #fff; }
+.badge-priority-low     { background-color: #36b37e; color: #fff; }
+.badge-priority-default { background-color: #6554c0; color: #fff; }
+
+/* ── Alpine cloak ── */
+[x-cloak] { display: none !important; }
+
+/* ── Page title ── */
+.mj-page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #172b4d;
+    margin-bottom: 1.5rem;
+}

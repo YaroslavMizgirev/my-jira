@@ -61,14 +61,14 @@ class GroupConstraintsTest {
         assertThat(saved.getId()).isNotNull();
 
         String tableName = (String) entityManager
-            .createNativeQuery("SELECT table_name FROM information_schema.tables WHERE table_name = 'groups'")
+            .createNativeQuery("SELECT table_name FROM information_schema.tables WHERE LOWER(table_name) = 'groups'")
             .getSingleResult();
 
-        assertThat(tableName).isEqualTo("groups");
+        assertThat(tableName.toLowerCase()).isEqualTo("groups");
 
         Long uniqueConstraintCount = (Long) entityManager
             .createNativeQuery("SELECT COUNT(*) FROM information_schema.table_constraints " +
-                              "WHERE table_name = 'groups' AND constraint_type = 'UNIQUE'")
+                              "WHERE LOWER(table_name) = 'groups' AND constraint_type = 'UNIQUE'")
             .getSingleResult();
 
         assertThat(uniqueConstraintCount).isGreaterThanOrEqualTo(1L);

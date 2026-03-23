@@ -118,8 +118,8 @@ class ActionTypeServiceIntegrationTest {
 
         Pageable pageable = PageRequest.of(0, 3);
 
-        // When
-        Page<ActionTypeDto> result = actionTypeService.listActionTypes("Action", pageable);
+        // When — "Action " (with space) matches "Action 1..5" but not "Existing Action"
+        Page<ActionTypeDto> result = actionTypeService.listActionTypes("Action ", pageable);
 
         // Then
         assertThat(result).isNotNull();

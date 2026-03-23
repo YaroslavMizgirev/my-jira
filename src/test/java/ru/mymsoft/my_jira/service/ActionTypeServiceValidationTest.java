@@ -264,27 +264,19 @@ class ActionTypeServiceValidationTest {
     @Test
     @DisplayName("Should handle pagination with size zero")
     void listActionTypes_WithZeroPageSize_ThrowsException() {
-        // Given
-        Pageable pageable = PageRequest.of(0, 0);
-
         // When & Then
-        assertThatThrownBy(() -> actionTypeService.listActionTypes("test", pageable))
+        assertThatThrownBy(() -> actionTypeService.listActionTypes("test", PageRequest.of(0, 0)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Page size must not be less than one");
-
-        verify(actionTypeRepository).findAllByNameContainingIgnoreCase("test", pageable);
     }
 
     @Test
     @DisplayName("Should handle negative page number")
     void listActionTypes_WithNegativePageNumber_ThrowsException() {
-        // Given
-        Pageable pageable = PageRequest.of(-1, 10);
-
         // When & Then
-        assertThatThrownBy(() -> actionTypeService.listActionTypes("test", pageable))
+        assertThatThrownBy(() -> actionTypeService.listActionTypes("test", PageRequest.of(-1, 10)))
+                .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("Page index must not be less than zero");
-
-        verify(actionTypeRepository).findAllByNameContainingIgnoreCase("test", pageable);
     }
 
     @Test

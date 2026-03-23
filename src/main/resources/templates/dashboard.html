@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/head :: head('Dashboard')}"></head>
+<body>
+
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<div class="mj-content">
+
+    <!-- Welcome -->
+    <h1 class="mj-page-title">
+        Добро пожаловать,
+        <span th:text="${currentUser?.displayName ?: currentUser?.username ?: 'пользователь'}">User</span>!
+    </h1>
+
+    <div class="row g-4">
+
+        <!-- Projects -->
+        <div class="col-12 col-lg-5">
+            <div class="mj-card">
+                <div class="d-flex justify-content-between align-items-center mj-card-title">
+                    <span><span class="bi bi-folder2 me-2"></span>Проекты</span>
+                    <a th:href="@{/projects}" class="btn btn-sm btn-outline-primary">Все</a>
+                </div>
+
+                <div th:if="${#lists.isEmpty(projects)}" class="text-muted small py-2">
+                    Нет проектов. <a th:href="@{/projects/create}">Создать первый</a>
+                </div>
+
+                <div th:each="project : ${projects}">
+                    <a th:href="@{/projects/{id}(id=${project.id})}" class="mj-row">
+                        <span class="badge bg-primary fw-normal"
+                              th:text="${project.key}">KEY</span>
+                        <span class="flex-grow-1 text-truncate"
+                              th:text="${project.name}">Project Name</span>
+                        <span class="bi bi-chevron-right text-muted small"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Issues -->
+        <div class="col-12 col-lg-7">
+            <div class="mj-card">
+                <div class="d-flex justify-content-between align-items-center mj-card-title">
+                    <span><span class="bi bi-list-task me-2"></span>Последние задачи</span>
+                    <a th:href="@{/issues}" class="btn btn-sm btn-outline-primary">Все</a>
+                </div>
+
+                <div th:if="${#lists.isEmpty(recentIssues)}" class="text-muted small py-2">
+                    Нет задач. <a th:href="@{/issues/create}">Создать первую</a>
+                </div>
+
+                <div th:each="issue : ${recentIssues}">
+                    <a th:href="@{/issues/{id}(id=${issue.id})}" class="mj-row">
+                        <span class="badge bg-secondary fw-normal font-monospace small"
+                              th:text="${issue.key}">KEY-1</span>
+                        <span class="flex-grow-1 text-truncate"
+                              th:text="${issue.title}">Issue title</span>
+                        <span class="text-muted small"
+                              th:text="${#temporals.format(issue.createdAt, 'dd.MM.yyyy')}">01.01.2025</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

@@ -40,8 +40,8 @@ public class NotificationQueue {
     @JoinColumn(name = "project_id")
     private Project project;
 
-    @JdbcTypeCode(SqlTypes.JSON) // Use JdbcTypeCode for JSONB mapping
-    @Column(name = "payload", columnDefinition = "jsonb")
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "payload")
     private String payload;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

@@ -10,7 +10,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "projects",
     uniqueConstraints = {
-        @UniqueConstraint(name = "uk_projects_key", columnNames = {"key"}),
+        @UniqueConstraint(name = "uk_projects_key", columnNames = {"\"key\""}),
         @UniqueConstraint(name = "uk_projects_name", columnNames = {"name"}),
     })
 @Getter
@@ -28,7 +28,7 @@ public class Project {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "key", nullable = false, length = 50)
+    @Column(name = "\"key\"", nullable = false, length = 50)
     private String key;
 
     @Column(name = "description", columnDefinition = "TEXT")
