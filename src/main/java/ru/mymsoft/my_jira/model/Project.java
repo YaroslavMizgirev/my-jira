@@ -18,6 +18,7 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = {"id", "name", "key"})
+@ToString
 @Builder
 public class Project {
     @Id
@@ -25,19 +26,16 @@ public class Project {
     private Long id;
 
     @Column(name = "name", nullable = false)
-    @NonNull
     private String name;
 
     @Column(name = "key", nullable = false, length = 50)
-    @NonNull
     private String key;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "lead_id", nullable = false)
-    @NonNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "lead_id")
     private User lead;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -46,11 +44,9 @@ public class Project {
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    @NonNull
     private Instant createdAt;
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    @NonNull
     private Instant updatedAt;
 }

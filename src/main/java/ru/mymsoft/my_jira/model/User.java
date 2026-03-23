@@ -7,80 +7,67 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.Builder;
+import lombok.AccessLevel;
 
 /**
  * Хранит информацию обо всех зарегистрированных пользователях системы.
- * Аутентификация — только через OAuth2 (Google, GitHub, GitLab, Yandex, Mail.ru).
+ * Это центральная сущность, к которой привязаны многие другие действия и объекты.
  */
 @Entity
 @Table(name = "users",
     uniqueConstraints = {
         @UniqueConstraint(name = "uk_users_email", columnNames = {"email"}),
         @UniqueConstraint(name = "uk_users_username", columnNames = {"username"}),
-        @UniqueConstraint(name = "uk_users_oauth", columnNames = {"oauth_provider", "oauth_id"}),
     })
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+@ToString
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString(onlyExplicitlyIncluded = true)
 public class User {
-
+    /**
+     * Уникальный идентификатор пользователя.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Exclude
-    @ToString.Include
     private Long id;
 
+    /**
+     * Электронная почта пользователя (используется для входа и уведомлений).
+     */
     @Column(name = "email", nullable = false)
-    @NonNull
-    @EqualsAndHashCode.Include
-    @ToString.Include
     private String email;
 
+    /**
+     * Уникальное имя пользователя.
+     */
     @Column(name = "username", nullable = false)
-    @NonNull
-    @EqualsAndHashCode.Include
-    @ToString.Include
     private String username;
 
     /**
-     * Хэш пароля. Nullable — используется только для OAuth2-аутентификации.
+     * Хэш пароля пользователя.
+     * SHA-256 или bcrypt (рекомендуется для безопасности).
      */
-    @Column(name = "password_hash")
-    @EqualsAndHashCode.Exclude
+    @Column(name = "password_hash", nullable = false)
     @ToString.Exclude
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private String passwordHash;
 
-    /**
-     * Провайдер OAuth2: google, github, gitlab, yandex, mailru.
-     */
-    @Column(name = "oauth_provider", length = 50)
-    @EqualsAndHashCode.Exclude
-    @ToString.Include
-    private String oauthProvider;
+    public void setPassword(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 
-    /**
-     * Уникальный идентификатор пользователя у провайдера OAuth2.
-     */
-    @Column(name = "oauth_id", length = 255)
-    @EqualsAndHashCode.Exclude
-    private String oauthId;
-
-    /**
-     * Отображаемое имя (из профиля OAuth2-провайдера).
-     */
-    @Column(name = "display_name", length = 255)
-    @EqualsAndHashCode.Exclude
-    @ToString.Include
-    private String displayName;
-
-    /**
-     * URL аватара пользователя (из профиля OAuth2-провайдера).
-     */
-    @Column(name = "avatar_url", length = 2048)
-    @EqualsAndHashCode.Exclude
-    private String avatarUrl;
+    public String getPassword() {
+        return passwordHash;
+    }
 }

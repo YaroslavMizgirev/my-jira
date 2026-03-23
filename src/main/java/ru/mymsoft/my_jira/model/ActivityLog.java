@@ -27,7 +27,6 @@ import jakarta.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @ToString(onlyExplicitlyIncluded = true)
 public class ActivityLog {
     /**
@@ -35,7 +34,6 @@ public class ActivityLog {
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Exclude
     @ToString.Include
     private Long id;
 
@@ -43,74 +41,36 @@ public class ActivityLog {
      * Ссылка на задачу, к которой относится запись.
      */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(
-        name = "issue_id",
-        nullable = false,
-        foreignKey = @ForeignKey(
-            name = "fk_activity_log_issue",
-            foreignKeyDefinition = "FOREIGN KEY (issue_id) REFERENCES public.issues (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE"
-        )
+    @JoinColumn(name = "issue_id", nullable = false, foreignKey = @ForeignKey(name = "fk_activity_log_issue")
     )
     @NonNull
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private Issue issue;
-
-    @EqualsAndHashCode.Include
-    private Long getIssueId() {
-        return this.issue.getId();
-    }
 
     /**
      * Ссылка на пользователя, который выполнил действие
      * (может быть NULL для системных действий).
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "user_id",
-        foreignKey = @ForeignKey(
-            name = "fk_activity_log_user",
-            foreignKeyDefinition = "FOREIGN KEY (user_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-        )
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_activity_log_user")
     )
-    @NonNull
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private User user;
-
-    @EqualsAndHashCode.Include
-    private Long getUserId() {
-        return this.user.getId();
-    }
 
     /**
      * Ссылка на тип действия, которое происходит с задачей.
      */
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(
-        name = "action_type_id",
-        nullable = false,
-        foreignKey = @ForeignKey(
-            name = "fk_activity_log_action_type",
-            foreignKeyDefinition = "FOREIGN KEY (action_type_id) REFERENCES public.action_types (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT"
-        )
+    @JoinColumn(name = "action_type_id", nullable = false, foreignKey = @ForeignKey(name = "fk_activity_log_action_type")
     )
     @NonNull
-    @EqualsAndHashCode.Exclude
     @ToString.Exclude
     private ActionType actionType;
-
-    @EqualsAndHashCode.Include
-    private Long getActionTypeId() {
-        return this.actionType.getId();
-    }
 
     /**
      * Имя поля, которое было изменено (если применимо).
      */
     @Column(name = "field_name", length = 100)
-    @NonNull
-    @EqualsAndHashCode.Include
     @ToString.Include
     private String fieldName;
 
@@ -118,16 +78,14 @@ public class ActivityLog {
      * Предыдущее значение поля (если применимо).
      */
     @Column(name = "old_value", columnDefinition = "TEXT")
-    @EqualsAndHashCode.Include
-    @ToString.Include
+    @ToString.Exclude
     private String oldValue;
 
     /**
      * Новое значение поля (если применимо).
      */
     @Column(name = "new_value", columnDefinition = "TEXT")
-    @EqualsAndHashCode.Include
-    @ToString.Include
+    @ToString.Exclude
     private String newValue;
 
     /**
@@ -136,7 +94,20 @@ public class ActivityLog {
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     @NonNull
-    @EqualsAndHashCode.Exclude
     @ToString.Include
     private Instant createdAt;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ActivityLog that = (ActivityLog) o;
+        if (this.id == null) return false;
+        return this.id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : System.identityHashCode(this);
+    }
 }

@@ -8,23 +8,25 @@ import lombok.*;
     uniqueConstraints = {
         @UniqueConstraint(name = "uk_roles_name", columnNames = {"name"}),
     })
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode(of = {"id", "name"})
 @Builder
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Exclude
     private Long id;
 
     @Column(name = "name", nullable = false, length = 100)
-    @NonNull
-    @EqualsAndHashCode.Include
     private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")
-    @EqualsAndHashCode.Exclude
     private String description;
+
+    @Column(name = "is_system_role", nullable = false)
+    @Builder.Default
+    @NonNull
+    private Boolean isSystemRole = false;
 }

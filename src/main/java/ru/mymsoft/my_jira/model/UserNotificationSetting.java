@@ -25,11 +25,10 @@ public class UserNotificationSetting {
     private User user;
 
     @Column(name = "notification_type", nullable = false, length = 50)
-    @NonNull
     private String notificationType;
 
     @Column(name = "is_enabled", nullable = false)
     @Builder.Default
     @NonNull
-    private Boolean isEnabled = false;
+    private Boolean isEnabled = true;
 }

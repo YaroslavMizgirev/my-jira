@@ -2,7 +2,15 @@ package ru.mymsoft.my_jira.model;
 
 import java.time.Instant;
 
-import lombok.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -21,11 +29,14 @@ import jakarta.persistence.UniqueConstraint;
 @Entity
 @Table(name = "issues",
     uniqueConstraints = {
-        @UniqueConstraint(name = "uk_issues_key", columnNames = {"key"}),
+        @UniqueConstraint(name ="uk_issues_key", columnNames = {"key"}),
     })
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = {"id", "key"})
+@ToString
 @Builder
 public class Issue {
 
@@ -33,75 +44,59 @@ public class Issue {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "key", nullable = false)
-    @NonNull
-    private String key;
-
-    @Column(name = "title", nullable = false)
-    @NonNull
-    private String title;
+    @CreationTimestamp
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "performer_id", foreignKey = @ForeignKey(
-        name = "fk_issues_performer",
-        foreignKeyDefinition = "FOREIGN KEY (performer_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT")
-    )
-    private User performer;
+    @Column(name = "key", nullable = false)
+    @NotBlank(message = "must not be blank")
+    private String key;
+
+    @Column(name = "title", nullable = false)
+    @NotBlank(message = "must not be blank")
+    private String title;
+
+    @UpdateTimestamp
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "issue_type_id", foreignKey = @ForeignKey(
-        name = "fk_issues_issue_type",
-        foreignKeyDefinition = "FOREIGN KEY (issue_type_id) REFERENCES public.issue_types (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT")
+    @JoinColumn(name = "assignee_id", foreignKey = @ForeignKey(name = "fk_issues_assignee")
+    )
+    private User assignee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "issue_type_id", foreignKey = @ForeignKey(name = "fk_issues_issue_type")
     )
     private IssueType issueType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "priority_id", foreignKey = @ForeignKey(
-        name = "fk_issues_priority",
-        foreignKeyDefinition = "FOREIGN KEY (priority_id) REFERENCES public.priorities (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT")
+    @JoinColumn(name = "priority_id", foreignKey = @ForeignKey(name = "fk_issues_priority")
     )
     private Priority priority;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "reporter_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_issues_reporter",
-        foreignKeyDefinition = "FOREIGN KEY (reporter_id) REFERENCES public.users (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT")
+    @JoinColumn(name = "reporter_id", nullable = false, foreignKey = @ForeignKey(name = "fk_issues_reporter")
     )
-    @NonNull
+    @NotNull(message = "must not be null")
     private User reporter;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "status_id", foreignKey = @ForeignKey(
-        name = "fk_issues_status",
-        foreignKeyDefinition = "FOREIGN KEY (status_id) REFERENCES public.issue_statuses (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT")
+    @JoinColumn(name = "status_id", foreignKey = @ForeignKey(name = "fk_issues_status")
     )
     private IssueStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "workflow_id", foreignKey = @ForeignKey(
-        name = "fk_issues_workflow",
-        foreignKeyDefinition = "FOREIGN KEY (workflow_id) REFERENCES public.workflows (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE RESTRICT")
+    @JoinColumn(name = "workflow_id", foreignKey = @ForeignKey(name = "fk_issues_workflow")
     )
     private Workflow workflow;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "project_id", nullable = false, foreignKey = @ForeignKey(
-        name = "fk_issues_project",
-        foreignKeyDefinition = "FOREIGN KEY (project_id) REFERENCES public.projects (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE CASCADE")
+    @JoinColumn(name = "project_id", nullable = false, foreignKey = @ForeignKey(name = "fk_issues_project")
     )
-    @NonNull
+    @NotNull(message = "must not be null")
     private Project project;
-
-    @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
-    @NonNull
-    private Instant createdAt;
-
-    @UpdateTimestamp
-    @Column(name = "updated_at", nullable = false)
-    @NonNull
-    private Instant updatedAt;
 }

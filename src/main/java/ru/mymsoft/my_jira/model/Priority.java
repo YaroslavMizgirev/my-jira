@@ -6,35 +6,29 @@ import lombok.*;
 @Entity
 @Table(name = "priorities",
     uniqueConstraints = {
-        @UniqueConstraint(name = "uk_priorities_level", columnNames = {"level"}),
-        @UniqueConstraint(name = "uk_priorities_name", columnNames = {"name"}),
+            @UniqueConstraint(name = "uk_priorities_level", columnNames = {"level"}),
+            @UniqueConstraint(name = "uk_priorities_name", columnNames = {"name"}),
     })
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = {"id", "name", "level"})
 @Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Priority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @EqualsAndHashCode.Exclude
     private Long id;
 
-    @Column(name = "level", nullable = false)
-    @NonNull
-    @EqualsAndHashCode.Include
+    @Column(name = "level")
     private Integer level;
 
     @Column(name = "name", nullable = false, length = 50)
-    @NonNull
-    @EqualsAndHashCode.Include
     private String name;
 
     @Column(name = "icon_url")
-    @EqualsAndHashCode.Exclude
     private String iconUrl;
 
     @Column(name = "color_hex_code", length = 7)
-    @EqualsAndHashCode.Exclude
     private String colorHexCode;
 }
